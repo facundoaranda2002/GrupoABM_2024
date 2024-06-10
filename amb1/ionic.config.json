@@ -1,7 +1,0 @@
-{
-  "name": "amb1",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular-standalone"
-}
