@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
+import { AuthService } from './service/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,5 +10,21 @@ import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
   imports: [IonApp, IonRouterOutlet],
 })
 export class AppComponent {
-  constructor() {}
+  authService = inject(AuthService);
+  router = inject(Router);
+
+  ngOnInit(): void {
+    this.router.navigateByUrl('/');
+
+    this.authService.user$.subscribe((user) => {
+      if (user) {
+        this.authService.currentUserSig.set({
+          email: user.email!,
+          username: user.displayName!,
+        });
+      } else {
+        this.authService.currentUserSig.set(null);
+      }
+    });
+  }
 }

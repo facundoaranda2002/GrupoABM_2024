@@ -1,0 +1,19 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    @if(this.authService.currentUserSig() == null) {
+    <ion-buttons slot="secondary">
+      <ion-button (click)="goLogin()"> Ingresar </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="primary">
+      <ion-button (click)="goRegister()"> Registrar </ion-button>
+    </ion-buttons>
+    } @if(this.authService.currentUserSig()) {
+    <ion-buttons slot="primary">
+      <ion-button (click)="logout()"> Salir </ion-button>
+    </ion-buttons>
+    }
+    <ion-title (click)="goHome()">Jota</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true"> </ion-content>
