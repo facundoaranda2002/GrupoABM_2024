@@ -30,12 +30,12 @@ bootstrapApplication(AppComponent, {
     provideRouter(routes, withPreloading(PreloadAllModules)),
     provideFirebaseApp(() =>
       initializeApp({
-        projectId: 'ppsabm-1a5eb',
-        appId: '1:281289826400:web:2464a5d247b327ff1f6305',
-        storageBucket: 'ppsabm-1a5eb.appspot.com',
-        apiKey: 'AIzaSyCAXNHPsnp00YhCanOtetVyCUZWZPO-sDA',
-        authDomain: 'ppsabm-1a5eb.firebaseapp.com',
-        messagingSenderId: '281289826400',
+        apiKey: "AIzaSyDTsUdrugIcwnk4cMQqeNZ0B1E3g1XxMTQ",
+        authDomain: "miproyectopps.firebaseapp.com",
+        projectId: "miproyectopps",
+        storageBucket: "miproyectopps.appspot.com",
+        messagingSenderId: "406636064141",
+        appId: "1:406636064141:web:c165d60b168d0d650661c4"
       })
     ),
     provideAuth(() => getAuth()),
@@ -43,3 +43,10 @@ bootstrapApplication(AppComponent, {
     provideStorage(() => getStorage()),
   ],
 });
+
+// projectId: 'ppsabm-1a5eb',
+//         appId: '1:281289826400:web:2464a5d247b327ff1f6305',
+//         storageBucket: 'ppsabm-1a5eb.appspot.com',
+//         apiKey: 'AIzaSyCAXNHPsnp00YhCanOtetVyCUZWZPO-sDA',
+//         authDomain: 'ppsabm-1a5eb.firebaseapp.com',
+//         messagingSenderId: '281289826400',

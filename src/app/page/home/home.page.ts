@@ -40,7 +40,7 @@ export class HomePage implements OnInit {
   authService = inject(AuthService);
   router = inject(Router);
 
-  constructor() {}
+  constructor() { }
 
   //Form - Alert
 
@@ -58,6 +58,14 @@ export class HomePage implements OnInit {
     this.authService.logout();
     this.router.navigateByUrl('/login');
   }
+
+  goRegisterTable() {
+    this.router.navigateByUrl('/alta-mesa');
+  }
+  goRegisterClient() {
+    this.router.navigateByUrl('/alta-cliente');
+  }
+
   //Init - Destroy
-  ngOnInit() {}
+  ngOnInit() { }
 }

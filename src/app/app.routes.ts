@@ -26,7 +26,18 @@ export const routes: Routes = [
     canActivate: [pasoUnaVezGuard],
   },
   {
+    path: 'alta-mesa',
+    loadComponent: () => import('./page/alta-mesa/alta-mesa.page').then(m => m.AltaMesaPage),
+    canActivate: [logeadoGuard],
+  },
+  {
+    path: 'alta-cliente',
+    loadComponent: () => import('./page/alta-cliente/alta-cliente.page').then(m => m.AltaClientePage)
+  },
+  {
     path: '**',
     redirectTo: 'home',
   },
+
+
 ];
