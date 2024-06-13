@@ -87,3 +87,21 @@
   --ion-color-shade: var(--ion-color-free-shade);
   --ion-color-tint: var(--ion-color-free-tint);
 }
+
+body.barcode-scanning-active {
+  visibility: hidden;
+  --background: transparent;
+  --ion-background-color: transparent;
+}
+
+.barcode-scanning-modal {
+  visibility: visible;
+}
+
+@media (prefers-color-scheme: dark) {
+  .barcode-scanning-active {
+    visibility: hidden;
+    --background: transparent;
+    --ion-background-color: transparent;
+  }
+}
