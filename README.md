@@ -26,78 +26,78 @@ conformado por:
 ### Alfa
 - **Alta de dueño/supervisor** _(15/06/2024 - 22/06/24)_
     
-    Estado: <span style="color: orange;">En curso:</span>
+    ![Estado](https://img.shields.io/badge/Estado-En%20Curso-FFD700?style=for-the-badge&labelColor=black)
 - **Alta de productos** _(15/06/2024 - 22/06/24)_   
     
-    Estado: En curso
+    ![Estado](https://img.shields.io/badge/Estado-En%20Curso-FFD700?style=for-the-badge&labelColor=black)
 - **QR de ingreso al local** _(15/06/2024 - 22/06/24)_   
     
-    Estado: En curso
+    ![Estado](https://img.shields.io/badge/Estado-En%20Curso-FFD700?style=for-the-badge&labelColor=black)
 - **Encuesta clientes** _(22/06/2024 - 29/06/24)_   
     
-    Estado: Pendiente    
+    ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)  
 - **Agregar un nuevo cliente registrado** _(22/06/2024 - 29/06/24)_   
     
-    Estado: Pendiente   
+    ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)    
 - **Generar reservas agendadas** _(22/06/2024 - 29/06/24)_   
     
-    Estado: Pendiente  
+    ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)  
 - **Push notification: agregar cliente nuevo** _(29/06/2024 - 06/06/24)_   
     
-    Estado: Pendiente    
+    ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)    
 - **Push notification: generar reservas agendadas** _(29/06/2024 - 06/06/24)_   
     
-    Estado: Pendiente  
+    ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)    
 - **Juego: 10% de descuento** _(29/06/2024 - 06/06/24)_   
     
-    Estado: Pendiente  
+    ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)   
 ### Beta
 - **Alta de empleados** _(15/06/2024 - 22/06/24)_
     
-    Estado: En curso
+    ![Estado](https://img.shields.io/badge/Estado-En%20Curso-FFD700?style=for-the-badge&labelColor=black)
 - **QR de la mesa** _(15/06/2024 - 22/06/24)_   
     
-    Estado: En curso
+    ![Estado](https://img.shields.io/badge/Estado-En%20Curso-FFD700?style=for-the-badge&labelColor=black)
 - **Encuesta empleados** _(22/06/2024 - 29/06/24)_   
     
-    Estado: Pendiente    
+    ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)     
 - **Ingresar al local** _(22/06/2024 - 29/06/24)_   
     
-    Estado: Pendiente   
+    ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)    
 - **Push notification: ingresar al local** _(29/06/2024 - 06/06/24)_   
     
-    Estado: Pendiente    
+    ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)      
 - **Push notification: consultar al mozo** _(29/06/2024 - 06/06/24)_   
     
-    Estado: Pendiente  
+    ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)    
 - **Juego: 15% de descuento** _(29/06/2024 - 06/06/24)_   
     
-    Estado: Pendiente  
+    ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)    
 ### Gamma
 - **Alta de clientes** _(15/06/2024 - 22/06/24)_
     
-    Estado: En curso
+    ![Estado](https://img.shields.io/badge/Estado-En%20Curso-FFD700?style=for-the-badge&labelColor=black)
 - **Alta de mesa** _(15/06/2024 - 22/06/24)_   
     
-    Estado: En curso
+    ![Estado](https://img.shields.io/badge/Estado-En%20Curso-FFD700?style=for-the-badge&labelColor=black)
 - **QR de propina** _(15/06/2024 - 22/06/24)_   
     
-    Estado: En curso
+    ![Estado](https://img.shields.io/badge/Estado-En%20Curso-FFD700?style=for-the-badge&labelColor=black)
 - **Encuesta supervisor** _(22/06/2024 - 29/06/24)_   
     
-    Estado: Pendiente    
+    ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)     
 - **Realizar pedidos(platos y bebidas)** _(22/06/2024 - 29/06/24)_   
     
-    Estado: Pendiente   
+    ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)     
 - **Confirmar pedidos** _(22/06/2024 - 29/06/24)_   
     
-    Estado: Pendiente  
+    ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)    
 - **Push notification: confirmar pedido(por parte del mozo)** _(29/06/2024 - 06/06/24)_   
     
-    Estado: Pendiente    
+    ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)      
 - **Push notification: confirmar realización del pedido(por parte del cocinero o bartender)** _(29/06/2024 - 06/06/24)_   
     
-    Estado: Pendiente  
+    ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)    
 - **Juego: 20% de descuento** _(29/06/2024 - 06/06/24)_   
     
-    Estado: Pendiente  
+    ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)    
