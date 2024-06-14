@@ -101,3 +101,14 @@ conformado por:
 - **Juego: 20% de descuento** _(29/06/2024 - 06/06/24)_   
     
     ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)    
+
+## Bienvenida e Ingreso
+
+La pantalla de bienvenida muestra la opción de ingresar y de registrarse, este último es para que un cliente se registre de forma completa o de forma anónima
+
+<img src="src/assets/img/home.png">
+
+La pantalla de ingreso pide el correo y la contraseña, además cuenta con un desplegable abajo a la izquierda que cuenta con los usuarios pre registrados, a fin de hacer un ingreso rapido para probar la aplicación
+
+
+<img src="src/assets/img/login.png">
