@@ -14,7 +14,7 @@ export class AppComponent {
   router = inject(Router);
 
   ngOnInit(): void {
-    this.router.navigateByUrl('/');
+    // this.router.navigateByUrl('/');
 
     this.authService.user$.subscribe((user) => {
       if (user) {
@@ -25,6 +25,7 @@ export class AppComponent {
       } else {
         this.authService.currentUserSig.set(null);
       }
+      console.log(this.authService.currentUserSig());
     });
   }
 }

@@ -1,20 +1,36 @@
 <ion-content [fullscreen]="true">
-
   <form id="form" [formGroup]="form" (ngSubmit)="onSubmit()">
     <ion-item color="primary">
-      <ion-input type="text" label="nombre" placeholder="nombre" formControlName="nombre"></ion-input>
+      <ion-input
+        type="text"
+        label="nombre"
+        placeholder="nombre"
+        formControlName="nombre"
+      ></ion-input>
     </ion-item>
 
     <ion-item color="primary">
-      <ion-input type="text" label="apellido" placeholder="apellido" formControlName="apellido"></ion-input>
+      <ion-input
+        type="text"
+        label="apellido"
+        placeholder="apellido"
+        formControlName="apellido"
+      ></ion-input>
     </ion-item>
 
     <ion-item color="primary">
-      <ion-input type="number" label="DNI" placeholder="DNI" formControlName="DNI"></ion-input>
+      <ion-input
+        type="number"
+        label="DNI"
+        placeholder="DNI"
+        formControlName="DNI"
+      ></ion-input>
     </ion-item>
 
     <ion-item color="primary">
-      <ion-button type="button" label="foto" (click)="takePhoto()">Tomar Foto</ion-button>
+      <ion-button type="button" label="foto" (click)="takePhoto()"
+        >Tomar Foto</ion-button
+      >
     </ion-item>
 
     <ion-button class="submit" (click)="startScan()" expand="block">
@@ -32,25 +48,29 @@
     </ion-item>
 
     <ion-item color="primary">
-      <ion-input type="text" label="mail" placeholder="mail" formControlName="mail"></ion-input>
+      <ion-input
+        type="text"
+        label="mail"
+        placeholder="mail"
+        formControlName="mail"
+      ></ion-input>
     </ion-item>
 
     <ion-item color="primary">
-      <ion-input type="text" label="password" placeholder="password" formControlName="password"></ion-input>
+      <ion-input
+        type="text"
+        label="password"
+        placeholder="password"
+        formControlName="password"
+      ></ion-input>
     </ion-item>
 
     <ion-button type="submit" expand="block" shape="round">Guardar</ion-button>
 
-
     <ion-item color="primary">
-      <ion-button type="button" label="atras" (click)="atras()">Volver al Inicio</ion-button>
+      <ion-button type="button" label="atras" (click)="atras()"
+        >Volver al Inicio</ion-button
+      >
     </ion-item>
-
   </form>
-
-  <!-- Esto genera un qr del cliente, está por si se llegaba a necesitar -->
-  <!-- <div *ngIf="qrCodeImageUrl">
-    <img [src]="qrCodeImageUrl" alt="QR Code" />
-  </div> -->
-
 </ion-content>

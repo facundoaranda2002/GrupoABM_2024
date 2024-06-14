@@ -1,5 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Storage, getDownloadURL, list, ref, uploadString } from '@angular/fire/storage';
+import {
+  Storage,
+  getDownloadURL,
+  list,
+  ref,
+  uploadString,
+} from '@angular/fire/storage';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { AuthService } from './auth.service';
 
@@ -10,7 +16,7 @@ export interface UserPhoto {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PhotoService {
   private readonly NICE_BUCKET = 'mesas';
@@ -19,10 +25,7 @@ export class PhotoService {
   nicePhotos: UserPhoto[] = [];
   clientPhotos: UserPhoto[] = [];
 
-  constructor(
-    private storage: Storage,
-    private authService: AuthService
-  ) {
+  constructor(private storage: Storage, private authService: AuthService) {
     const niceRef = ref(this.storage, this.NICE_BUCKET);
     const clientPhotos = ref(this.storage, this.CLIENT_BUCKET);
 
@@ -32,17 +35,16 @@ export class PhotoService {
 
   build(ref: any, photoList: UserPhoto[]) {
     list(ref)
-      .then(res => {
-        res.items.forEach(photo => {
-          getDownloadURL(photo)
-            .then(path => {
-              const [email, timestamp] = photo.name.split(' ');
-              photoList.push({
-                name: photo.name,
-                webViewPath: path,
-                timestamp: parseInt(timestamp)
-              });
+      .then((res) => {
+        res.items.forEach((photo) => {
+          getDownloadURL(photo).then((path) => {
+            const [email, timestamp] = photo.name.split(' ');
+            photoList.push({
+              name: photo.name,
+              webViewPath: path,
+              timestamp: parseInt(timestamp),
             });
+          });
         });
       })
       .finally(() => {
@@ -50,7 +52,6 @@ export class PhotoService {
         photoList.sort((a, b) => b.timestamp - a.timestamp);
       });
   }
-
 
   async getPhotoUrl(photoName: string): Promise<string> {
     const storageRef = ref(this.storage, `${this.NICE_BUCKET}/${photoName}`);
@@ -71,23 +72,33 @@ export class PhotoService {
     return await this.addNewToGallery(this.clientPhotos, this.CLIENT_BUCKET);
   }
 
-  private async addNewToGallery(gallery: UserPhoto[], bucket: string): Promise<UserPhoto | undefined> {
+  private async addNewToGallery(
+    gallery: UserPhoto[],
+    bucket: string
+  ): Promise<UserPhoto | undefined> {
     const capturedPhoto = await Camera.getPhoto({
       resultType: CameraResultType.Base64,
       source: CameraSource.Camera,
-      quality: 100
+      quality: 100,
     });
 
     const date = Date.now();
-    const storageRef = ref(this.storage, `${bucket}/${this.authService.actual()} ${date}`);
+    const storageRef = ref(
+      this.storage,
+      `${bucket}/${this.authService.actual()} ${date}`
+    );
 
     try {
-      await uploadString(storageRef, `data:image/jpeg;base64, ${capturedPhoto.base64String!}`, 'data_url');
+      await uploadString(
+        storageRef,
+        `data:image/jpeg;base64, ${capturedPhoto.base64String!}`,
+        'data_url'
+      );
       const webViewPath = await getDownloadURL(storageRef);
       const newPhoto: UserPhoto = {
         name: storageRef.name,
         webViewPath: webViewPath,
-        timestamp: date
+        timestamp: date,
       };
       gallery.unshift(newPhoto);
       return newPhoto;
@@ -96,5 +107,4 @@ export class PhotoService {
       return undefined;
     }
   }
-
 }

@@ -27,17 +27,24 @@ export const routes: Routes = [
   },
   {
     path: 'alta-mesa',
-    loadComponent: () => import('./page/alta-mesa/alta-mesa.page').then(m => m.AltaMesaPage),
+    loadComponent: () =>
+      import('./page/alta-mesa/alta-mesa.page').then((m) => m.AltaMesaPage),
     canActivate: [logeadoGuard],
   },
   {
     path: 'alta-cliente',
-    loadComponent: () => import('./page/alta-cliente/alta-cliente.page').then(m => m.AltaClientePage)
+    loadComponent: () =>
+      import('./page/alta-cliente/alta-cliente.page').then(
+        (m) => m.AltaClientePage
+      ),
+  },
+  {
+    path: 'menu',
+    loadComponent: () =>
+      import('./page/menu/menu.page').then((m) => m.MenuPage),
   },
   {
     path: '**',
     redirectTo: 'home',
   },
-
-
 ];

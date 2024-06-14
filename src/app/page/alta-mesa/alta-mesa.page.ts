@@ -2,7 +2,12 @@ import { Component, OnInit, inject, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../service/auth.service';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormsModule,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import {
   IonContent,
   IonHeader,
@@ -11,8 +16,27 @@ import {
   IonButton,
   IonButtons,
   IonIcon,
-  IonNavLink, IonItem, IonSelectOption, IonLabel, IonSelect,
-  IonAlert, IonList, IonRow, IonGrid, IonCol, IonImg, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonText, IonFabButton, IonFab, IonToast, IonFabList, IonInput
+  IonNavLink,
+  IonItem,
+  IonSelectOption,
+  IonLabel,
+  IonSelect,
+  IonAlert,
+  IonList,
+  IonRow,
+  IonGrid,
+  IonCol,
+  IonImg,
+  IonCardHeader,
+  IonCardTitle,
+  IonCardSubtitle,
+  IonCardContent,
+  IonText,
+  IonFabButton,
+  IonFab,
+  IonToast,
+  IonFabList,
+  IonInput,
 } from '@ionic/angular/standalone';
 
 import { Table } from '../../clases/table';
@@ -22,15 +46,34 @@ type TipoMesa = 'VIP' | 'discapacitados' | 'estandar';
 
 import * as QRCode from 'qrcode';
 import { firstValueFrom } from 'rxjs';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-alta-mesa',
   templateUrl: './alta-mesa.page.html',
   standalone: true,
-  imports: [IonInput, IonFabList, IonToast, IonList, IonSelectOption, IonLabel,
-    IonAlert, IonRow, IonGrid, IonItem, IonCol, IonImg, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonText, IonFabButton, IonFab,
-    IonNavLink, IonSelect,
+  imports: [
+    IonInput,
+    IonFabList,
+    IonToast,
+    IonList,
+    IonSelectOption,
+    IonLabel,
+    IonAlert,
+    IonRow,
+    IonGrid,
+    IonItem,
+    IonCol,
+    IonImg,
+    IonCardHeader,
+    IonCardTitle,
+    IonCardSubtitle,
+    IonCardContent,
+    IonText,
+    IonFabButton,
+    IonFab,
+    IonNavLink,
+    IonSelect,
     IonIcon,
     IonButtons,
     IonButton,
@@ -40,13 +83,12 @@ import Swal from 'sweetalert2'
     IonToolbar,
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   styleUrls: ['./alta-mesa.page.scss'],
 })
 export class AltaMesaPage implements OnInit {
-
-  ngOnInit() { }
+  ngOnInit() {}
   tempPhoto: string | undefined;
 
   router = inject(Router);
@@ -74,11 +116,10 @@ export class AltaMesaPage implements OnInit {
     timer: 2500,
     timerProgressBar: true,
     didOpen: (toast) => {
-      toast.addEventListener('mouseenter', Swal.stopTimer)
-      toast.addEventListener('mouseleave', Swal.resumeTimer)
-    }
-  })
-
+      toast.addEventListener('mouseenter', Swal.stopTimer);
+      toast.addEventListener('mouseleave', Swal.resumeTimer);
+    },
+  });
 
   async onSubmit(): Promise<void> {
     if (this.form.valid) {
@@ -89,7 +130,11 @@ export class AltaMesaPage implements OnInit {
           const perfil = await this.authService.getUser(userEmail);
 
           //Acá van los perfiles que pueden dar de alta una mesa
-          if (perfil === 'supervisor' || perfil === 'dueño' || perfil === 'admin') {
+          if (
+            perfil === 'supervisor' ||
+            perfil === 'dueño' ||
+            perfil === 'admin'
+          ) {
             const mesa = await this.cargartable();
             if (mesa) {
               // Se guarda la mesa en la base de datos
@@ -99,8 +144,7 @@ export class AltaMesaPage implements OnInit {
                 icon: 'success',
                 title: 'Alta de mesa exitosa',
                 color: '#ffffff',
-              })
-
+              });
             } else {
               console.error('Error al crear la mesa.');
             }
@@ -108,14 +152,20 @@ export class AltaMesaPage implements OnInit {
             console.error('Usuario no autorizado para realizar esta acción.');
           }
         } else {
-          console.error('No se pudo obtener el correo electrónico del usuario.');
+          console.error(
+            'No se pudo obtener el correo electrónico del usuario.'
+          );
         }
       } catch (error) {
         console.error('Error al obtener el perfil del usuario:', error);
       }
     } else {
       console.error('Formulario inválido');
-      this.Toast.fire({ icon: 'error', title: "Ingrese los datos correctos!", color: '#ffffff' })
+      this.Toast.fire({
+        icon: 'error',
+        title: 'Ingrese los datos correctos!',
+        color: '#ffffff',
+      });
     }
   }
 
@@ -139,7 +189,9 @@ export class AltaMesaPage implements OnInit {
 
     this.photoUrl = await this.photoService.getPhotoUrl(value.foto);
 
-    mesa.qr = await this.generateQRCode(`Mesa: ${mesa.numeroMesa}, Comensales: ${mesa.comensales}, Tipo: ${mesa.tipoMesa}, Foto: ${this.photoUrl}`);
+    mesa.qr = await this.generateQRCode(
+      `Mesa: ${mesa.numeroMesa}, Comensales: ${mesa.comensales}, Tipo: ${mesa.tipoMesa}, Foto: ${this.photoUrl}`
+    );
     this.qrCodeImageUrl = mesa.qr;
 
     return mesa;
@@ -152,7 +204,6 @@ export class AltaMesaPage implements OnInit {
   atras() {
     this.router.navigateByUrl('/home');
   }
-
 
   async takePhoto() {
     const photo = await this.photoService.addNicePhoto();

@@ -1,54 +1,88 @@
-<ion-header [translucent]="true">
-  <ion-toolbar color="secondary">
-    <ion-buttons slot="start">
-      <ion-button (click)="goHome()"> Atras </ion-button>
-    </ion-buttons>
-    <ion-buttons slot="end">
-      <ion-button (click)="goLogin()"> Ingresar </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <h1>Create una cuenta</h1>
-  <form id="form" [formGroup]="form" (ngSubmit)="onSubmit()">
-    <ion-item color="primary">
-      <ion-input
-        type="text"
-        label="Usuario"
-        placeholder="Ingrese su usuario"
-        formControlName="username"
-      ></ion-input>
-    </ion-item>
-    <ion-item color="primary">
-      <ion-input
-        type="email"
-        label="Correo Electronico"
-        placeholder="Ingrese su correo electronico"
-        formControlName="email"
-      ></ion-input>
-    </ion-item>
-    <ion-item color="primary">
-      <ion-input
-        type="password"
-        label="Contraseña"
-        placeholder="Ingrese su contraseña"
-        formControlName="password"
-      ></ion-input>
-    </ion-item>
-    <ion-button type="submit" expand="block" shape="round"
-      >Registrar</ion-button
-    >
-    <ion-toast
-      color="danger"
-      [isOpen]="isToastOpen"
-      message="contraseña o correo incorrecto"
-      [duration]="3000"
-      (didDismiss)="setOpen(false)"
-    ></ion-toast>
-  </form>
-  <p>
-    Precione el boton ingresar para aceptar <br />
-    nuestros terminos y condiciones.
-  </p>
+  <ion-fab (click)="goMenu()" slot="fixed" vertical="top" horizontal="start">
+    <ion-icon size="large" name="arrow-back-outline"></ion-icon>
+  </ion-fab>
+  <div class="contenedorBlanco">
+    <h1>Registra una cuenta</h1>
+    <form id="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <!-- Nombre -->
+      <ion-item color="secondary">
+        <ion-input
+          label="Nombre"
+          type="text"
+          placeholder="Ingrese su Nombre"
+          formControlName="nombre"
+        ></ion-input>
+      </ion-item>
+      <!-- Apellido -->
+      <ion-item color="secondary">
+        <ion-input
+          label="Apellido"
+          type="text"
+          placeholder="Ingrese su Apellido"
+          formControlName="apellido"
+        ></ion-input>
+      </ion-item>
+      <!-- Dni -->
+      <ion-item color="secondary">
+        <ion-input
+          label="Dni"
+          type="number"
+          placeholder="Ingrese su DNI"
+          formControlName="DNI"
+        ></ion-input>
+      </ion-item>
+      <!-- Correo Electronico -->
+      <ion-item color="secondary">
+        <ion-input
+          label="Correo"
+          type="email"
+          placeholder="Ingrese su correo electronico"
+          formControlName="mail"
+        ></ion-input>
+      </ion-item>
+      <!-- Contraseña -->
+      <ion-item color="secondary">
+        <ion-input
+          label="Contraseña"
+          type="password"
+          placeholder="Ingrese su contraseña"
+          formControlName="password"
+        ></ion-input>
+      </ion-item>
+
+      <div class="btnScanFoto">
+        <!-- Foto -->
+        <ion-button color="secondary" (click)="takePhoto()"
+          >Tomar Foto</ion-button
+        >
+        <!-- Scan Dni -->
+        <ion-button color="secondary" (click)="startScan()">
+          Escanear DNI
+          <ion-icon slot="end" name="scan-outline"></ion-icon>
+        </ion-button>
+      </div>
+
+      <!-- Tipo -->
+      <ion-item color="secondary">
+        <ion-select formControlName="tipo" placeholder="Seleccione Tipo">
+          <ion-select-option value="anonimo">Anonimo</ion-select-option>
+          <ion-select-option value="registrado">Registrado</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <!-- Boton -->
+      <ion-button
+        class="btnRegistrar"
+        color="secondary"
+        type="submit"
+        expand="block"
+        shape="round"
+        >Registrar</ion-button
+      >
+    </form>
+    <p class="terminos">
+      Precione el boton registrar para aceptar <br />
+      nuestros terminos y condiciones.
+    </p>
+  </div>
 </ion-content>

@@ -91,6 +91,9 @@ export class LoginPage implements OnInit {
   goHome() {
     this.router.navigateByUrl('/home');
   }
+  goMenu() {
+    this.router.navigateByUrl('/menu');
+  }
   logout(): void {
     this.authService.logout();
   }

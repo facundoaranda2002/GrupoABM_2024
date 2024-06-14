@@ -4,12 +4,23 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  updateProfile, UserCredential
+  updateProfile,
+  UserCredential,
 } from 'firebase/auth';
 
 import {
-  Firestore, Unsubscribe, collection, doc, getDoc, getDocs,
-  onSnapshot, query, setDoc, updateDoc, DocumentData, where
+  Firestore,
+  Unsubscribe,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  onSnapshot,
+  query,
+  setDoc,
+  updateDoc,
+  DocumentData,
+  where,
 } from '@angular/fire/firestore';
 
 import { Observable, from, of, BehaviorSubject } from 'rxjs';
@@ -31,7 +42,7 @@ export class AuthService {
   //Consigue el mail del usaurio actual
   actual(): Observable<string | null> {
     return this.user$.pipe(
-      map(user => user ? user.email : null) // Usa map para extraer el email o null si no hay usuario
+      map((user) => (user ? user.email : null)) // Usa map para extraer el email o null si no hay usuario
     );
   }
 
@@ -53,7 +64,6 @@ export class AuthService {
     }
   }
 
-
   register(
     email: string,
     username: string,
@@ -73,21 +83,14 @@ export class AuthService {
       email,
       password
       /*agregue this.saveEmail(email); para guardar el mail con el que me logueo y poder cargar clientes*/
-    ).then(() => { this.saveEmail(email); });
+    ).then(() => {
+      this.saveEmail(email);
+    });
     return from(promise);
   }
+
   logout(): Observable<void> {
     const promise = signOut(this.firebaseAuth);
     return from(promise);
   }
-
-  login1(email: string, password: string): Observable<void> {
-    const promise = signInWithEmailAndPassword(
-      this.firebaseAuth,
-      email,
-      password
-    ).then(() => { });
-    return from(promise);
-  }
-
 }

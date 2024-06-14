@@ -2,9 +2,15 @@ import { Component, OnInit, inject, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../service/auth.service';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
 import {
-  ModalController, IonSelect,
+  FormBuilder,
+  FormsModule,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import {
+  ModalController,
+  IonSelect,
   Platform,
   IonContent,
   IonHeader,
@@ -13,9 +19,26 @@ import {
   IonButton,
   IonButtons,
   IonIcon,
-  IonNavLink, IonItem, IonSelectOption, IonLabel,
-  IonAlert, IonList, IonRow, IonGrid, IonCol, IonImg,
-  IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonText, IonFabButton, IonFab, IonToast, IonFabList, IonInput
+  IonNavLink,
+  IonItem,
+  IonSelectOption,
+  IonLabel,
+  IonAlert,
+  IonList,
+  IonRow,
+  IonGrid,
+  IonCol,
+  IonImg,
+  IonCardHeader,
+  IonCardTitle,
+  IonCardSubtitle,
+  IonCardContent,
+  IonText,
+  IonFabButton,
+  IonFab,
+  IonToast,
+  IonFabList,
+  IonInput,
 } from '@ionic/angular/standalone';
 
 import { Cliente } from '../../clases/cliente';
@@ -25,7 +48,7 @@ import { PhotoService, UserPhoto } from '../../service/photo.service';
 import * as QRCode from 'qrcode';
 import { firstValueFrom, switchMap } from 'rxjs';
 import { Observer } from 'rxjs';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 import { BarcodeScanningModalComponent } from './barcode-scanning-modal.component';
 import { BarcodeScanner, LensFacing } from '@capacitor-mlkit/barcode-scanning';
 
@@ -34,9 +57,28 @@ import { BarcodeScanner, LensFacing } from '@capacitor-mlkit/barcode-scanning';
   templateUrl: './alta-cliente.page.html',
   styleUrls: ['./alta-cliente.page.scss'],
   standalone: true,
-  imports: [IonInput, IonFabList, IonToast, IonList, IonSelectOption, IonLabel,
-    IonAlert, IonRow, IonGrid, IonItem, IonCol, IonImg, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonText, IonFabButton, IonFab,
-    IonNavLink, IonSelect,
+  imports: [
+    IonInput,
+    IonFabList,
+    IonToast,
+    IonList,
+    IonSelectOption,
+    IonLabel,
+    IonAlert,
+    IonRow,
+    IonGrid,
+    IonItem,
+    IonCol,
+    IonImg,
+    IonCardHeader,
+    IonCardTitle,
+    IonCardSubtitle,
+    IonCardContent,
+    IonText,
+    IonFabButton,
+    IonFab,
+    IonNavLink,
+    IonSelect,
     IonIcon,
     IonButtons,
     IonButton,
@@ -46,14 +88,11 @@ import { BarcodeScanner, LensFacing } from '@capacitor-mlkit/barcode-scanning';
     IonToolbar,
     CommonModule,
     FormsModule,
-    ReactiveFormsModule, BarcodeScanningModalComponent
+    ReactiveFormsModule,
+    BarcodeScanningModalComponent,
   ],
 })
 export class AltaClientePage implements OnInit {
-
-
-  scanResoult = '';
-
   platform = inject(Platform);
   router = inject(Router);
   clienteService = inject(ClienteService);
@@ -63,9 +102,10 @@ export class AltaClientePage implements OnInit {
   authService = inject(AuthService);
 
   qrCodeImageUrl: string | undefined;
-  nombreRegistrar: string = ""
-  mailRegistrar: string = ""
-  passwordRegistrar: string = ""
+  nombreRegistrar: string = '';
+  mailRegistrar: string = '';
+  passwordRegistrar: string = '';
+  scanResoult = '';
 
   private modalController: ModalController = inject(ModalController);
 
@@ -76,10 +116,13 @@ export class AltaClientePage implements OnInit {
       BarcodeScanner.removeAllListeners();
     }
 
-    this.authService.actual().subscribe(email => {
+    this.authService.actual().subscribe((email) => {
       if (email) {
         console.log('Usuario logueado con email:', email);
-        console.log('Usuario logueado con this.authService.email:', this.authService.email);
+        console.log(
+          'Usuario logueado con this.authService.email:',
+          this.authService.email
+        );
       } else {
         console.log('Usuario deslogueado.');
       }
@@ -100,7 +143,7 @@ export class AltaClientePage implements OnInit {
     const { data } = await modal.onWillDismiss();
     if (data) {
       this.scanResoult = data?.barcode?.displayValue;
-      this.form.patchValue({ DNI: this.scanResoult });  // Actualiza el campo DNI en el formulario
+      this.form.patchValue({ DNI: this.scanResoult }); // Actualiza el campo DNI en el formulario
     }
   }
 
@@ -122,10 +165,10 @@ export class AltaClientePage implements OnInit {
     timer: 2500,
     timerProgressBar: true,
     didOpen: (toast) => {
-      toast.addEventListener('mouseenter', Swal.stopTimer)
-      toast.addEventListener('mouseleave', Swal.resumeTimer)
-    }
-  })
+      toast.addEventListener('mouseenter', Swal.stopTimer);
+      toast.addEventListener('mouseleave', Swal.resumeTimer);
+    },
+  });
 
   async onSubmit(): Promise<void> {
     if (this.form.valid) {
@@ -136,7 +179,11 @@ export class AltaClientePage implements OnInit {
 
           console.error('Perfil actual. ', perfil);
 
-          if (perfil === 'cliente' || perfil === 'maitre' || perfil === 'admin') {
+          if (
+            perfil === 'cliente' ||
+            perfil === 'maitre' ||
+            perfil === 'admin'
+          ) {
             const cliente = await this.cargarCliente();
             if (cliente) {
               // Se guarda el cliente en la base de datos
@@ -146,15 +193,14 @@ export class AltaClientePage implements OnInit {
                 icon: 'success',
                 title: 'Alta de cliente exitosa',
                 color: '#ffffff',
-              })
-
+              });
             } else {
               console.error('Error al crear el cliente.');
               this.Toast.fire({
                 icon: 'error',
                 title: 'Error al crear el cliente.',
                 color: '#ffffff',
-              })
+              });
             }
           } else {
             console.error('Usuario no autorizado para realizar esta acción.');
@@ -162,15 +208,17 @@ export class AltaClientePage implements OnInit {
               icon: 'error',
               title: 'Usuario no autorizado para realizar esta acción.',
               color: '#ffffff',
-            })
+            });
           }
         } else {
-          console.error('No se pudo obtener el correo electrónico del usuario.');
+          console.error(
+            'No se pudo obtener el correo electrónico del usuario.'
+          );
           this.Toast.fire({
             icon: 'error',
             title: 'No se pudo obtener el correo electrónico del usuario.',
             color: '#ffffff',
-          })
+          });
         }
       } catch (error) {
         console.error('Error al obtener el perfil del usuario:', error);
@@ -178,11 +226,15 @@ export class AltaClientePage implements OnInit {
           icon: 'error',
           title: 'Error al obtener el perfil del usuario.',
           color: '#ffffff',
-        })
+        });
       }
     } else {
       console.error('Formulario inválido');
-      this.Toast.fire({ icon: 'error', title: "Ingrese los datos correctos!", color: '#ffffff' })
+      this.Toast.fire({
+        icon: 'error',
+        title: 'Ingrese los datos correctos!',
+        color: '#ffffff',
+      });
     }
   }
 
@@ -234,25 +286,31 @@ export class AltaClientePage implements OnInit {
   }
 
   alta(user: Cliente) {
-
     // Registra al usuario en Firebase Authentication
-    this.authService.register(this.mailRegistrar, this.nombreRegistrar, this.passwordRegistrar).pipe(
-      switchMap(() => {
-        // Una vez registrado, guarda los datos adicionales en Firestore
-        return this.clienteService.AltaCliente(user);
-      })
-    ).subscribe({
-      next: () => {
-        // Éxito: ambas operaciones completadas correctamente
-        console.log('Usuario registrado y datos guardados correctamente');
-        // Aquí podrías mostrar un mensaje de éxito o redirigir a otra página
-      },
-      error: (error) => {
-        // Manejo de errores
-        console.error('Error al registrar usuario o guardar datos:', error);
-        // Aquí podrías mostrar un mensaje de error al usuario
-      }
-    });
+    this.authService
+      .register(
+        this.mailRegistrar,
+        this.nombreRegistrar,
+        this.passwordRegistrar
+      )
+      .pipe(
+        switchMap(() => {
+          // Una vez registrado, guarda los datos adicionales en Firestore
+          return this.clienteService.AltaCliente(user);
+        })
+      )
+      .subscribe({
+        next: () => {
+          // Éxito: ambas operaciones completadas correctamente
+          console.log('Usuario registrado y datos guardados correctamente');
+          // Aquí podrías mostrar un mensaje de éxito o redirigir a otra página
+        },
+        error: (error) => {
+          // Manejo de errores
+          console.error('Error al registrar usuario o guardar datos:', error);
+          // Aquí podrías mostrar un mensaje de error al usuario
+        },
+      });
   }
 
   async takePhoto() {
@@ -266,4 +324,3 @@ export class AltaClientePage implements OnInit {
     this.router.navigateByUrl('/home');
   }
 }
-

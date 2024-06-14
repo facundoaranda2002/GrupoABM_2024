@@ -36,8 +36,8 @@ export class SplashPage implements OnInit {
       if (this.auth.currentUserSig()) {
         this.router.navigateByUrl('/home');
       } else {
-        this.router.navigateByUrl('/login');
+        this.router.navigateByUrl('/menu');
       }
-    }, 7000);
+    }, 4000);
   }
 }

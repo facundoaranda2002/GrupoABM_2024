@@ -1,56 +1,57 @@
-<ion-header [translucent]="true">
-  <ion-toolbar color="secondary">
-    <ion-buttons slot="start">
-      <ion-button (click)="goHome()"> Atras </ion-button>
-    </ion-buttons>
-    <ion-buttons slot="end">
-      <ion-button (click)="goRegister()"> Registrar </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <div id="header">
-    <h1>Ingresar</h1>
-    <img src="../../../assets/img/user.jpg" alt="" />
+  <ion-fab
+    class="fabAtras"
+    (click)="goMenu()"
+    slot="fixed"
+    vertical="top"
+    horizontal="start"
+  >
+    <ion-icon size="large" name="arrow-back-outline"></ion-icon>
+  </ion-fab>
+  <div class="contenedorImg">
+    <img src="../../../assets/img/splashanimated.png" alt="User" />
   </div>
+  <h1>Ingresar</h1>
   <form id="form" [formGroup]="form" (ngSubmit)="onSubmit()">
-    <ion-item color="primary">
+    <p class="labelParrafo">Correo electronico</p>
+    <ion-item color="secondary">
       <ion-input
         type="email"
-        label="Correo Electronico"
         placeholder="Ingrese su correo electronico"
         formControlName="email"
       ></ion-input>
     </ion-item>
-    <ion-item color="primary">
+    <p class="labelParrafo">Contraseña</p>
+    <ion-item color="secondary">
       <ion-input
         type="password"
-        label="Contraseña"
         placeholder="Ingrese su contraseña"
         formControlName="password"
       ></ion-input>
     </ion-item>
-    <ion-button type="submit" expand="block" shape="round">Ingresar</ion-button>
+    <ion-button color="secondary" type="submit" expand="block" shape="round"
+      >Ingresar</ion-button
+    >
     <ion-toast
       color="danger"
       [isOpen]="isToastOpen"
-      message="Incorrect Password or Email"
+      message="contraseña o correo incorrecto"
       [duration]="3000"
       (didDismiss)="setOpen(false)"
     ></ion-toast>
   </form>
-  <p>
-    precione el boton ingresar para aceptar <br />
+  <p class="terminos">
+    Precione el boton Ingresar para aceptar <br />
     nuestros terminos y condiciones.
   </p>
-
   <ion-fab slot="fixed" vertical="bottom" horizontal="start">
-    <ion-fab-button> + </ion-fab-button>
+    <ion-fab-button>
+      <ion-icon name="restaurant-outline"></ion-icon>
+    </ion-fab-button>
     <ion-fab-list side="top">
-      <ion-fab-button color="tertiary" (click)="userA()"> A </ion-fab-button>
-      <ion-fab-button color="success" (click)="userB()"> B </ion-fab-button>
-      <ion-fab-button color="secondary" (click)="userC()"> C </ion-fab-button>
+      <ion-fab-button color="primary" (click)="userA()"> A </ion-fab-button>
+      <ion-fab-button color="primary" (click)="userB()"> B </ion-fab-button>
+      <ion-fab-button color="primary" (click)="userC()"> C </ion-fab-button>
     </ion-fab-list>
   </ion-fab>
 </ion-content>
