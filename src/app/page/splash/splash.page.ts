@@ -38,6 +38,6 @@ export class SplashPage implements OnInit {
       } else {
         this.router.navigateByUrl('/menu');
       }
-    }, 4000);
+    }, 4500);
   }
 }

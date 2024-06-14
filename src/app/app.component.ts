@@ -14,8 +14,7 @@ export class AppComponent {
   router = inject(Router);
 
   ngOnInit(): void {
-    // this.router.navigateByUrl('/');
-
+    this.router.navigateByUrl('/');
     this.authService.user$.subscribe((user) => {
       if (user) {
         this.authService.currentUserSig.set({

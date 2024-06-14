@@ -5,6 +5,22 @@
   <div class="contenedorBlanco">
     <h1>Registra una cuenta</h1>
     <form id="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <!-- Tipo -->
+      <ion-item color="secondary">
+        <ion-select formControlName="tipo" placeholder="Seleccione Tipo">
+          <ion-select-option value="anonimo">Anonimo</ion-select-option>
+          <ion-select-option value="registrado">Registrado</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <!-- Correo Electronico -->
+      <ion-item color="secondary">
+        <ion-input
+          label="Correo"
+          type="email"
+          placeholder="Ingrese su correo electronico"
+          formControlName="mail"
+        ></ion-input>
+      </ion-item>
       <!-- Nombre -->
       <ion-item color="secondary">
         <ion-input
@@ -14,6 +30,7 @@
           formControlName="nombre"
         ></ion-input>
       </ion-item>
+      @if(!(form.getRawValue().tipo == "anonimo")){
       <!-- Apellido -->
       <ion-item color="secondary">
         <ion-input
@@ -32,15 +49,7 @@
           formControlName="DNI"
         ></ion-input>
       </ion-item>
-      <!-- Correo Electronico -->
-      <ion-item color="secondary">
-        <ion-input
-          label="Correo"
-          type="email"
-          placeholder="Ingrese su correo electronico"
-          formControlName="mail"
-        ></ion-input>
-      </ion-item>
+      }
       <!-- Contraseña -->
       <ion-item color="secondary">
         <ion-input
@@ -51,25 +60,24 @@
         ></ion-input>
       </ion-item>
 
-      <div class="btnScanFoto">
+      <div
+        [ngClass]="{ 
+        'btnFoto': form.getRawValue().tipo == 'anonimo',
+        'btnScanFoto': !(form.getRawValue().tipo == 'anonimo'),
+      }"
+      >
         <!-- Foto -->
         <ion-button color="secondary" (click)="takePhoto()"
           >Tomar Foto</ion-button
         >
+        @if(!(form.getRawValue().tipo == "anonimo")){
         <!-- Scan Dni -->
         <ion-button color="secondary" (click)="startScan()">
           Escanear DNI
           <ion-icon slot="end" name="scan-outline"></ion-icon>
         </ion-button>
+        }
       </div>
-
-      <!-- Tipo -->
-      <ion-item color="secondary">
-        <ion-select formControlName="tipo" placeholder="Seleccione Tipo">
-          <ion-select-option value="anonimo">Anonimo</ion-select-option>
-          <ion-select-option value="registrado">Registrado</ion-select-option>
-        </ion-select>
-      </ion-item>
       <!-- Boton -->
       <ion-button
         class="btnRegistrar"

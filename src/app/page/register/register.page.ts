@@ -127,6 +127,8 @@ export class RegisterPage implements OnInit {
     });
   }
 
+  cambiarTipo() {}
+
   async startScan() {
     const modal = await this.modalController.create({
       component: BarcodeScanningModalComponent,
