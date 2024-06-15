@@ -67,7 +67,13 @@ conformado por:
 - **Push notification: ingresar al local** _(29/06/2024 - 06/06/24)_   
     
     ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)      
-- **Push notification: consultar al mozo** _(29/06/2024 - 06/06/24)_   
+- **Push notification: consultar al mozo** _(29/06/2024 - 06/06/24)_
+
+  ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)    
+- **Realizar pedido con GPS o dirección** _(29/06/2024 - 06/06/24)_
+
+    ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)    
+- **Mapa de ruta hasta el domicilio de entrega** _(29/06/2024 - 06/06/24)_        
     
     ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)    
 - **Juego: 15% de descuento** _(29/06/2024 - 06/06/24)_   
