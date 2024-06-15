@@ -5,7 +5,7 @@ Este documento cumple la funcion de detallar las **responsabilidades** y **carac
 ## Integrantes
 Somos el grupo ABM 
 
-<img src="src/assets/img/splashanimated.png"> 
+<img src="src/assets/img/splashanimated.png" width: "100px"> 
 
 conformado por:
 
