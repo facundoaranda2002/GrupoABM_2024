@@ -5,7 +5,7 @@ Este documento cumple la funcion de detallar las **responsabilidades** y **carac
 ## Integrantes
 Somos el grupo ABM 
 
-<img src="src/assets/img/splashanimated.png" width="50px"> 
+<img src="src/assets/img/splashanimated.png"> 
 
 conformado por:
 
@@ -21,6 +21,17 @@ conformado por:
 
   <a href="javier.mendoza.benitez@gmail.com"><img alt="Email" src="https://img.shields.io/badge/Gmail-javier.mendoza.benitez@gmail.com-blue?style=flat-square&logo=gmail"></a>
 <a href="https://github.com/JavierMendozaBenitez"><img alt="GitHub" src="https://img.shields.io/badge/GitHub-JavierMendozaBenitez-black?style=flat-square&logo=github"></a>
+
+## Bienvenida e Ingreso
+
+La pantalla de bienvenida muestra la opción de ingresar y de registrarse, este último es para que un cliente se registre de forma completa o de forma anónima
+
+<img src="src/assets/img/home.png">
+
+La pantalla de ingreso pide el correo y la contraseña, además cuenta con un desplegable abajo a la izquierda que cuenta con los usuarios pre registrados, a fin de hacer un ingreso rapido para probar la aplicación
+
+
+<img src="src/assets/img/login.png">
 
 ## Módulos
 ### Alfa
@@ -108,13 +119,3 @@ conformado por:
     
     ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)    
 
-## Bienvenida e Ingreso
-
-La pantalla de bienvenida muestra la opción de ingresar y de registrarse, este último es para que un cliente se registre de forma completa o de forma anónima
-
-<img src="src/assets/img/home.png">
-
-La pantalla de ingreso pide el correo y la contraseña, además cuenta con un desplegable abajo a la izquierda que cuenta con los usuarios pre registrados, a fin de hacer un ingreso rapido para probar la aplicación
-
-
-<img src="src/assets/img/login.png">
