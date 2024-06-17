@@ -37,51 +37,51 @@ La pantalla de ingreso pide el correo y la contraseña, además cuenta con un de
 ### Enlace de Jira
 https://grupoabm.atlassian.net/jira/software/projects/KAN/boards/1?atlOrigin=eyJpIjoiNjY2MGQ3NWY4YWE5NGQwNGIyYmQ5YzZhNGFiMDg1Y2EiLCJwIjoiaiJ9
 ### Alfa
-- **QR de ingreso al local** _(15/06/2024 - 22/06/24)_   
-    
-    ![Estado](https://img.shields.io/badge/Estado-En%20Curso-FFD700?style=for-the-badge&labelColor=black)
-- **Encuesta clientes** _(22/06/2024 - 29/06/24)_   
-    
-    ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)  
-- **Agregar un nuevo cliente registrado** _(22/06/2024 - 29/06/24)_   
-    
-    ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)    
-- **Push notification: agregar cliente nuevo** _(29/06/2024 - 06/06/24)_   
+- **Encuesta clientes** _(15/06/2024 - 22/06/24)_   
     
     ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)
-- **Push notification: confirmar pedido(por parte del mozo)** _(29/06/2024 - 06/06/24)_   
+- **Agregar un nuevo cliente registrado** _(15/06/2024 - 22/06/24)_   
     
-    ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)       
+    ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)    
+- **Push notification: agregar cliente nuevo** _(29/06/2024 - 06/07/24)_   
+    
+    ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)
+- **Push notification: confirmar pedido(por parte del mozo)** _(29/06/2024 - 06/07/24)_
+    
+    ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)
+- **QR de propina** _(29/06/2024 - 06/07/24)_   
+    
+    ![Estado](https://img.shields.io/badge/Estado-En%20Curso-FFD700?style=for-the-badge&labelColor=black)       
 ### Beta
 - **Diseño de login, splash y logo** _(08/06/2024 - 15/06/24)_   
     
-    ![Estado](https://img.shields.io/badge/Estado-Completado-green?style=for-the-badge&labelColor=black)   
-- **QR de la mesa** _(15/06/2024 - 22/06/24)_   
+    ![Estado](https://img.shields.io/badge/Estado-Completado-green?style=for-the-badge&labelColor=black)
+- **QR de ingreso al local** _(15/06/2024 - 22/06/24)_   
     
     ![Estado](https://img.shields.io/badge/Estado-En%20Curso-FFD700?style=for-the-badge&labelColor=black)   
-- **Ingresar al local** _(22/06/2024 - 29/06/24)_   
+- **Ingresar al local** _(15/06/2024 - 22/06/24)_   
     
     ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)    
-- **Push notification: ingresar al local** _(29/06/2024 - 06/06/24)_   
+- **Push notification: ingresar al local** _(29/06/2024 - 06/07/24)_   
     
     ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)      
-- **Push notification: consultar al mozo** _(29/06/2024 - 06/06/24)_
+- **Push notification: consultar al mozo** _(29/06/2024 - 06/07/24)_
 
   ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)     
 ### Gamma
 - **Alta de clientes** _(15/06/2024 - 22/06/24)_
     
     ![Estado](https://img.shields.io/badge/Estado-En%20Curso-FFD700?style=for-the-badge&labelColor=black)
-- **QR de propina** _(15/06/2024 - 22/06/24)_   
+- **QR de la mesa** _(15/06/2024 - 22/06/24)_   
     
-    ![Estado](https://img.shields.io/badge/Estado-En%20Curso-FFD700?style=for-the-badge&labelColor=black)
+    ![Estado](https://img.shields.io/badge/Estado-En%20Curso-FFD700?style=for-the-badge&labelColor=black)   
 - **Realizar pedidos(platos y bebidas)** _(22/06/2024 - 29/06/24)_   
     
     ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)     
 - **Confirmar pedidos** _(22/06/2024 - 29/06/24)_   
     
     ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)       
-- **Push notification: confirmar realización del pedido(por parte del cocinero o bartender)** _(29/06/2024 - 06/06/24)_   
+- **Push notification: confirmar realización del pedido(por parte del cocinero o bartender)** _(29/06/2024 - 06/07/24)_   
     
     ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)
  
