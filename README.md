@@ -34,6 +34,8 @@ La pantalla de ingreso pide el correo y la contraseña, además cuenta con un de
 <img src="src/assets/img/login.png">
 
 ## Módulos
+### Enlace de Jira
+https://grupoabm.atlassian.net/jira/software/projects/KAN/boards/1?atlOrigin=eyJpIjoiNjY2MGQ3NWY4YWE5NGQwNGIyYmQ5YzZhNGFiMDg1Y2EiLCJwIjoiaiJ9
 ### Alfa
 - **QR de ingreso al local** _(15/06/2024 - 22/06/24)_   
     
@@ -51,12 +53,12 @@ La pantalla de ingreso pide el correo y la contraseña, además cuenta con un de
     
     ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)       
 ### Beta
+- **Diseño de login, splash y logo** _(08/06/2024 - 15/06/24)_   
+    
+    ![Estado](https://img.shields.io/badge/Estado-Completado-green?style=for-the-badge&labelColor=black)   
 - **QR de la mesa** _(15/06/2024 - 22/06/24)_   
     
-    ![Estado](https://img.shields.io/badge/Estado-En%20Curso-FFD700?style=for-the-badge&labelColor=black)
-- **Encuesta empleados** _(22/06/2024 - 29/06/24)_   
-    
-    ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)     
+    ![Estado](https://img.shields.io/badge/Estado-En%20Curso-FFD700?style=for-the-badge&labelColor=black)   
 - **Ingresar al local** _(22/06/2024 - 29/06/24)_   
     
     ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)    
@@ -81,5 +83,6 @@ La pantalla de ingreso pide el correo y la contraseña, además cuenta con un de
     ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)       
 - **Push notification: confirmar realización del pedido(por parte del cocinero o bartender)** _(29/06/2024 - 06/06/24)_   
     
-    ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)    
+    ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)
+ 
 
