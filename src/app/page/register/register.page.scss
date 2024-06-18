@@ -18,6 +18,7 @@ ion-content {
   #form {
     padding-left: 30px;
     padding-right: 30px;
+
     ion-item {
       height: 75px;
       --border-radius: 20px;
@@ -26,13 +27,16 @@ ion-content {
         font-size: 20px;
       }
     }
+
     .btnScanFoto {
       display: flex;
       justify-content: space-between;
       margin-bottom: 20px;
+
       ion-button {
         font-size: 15px;
         width: 50%;
+
         ion-icon {
           margin: 0;
           padding: 0;
@@ -40,13 +44,16 @@ ion-content {
         }
       }
     }
+
     .btnFoto {
       display: flex;
       justify-content: center;
       margin-bottom: 20px;
+
       ion-button {
         font-size: 15px;
         width: 80%;
+
         ion-icon {
           margin: 0;
           padding: 0;
@@ -54,6 +61,7 @@ ion-content {
         }
       }
     }
+
     .btnRegistrar {
       // height: 65px;
       font-size: 22px;
@@ -74,4 +82,11 @@ ion-content {
     padding: 0;
     color: #b6b6b6;
   }
+}
+
+.error-message {
+  color: red;
+  font-size: 0.875em;
+  margin-top: 0.25em;
+  margin-left: 0.5em;
 }

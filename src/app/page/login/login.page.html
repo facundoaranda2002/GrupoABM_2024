@@ -1,11 +1,5 @@
 <ion-content [fullscreen]="true">
-  <ion-fab
-    class="fabAtras"
-    (click)="goMenu()"
-    slot="fixed"
-    vertical="top"
-    horizontal="start"
-  >
+  <ion-fab class="fabAtras" (click)="goMenu()" slot="fixed" vertical="top" horizontal="start">
     <ion-icon size="large" name="arrow-back-outline"></ion-icon>
   </ion-fab>
   <div class="contenedorImg">
@@ -15,30 +9,31 @@
   <form id="form" [formGroup]="form" (ngSubmit)="onSubmit()">
     <p class="labelParrafo">Correo electronico</p>
     <ion-item color="secondary">
-      <ion-input
-        type="email"
-        placeholder="Ingrese su correo electronico"
-        formControlName="email"
-      ></ion-input>
+      <ion-input type="email" placeholder="Ingrese su correo electronico" formControlName="email"></ion-input>
     </ion-item>
+
+    <!-- Estas validaciones son agregadas por Javier -->
+    <p class="error-message" *ngIf="form.get('email')?.touched && form.get('email')?.hasError('required')">El correo es
+      obligatorio.</p>
+    <p class="error-message" *ngIf="form.get('email')?.touched && form.get('email')?.hasError('email')">Ingrese un
+      correo válido.</p>
+    <!-- -->
+
+
     <p class="labelParrafo">Contraseña</p>
     <ion-item color="secondary">
-      <ion-input
-        type="password"
-        placeholder="Ingrese su contraseña"
-        formControlName="password"
-      ></ion-input>
+      <ion-input type="password" placeholder="Ingrese su contraseña" formControlName="password"></ion-input>
     </ion-item>
-    <ion-button color="secondary" type="submit" expand="block" shape="round"
-      >Ingresar</ion-button
-    >
-    <ion-toast
-      color="danger"
-      [isOpen]="isToastOpen"
-      message="contraseña o correo incorrecto"
-      [duration]="3000"
-      (didDismiss)="setOpen(false)"
-    ></ion-toast>
+
+
+    <!-- Estas validaciones son agregadas por Javier -->
+    <p class="error-message" *ngIf="form.get('password')?.touched && form.get('password')?.hasError('required')">La
+      contraseña es obligatoria.</p>
+    <!-- -->
+
+    <ion-button color="secondary" type="submit" expand="block" shape="round">Ingresar</ion-button>
+    <ion-toast color="danger" [isOpen]="isToastOpen" message="contraseña o correo incorrecto" [duration]="3000"
+      (didDismiss)="setOpen(false)"></ion-toast>
   </form>
   <p class="terminos">
     Precione el boton Ingresar para aceptar <br />

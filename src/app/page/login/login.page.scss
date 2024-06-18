@@ -5,12 +5,14 @@ ion-content {
     margin-top: 10px;
     margin-left: 10px;
   }
+
   .contenedorImg {
     margin-top: 60px;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+
     img {
       width: 170px;
     }
@@ -28,6 +30,7 @@ ion-content {
   #form {
     padding-left: 30px;
     padding-right: 30px;
+
     ion-item {
       height: 75px;
       --border-radius: 20px;
@@ -36,6 +39,7 @@ ion-content {
         font-size: 20px;
       }
     }
+
     ion-button {
       font-size: 20px;
       --padding-top: 0px;
@@ -55,4 +59,11 @@ ion-content {
     padding: 0;
     color: #b6b6b6;
   }
+}
+
+.error-message {
+  color: red;
+  font-size: 0.875em;
+  margin-top: 0.25em;
+  margin-left: 0.5em;
 }

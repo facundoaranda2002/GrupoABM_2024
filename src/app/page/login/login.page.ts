@@ -57,14 +57,15 @@ export class LoginPage implements OnInit {
   elementRef = inject(ElementRef);
   isToastOpen = false;
 
-  constructor() {}
+  constructor() { }
 
   form = this.fb.nonNullable.group({
-    email: ['', Validators.required],
+    // email: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required],
   });
 
-  ngOnInit() {}
+  ngOnInit() { }
   setOpen(isOpen: boolean) {
     this.isToastOpen = isOpen;
   }

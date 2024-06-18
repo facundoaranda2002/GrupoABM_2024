@@ -89,7 +89,7 @@ import { Cliente } from 'src/app/clases/cliente';
   ],
 })
 export class RegisterPage implements OnInit {
-  constructor() {}
+  constructor() { }
 
   authService = inject(AuthService);
   router = inject(Router);
@@ -127,7 +127,7 @@ export class RegisterPage implements OnInit {
     });
   }
 
-  cambiarTipo() {}
+  cambiarTipo() { }
 
   async startScan() {
     const modal = await this.modalController.create({
@@ -148,13 +148,30 @@ export class RegisterPage implements OnInit {
   }
 
   form = this.fb.nonNullable.group({
-    nombre: ['', Validators.required],
-    apellido: ['', Validators.required],
-    DNI: ['', Validators.required],
-    foto: ['', Validators.required],
+
+    tipo: ['anonimo', Validators.required],
+    mail: ['', [Validators.required, Validators.email]],
+    nombre: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
+    apellido: [''],
+    DNI: [''],
     password: ['', Validators.required],
-    tipo: ['', Validators.required],
-    mail: ['', Validators.required],
+    foto: [''],
+
+
+    // nombre: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
+    // apellido: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
+    // DNI: [
+    //   '',
+    //   [
+    //     Validators.required,
+    //     Validators.pattern('^[0-9]{8}$'),
+    //     Validators.maxLength(8),
+    //   ],
+    // ],
+    // foto: ['', Validators.required],
+    // password: ['', Validators.required],
+    // tipo: ['', Validators.required],
+    // mail: ['', [Validators.required, Validators.email]],
   });
 
   private Toast = Swal.mixin({
@@ -171,6 +188,33 @@ export class RegisterPage implements OnInit {
   });
 
   async onSubmit(): Promise<void> {
+
+    // Ajustar dinámicamente los validadores antes de verificar la validez del formulario
+    const tipo = this.form.get('tipo')?.value;
+    if (tipo === 'anonimo') {
+      this.form.get('apellido')?.clearValidators();
+      this.form.get('apellido')?.updateValueAndValidity();
+      this.form.get('DNI')?.clearValidators();
+      this.form.get('DNI')?.updateValueAndValidity();
+      this.form.get('foto')?.clearValidators();
+      this.form.get('foto')?.updateValueAndValidity();
+    } else {
+      this.form.get('apellido')?.setValidators([
+        Validators.required,
+        Validators.pattern('^[a-zA-Z ]*$'),
+      ]);
+      this.form.get('apellido')?.updateValueAndValidity();
+      this.form.get('DNI')?.setValidators([
+        Validators.required,
+        Validators.pattern('^[0-9]{8}$'),
+        Validators.maxLength(8),
+      ]);
+      this.form.get('DNI')?.updateValueAndValidity();
+      this.form.get('foto')?.setValidators([Validators.required]);
+      this.form.get('foto')?.updateValueAndValidity();
+    }
+
+
     if (this.form.valid) {
       try {
         const cliente = await this.cargarCliente();
