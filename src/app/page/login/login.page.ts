@@ -122,4 +122,7 @@ export class LoginPage implements OnInit {
       password: '555555',
     });
   }
+  userF() {
+    this.form.setValue({ email: 'aaaaaaaaaaaddf@jj.com', password: '111111' });
+  }
 }

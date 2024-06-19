@@ -25,6 +25,13 @@ export const routes: Routes = [
       import('./page/splash/splash.page').then((m) => m.SplashPage),
     canActivate: [pasoUnaVezGuard],
   },
+
+  //esto para ir directo al home
+  // {
+  //   path: '',
+  //   loadComponent: () => import('./page/maitre/maitre.page').then(m => m.MaitrePage),
+  //   canActivate: [pasoUnaVezGuard],
+  // },
   {
     path: 'alta-mesa',
     loadComponent: () =>
@@ -44,7 +51,16 @@ export const routes: Routes = [
       import('./page/menu/menu.page').then((m) => m.MenuPage),
   },
   {
+    path: 'maitre',
+    loadComponent: () => import('./page/maitre/maitre.page').then(m => m.MaitrePage)
+  },
+  {
     path: '**',
     redirectTo: 'home',
   },
+  {
+    path: 'maitre',
+    loadComponent: () => import('./page/maitre/maitre.page').then(m => m.MaitrePage)
+  },
+
 ];

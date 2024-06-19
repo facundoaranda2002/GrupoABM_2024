@@ -20,7 +20,7 @@ import {
   setDoc,
   updateDoc,
   DocumentData,
-  where,
+  where, writeBatch
 } from '@angular/fire/firestore';
 
 import { Observable, from, of, BehaviorSubject } from 'rxjs';
@@ -28,6 +28,7 @@ import { UserInterface } from '../interface/user-interface';
 
 import { map, switchMap } from 'rxjs/operators'; // Importa map
 import axios from 'axios';
+// import { ClienteService } from './cliente.service';
 
 @Injectable({
   providedIn: 'root',
@@ -38,6 +39,7 @@ export class AuthService {
   user$ = user(this.firebaseAuth);
   currentUserSig = signal<UserInterface | null | undefined>(undefined);
   email: string = '';
+  // clienteService = inject(ClienteService);
 
   //Consigue el mail del usaurio actual
   actual(): Observable<string | null> {
@@ -50,7 +52,7 @@ export class AuthService {
     this.email = email; // Guardar el correo electrónico en la propiedad
   }
 
-  //Busco en la colecció Usuarios si hay un mail cargado igual al que estoy usando para encontrar el perfil
+  //Busco en la colección Usuarios si hay un mail cargado igual al que estoy usando para encontrar el perfil
   async getUser(email: string): Promise<string | null> {
     const usersCollection = collection(this.firestore, 'Usuarios');
     const q = query(usersCollection, where('mail', '==', email)); // Declaramos explícitamente el tipo de la consulta
@@ -85,12 +87,81 @@ export class AuthService {
       /*agregue this.saveEmail(email); para guardar el mail con el que me logueo y poder cargar clientes*/
     ).then(() => {
       this.saveEmail(email);
+      /*Guardo su estado de online y ultima conexión*/
+      this.updateUserOnlineStatus(email, 'true');
+      this.agregarCampoOnline()
     });
     return from(promise);
   }
 
   logout(): Observable<void> {
+    //Obtener el email del usuario actualmente autenticado
+    const email = this.firebaseAuth.currentUser?.email;
+    if (email) {
+      // Actualizar estado online a false
+      /*Guardo su estado de online y ultima conexión*/
+      this.updateUserOnlineStatus(email, 'false');
+    } else {
+      // Manejar el caso donde no se puede obtener el email
+      console.error('No se pudo obtener el email del usuario.');
+    }
     const promise = signOut(this.firebaseAuth);
     return from(promise);
   }
+
+
+  // Actualizar estado online y ultima conexión si el usuario tiene un perfil cliente
+  private async updateUserOnlineStatus(email: string, online: string): Promise<void> {
+    const coleccion = collection(this.firestore, 'Usuarios');
+    const q = query(coleccion, where('mail', '==', email));
+
+    try {
+      const perfil = await this.getUser(email);
+      if (perfil === 'cliente') {
+        const querySnapshot = await getDocs(q);
+        if (!querySnapshot.empty) {
+          const documento = querySnapshot.docs[0].ref;
+
+          const fechaHoraActual = new Date(); // Obtener la fecha y hora actual
+
+          await updateDoc(documento, {
+            online: online,
+            ultimaConexion: fechaHoraActual
+          });
+        } else {
+          console.error(`Document with email ${email} does not exist.`);
+          throw new Error(`Document with email ${email} does not exist.`);
+        }
+      } else {
+        console.log(`El usuario con email ${email} no es un cliente, no se actualizó el estado online.`);
+      }
+    } catch (error) {
+      console.error('Error updating online status:', error);
+      throw error;
+    }
+  }
+
+  //esto agrega el campo online en false a todos los usuarios
+  async agregarCampoOnline(): Promise<void> {
+    const coleccion = collection(this.firestore, 'Usuarios');
+    const querySnapshot = await getDocs(coleccion);
+
+    const batch = writeBatch(this.firestore);
+
+    querySnapshot.forEach((doc) => {
+      const docRef = doc.ref;
+      batch.update(docRef, { online: 'false' });
+      //este campo opcional agrega mesaAsignada en 0 a todos los usuarios
+      // batch.update(docRef, { mesaAsignada: 0 });
+    });
+
+    try {
+      await batch.commit();
+      console.log('Campo "online" agregado a todos los usuarios exitosamente.');
+    } catch (error) {
+      console.error('Error al actualizar el estado "online":', error);
+      throw error;
+    }
+  }
+
 }

@@ -14,6 +14,7 @@ import {
 } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/service/auth.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -40,7 +41,32 @@ export class HomePage implements OnInit {
   authService = inject(AuthService);
   router = inject(Router);
 
+  isClientProfile: boolean = false;
+
   constructor() { }
+
+
+  ngOnInit() {
+    this.checkUserProfile();
+  }
+
+  async checkUserProfile() {
+    try {
+      const currentUserEmail = await firstValueFrom(this.authService.actual());
+      console.log("currentUserEmail es: ", currentUserEmail);
+      if (currentUserEmail) {
+        const perfil = await this.authService.getUser(currentUserEmail);
+        if (perfil === 'cliente') {
+          this.isClientProfile = true;
+          console.log("isClientProfile es: ", this.isClientProfile);
+        }
+        console.log("isClientProfile 2 es: ", this.isClientProfile);
+      }
+      console.log("isClientProfile es 3: ", this.isClientProfile);
+    } catch (error) {
+      console.error('Error obteniendo perfil de usuario:', error);
+    }
+  }
 
   //Form - Alert
 
@@ -66,6 +92,10 @@ export class HomePage implements OnInit {
     this.router.navigateByUrl('/alta-cliente');
   }
 
+  goRegisterMaitreAsignaMesa() {
+    this.router.navigateByUrl('/maitre');
+  }
+
   //Init - Destroy
-  ngOnInit() { }
+  // ngOnInit() { }
 }

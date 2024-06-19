@@ -19,4 +19,10 @@
 <ion-content [fullscreen]="true">
   <ion-button (click)="goRegisterTable()">Alta Mesa</ion-button>
   <ion-button (click)="goRegisterClient()">Alta Cliente</ion-button>
+  <!-- <ion-button (click)="goRegisterMaitreAsignaMesa()">Maître Asigna Mesa</ion-button> -->
+
+  <ion-button (click)="goRegisterMaitreAsignaMesa()">
+    {{ isClientProfile ? 'Ir a tu mesa' : 'Maître Asigna Mesa' }}
+  </ion-button>
+
 </ion-content>

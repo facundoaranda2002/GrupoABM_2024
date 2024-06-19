@@ -1,0 +1,83 @@
+<ion-content [fullscreen]="true">
+
+  <ng-container *ngIf="!isClientProfile; else clientView">
+
+    <form id="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <ion-label class="qr-container">Asignar Mesa</ion-label>
+      <ion-item color="primary">
+        <ion-select formControlName="asignarMesa" placeholder="Selecciona un número">
+
+          <ion-select-option *ngFor="let number of numbers" [value]="number" [disabled]="estaAsignada(number)">
+            {{ number }}
+            <span *ngIf="estaAsignada(number)" style="color: gray; margin-left: 8px;">Esta mesa ya está asignada</span>
+          </ion-select-option>
+
+
+
+        </ion-select>
+
+
+
+        <div *ngIf="form.controls['asignarMesa'].invalid && form.controls['asignarMesa'].touched">
+          <ion-text color="danger" *ngIf="form.controls['asignarMesa'].errors?.['required']">
+            El campo es obligatorio.
+          </ion-text>
+          <ion-text color="danger" *ngIf="form.controls['asignarMesa'].errors?.['min']">
+            El número debe ser al menos 1.
+          </ion-text>
+          <ion-text color="danger" *ngIf="form.controls['asignarMesa'].errors?.['max']">
+            El número no debe ser mayor que 10.
+          </ion-text>
+        </div>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Número de Mesa Seleccionado:</ion-label>
+        <ion-text>{{ getSelectedMesaMensaje() }}</ion-text>
+      </ion-item>
+
+      <ion-item>
+        <ion-button (click)="asignarNumeroUltimoPerfilConectado()">Asignar número de
+          mesa</ion-button>
+      </ion-item>
+    </form>
+
+
+    <div *ngIf="qrCodeImageUrl" class="qr-container">
+      <ion-label>QR para ver tu numero de mesa asignado:</ion-label>
+      <div class="qr-code-wrapper">
+        <img [src]="qrCodeImageUrl" alt="QR Code" class="qr-code" />
+      </div>
+    </div>
+
+  </ng-container>
+
+  <ng-template #clientView>
+    <!-- <ion-label>Escanea tu mesa</ion-label>
+    <div *ngIf="qrCodeImageUrl">
+      <div>
+        <img [src]="qrCodeImageUrl" alt="QR Code" />
+      </div>
+    </div>
+    <ion-label>TU mesa es la numero: {{ mesaAsignada }}</ion-label> -->
+
+    <!-- Mostrar mensaje si la mesa ya está asignada a otro cliente -->
+    <div *ngIf="mesaYaAsignada">
+      <ion-text color="danger">Esta mesa la tiene asignada otro cliente, no la puede usar.</ion-text>
+    </div>
+
+    <ion-button class="submit" (click)="startScan()" expand="block">
+      Escanear Mesa
+      <ion-icon slot="end" name="scan-outline"></ion-icon>
+    </ion-button>
+    <h1>Mesa escaneada numero: </h1>
+    <h1>{{scanResoult}}</h1>
+
+  </ng-template>
+
+
+  <ion-item color="primary" class="center-button">
+    <ion-button type="button" label="atras" (click)="atras()">Volver al Inicio</ion-button>
+  </ion-item>
+
+</ion-content>
