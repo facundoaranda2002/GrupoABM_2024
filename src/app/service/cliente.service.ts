@@ -17,7 +17,7 @@ import {
 import { AuthService } from './auth.service';
 import { firstValueFrom } from 'rxjs';
 import { UserInterface } from '../interface/user-interface';
-import { Usuario } from '../clases/Usuario';
+import { Usuario } from '../clases/usuario';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +27,7 @@ export class ClienteService {
     private firestore: Firestore,
     private authService: AuthService,
     private auth: AuthService
-  ) {}
+  ) { }
 
   AltaCliente(user: Usuario) {
     const coleccion = collection(this.firestore, 'Usuarios');
@@ -74,14 +74,13 @@ export class ClienteService {
   }
 
   //obtengo el un perfil que tenga online en true, existe la posibilidad de hacerlo por fecha pero no tengo tiempo
-  async obtenerUltimoPerfilConectado(
-    online: string
+  async obtenerClienteEnListaEspera(
+    listaDeEspera: boolean
   ): Promise<UserInterface | null> {
     const usuariosCollection = collection(this.firestore, 'Usuarios');
     const q = query(
       usuariosCollection,
-      where('online', '==', online),
-      // // orderBy('ultimaConexion', 'desc'),
+      where('listaDeEspera', '==', listaDeEspera),
       where('perfil', '==', 'cliente'),
       limit(1)
     );

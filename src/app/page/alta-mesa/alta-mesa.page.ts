@@ -88,7 +88,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./alta-mesa.page.scss'],
 })
 export class AltaMesaPage implements OnInit {
-  ngOnInit() {}
+  ngOnInit() { }
   tempPhoto: string | undefined;
 
   router = inject(Router);
@@ -125,15 +125,15 @@ export class AltaMesaPage implements OnInit {
     if (this.form.valid) {
       try {
         // const userEmail = await firstValueFrom(this.authService.actual());
-        const userEmail = this.authService.email;
+        const userEmail = this.authService.currentUserSig()?.email;
         if (userEmail) {
           const perfil = await this.authService.getUser(userEmail);
 
           //Acá van los perfiles que pueden dar de alta una mesa
           if (
             perfil === 'supervisor' ||
-            perfil === 'dueño' ||
-            perfil === 'admin'
+            perfil === 'dueno' ||
+            perfil === 'maitre'
           ) {
             const mesa = await this.cargartable();
             if (mesa) {

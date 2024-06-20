@@ -28,7 +28,7 @@ import { Observable, from, of, BehaviorSubject } from 'rxjs';
 import { UserInterface } from '../interface/user-interface';
 
 import { map, switchMap } from 'rxjs/operators'; // Importa map
-import { Usuario } from '../clases/Usuario';
+import { Usuario } from '../clases/usuario';
 // import { ClienteService } from './cliente.service';
 
 @Injectable({

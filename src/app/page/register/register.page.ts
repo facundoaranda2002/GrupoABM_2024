@@ -46,7 +46,7 @@ import { BarcodeScanner, LensFacing } from '@capacitor-mlkit/barcode-scanning';
 import { BarcodeScanningModalComponent } from './barcode-scanning-modal.component';
 import Swal from 'sweetalert2';
 import { switchMap } from 'rxjs';
-import { Usuario } from 'src/app/clases/Usuario';
+import { Usuario } from 'src/app/clases/usuario';
 
 @Component({
   selector: 'app-register',
@@ -89,7 +89,7 @@ import { Usuario } from 'src/app/clases/Usuario';
   ],
 })
 export class RegisterPage implements OnInit {
-  constructor() {}
+  constructor() { }
 
   authService = inject(AuthService);
   router = inject(Router);

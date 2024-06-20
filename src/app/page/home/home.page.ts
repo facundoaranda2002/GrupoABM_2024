@@ -21,7 +21,7 @@ import { AuthService } from 'src/app/service/auth.service';
 import { firstValueFrom } from 'rxjs';
 import { BarcodeScanningModalComponent } from './barcode-scanning-modal.component';
 import { BarcodeScanner, LensFacing } from '@capacitor-mlkit/barcode-scanning';
-import { Usuario } from 'src/app/clases/Usuario';
+import { Usuario } from 'src/app/clases/usuario';
 
 @Component({
   selector: 'app-home',
@@ -57,7 +57,7 @@ export class HomePage implements OnInit {
   platform = inject(Platform);
   private modalController: ModalController = inject(ModalController);
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit() {
     this.checkUserProfile();

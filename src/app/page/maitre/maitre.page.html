@@ -12,11 +12,7 @@
             <span *ngIf="estaAsignada(number)" style="color: gray; margin-left: 8px;">Esta mesa ya está asignada</span>
           </ion-select-option>
 
-
-
         </ion-select>
-
-
 
         <div *ngIf="form.controls['asignarMesa'].invalid && form.controls['asignarMesa'].touched">
           <ion-text color="danger" *ngIf="form.controls['asignarMesa'].errors?.['required']">
@@ -37,8 +33,19 @@
       </ion-item>
 
       <ion-item>
-        <ion-button (click)="asignarNumeroUltimoPerfilConectado()">Asignar número de
-          mesa</ion-button>
+        <!-- <ion-button (click)="asignarNumeroMesa()">Asignar número de
+          mesa</ion-button> -->
+
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6" *ngFor="let number of numbers">
+              <ion-button expand="block" (click)="asignarNumeroMesa(number)">
+                Mesa {{ number }}
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
       </ion-item>
     </form>
 
@@ -53,15 +60,6 @@
   </ng-container>
 
   <ng-template #clientView>
-    <!-- <ion-label>Escanea tu mesa</ion-label>
-    <div *ngIf="qrCodeImageUrl">
-      <div>
-        <img [src]="qrCodeImageUrl" alt="QR Code" />
-      </div>
-    </div>
-    <ion-label>TU mesa es la numero: {{ mesaAsignada }}</ion-label> -->
-
-    <!-- Mostrar mensaje si la mesa ya está asignada a otro cliente -->
     <div *ngIf="mesaYaAsignada">
       <ion-text color="danger">Esta mesa la tiene asignada otro cliente, no la puede usar.</ion-text>
     </div>
