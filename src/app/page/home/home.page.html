@@ -25,4 +25,13 @@
     {{ isClientProfile ? 'Ir a tu mesa' : 'Maître Asigna Mesa' }}
   </ion-button>
 
+  <ion-row>
+    <ion-col size="12">
+      <ion-button class="submit" (click)="asignarSalaDeEspera()" expand="block">
+        Escanear
+        <ion-icon slot="end" name="scan-outline"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
 </ion-content>

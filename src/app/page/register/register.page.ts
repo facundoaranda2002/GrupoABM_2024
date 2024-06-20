@@ -158,10 +158,17 @@ export class RegisterPage implements OnInit {
     tipo: ['anonimo', Validators.required],
     mail: ['', [Validators.required, Validators.email]],
     nombre: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
-    apellido: ['', [Validators.required,Validators.pattern('^[a-zA-Z ]*$')]],
-    DNI: ['',[Validators.required,Validators.pattern('^[0-9]{8}$'),Validators.maxLength(8)]],
-    password: ['',[Validators.required, Validators.minLength(6)]],
-    foto: ['',Validators.required],
+    apellido: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
+    DNI: [
+      '',
+      [
+        Validators.required,
+        Validators.pattern('^[0-9]{8}$'),
+        Validators.maxLength(8),
+      ],
+    ],
+    password: ['', [Validators.required, Validators.minLength(6)]],
+    foto: ['', Validators.required],
   });
 
   private Toast = Swal.mixin({
@@ -200,10 +207,11 @@ export class RegisterPage implements OnInit {
           // Se guarda el cliente en la base de datos
           if (this.form.getRawValue().tipo == 'anonimo') {
             this.altaAnonimo(cliente);
-            this.router.navigateByUrl("/");
+            this.authService.agregarAnonimo(cliente.mail);
+            this.router.navigateByUrl('/home');
           } else {
             this.alta(cliente);
-            this.router.navigateByUrl("/login");
+            this.router.navigateByUrl('/login');
           }
 
           this.Toast.fire({
@@ -237,7 +245,7 @@ export class RegisterPage implements OnInit {
       });
     }
   }
-  
+
   async cargarCliente(): Promise<Usuario | null> {
     const value = this.form.getRawValue();
     const cliente = new Usuario();

@@ -11,10 +11,17 @@ import {
   IonIcon,
   IonNavLink,
   IonAlert,
+  ModalController,
+  Platform,
+  IonRow,
+  IonCol,
 } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/service/auth.service';
 import { firstValueFrom } from 'rxjs';
+import { BarcodeScanningModalComponent } from './barcode-scanning-modal.component';
+import { BarcodeScanner, LensFacing } from '@capacitor-mlkit/barcode-scanning';
+import { Usuario } from 'src/app/clases/Usuario';
 
 @Component({
   selector: 'app-home',
@@ -22,6 +29,8 @@ import { firstValueFrom } from 'rxjs';
   styleUrls: ['./home.page.scss'],
   standalone: true,
   imports: [
+    IonCol,
+    IonRow,
     IonAlert,
     IonNavLink,
     IonIcon,
@@ -33,6 +42,7 @@ import { firstValueFrom } from 'rxjs';
     IonToolbar,
     CommonModule,
     FormsModule,
+    BarcodeScanningModalComponent,
   ],
 })
 export class HomePage implements OnInit {
@@ -43,10 +53,20 @@ export class HomePage implements OnInit {
 
   isClientProfile: boolean = false;
 
+  scanResoult = '';
+  platform = inject(Platform);
+  private modalController: ModalController = inject(ModalController);
+
   constructor() {}
 
   ngOnInit() {
     this.checkUserProfile();
+    if (this.platform.is('capacitor')) {
+      BarcodeScanner.isSupported().then();
+      BarcodeScanner.checkPermissions().then();
+      BarcodeScanner.removeAllListeners();
+    }
+    console.log(this.authService.obtenerAnonimo());
   }
   //
   async checkUserProfile() {
@@ -67,8 +87,59 @@ export class HomePage implements OnInit {
     }
   }
 
-  //Form - Alert
+  // Cliente Sala de espera
+  async startScan() {
+    const modal = await this.modalController.create({
+      component: BarcodeScanningModalComponent,
+      cssClass: 'barcode-scanning-modal',
+      showBackdrop: false,
+      componentProps: {
+        formats: [],
+        lensfacing: LensFacing.Back,
+      },
+    });
+    await modal.present();
+    const { data } = await modal.onWillDismiss();
+    if (data) {
+      this.scanResoult = data?.barcode?.displayValue;
+    }
+  }
+  async asignarSalaDeEspera() {
+    // await this.startScan();
 
+    // Comprobar si el scan es correcto
+    if (this.scanResoult == '') {
+      // si es correcto compruevo que usuario esta (si es anonimo)
+      if (this.authService.currentUserSig()?.email) {
+        let usuarioActual = await this.authService.getUserActual(
+          this.authService.currentUserSig()?.email
+        );
+        const usuarioAux: Usuario = {
+          mail: usuarioActual.mail,
+          nombre: usuarioActual.nombre,
+          apellido: usuarioActual.apellido,
+          DNI: usuarioActual.DNI,
+          foto: usuarioActual.foto,
+          tipo: usuarioActual.tipo,
+          qrDNI: usuarioActual.qrDNI,
+          password: usuarioActual.password,
+          perfil: usuarioActual.perfil,
+          estaValidado: usuarioActual.estaValidado,
+          listaDeEspera: true,
+        };
+        this.authService
+          .updateUsuarioCliente(usuarioActual.id, usuarioAux)
+          .then(() => {
+            console.log('modiificacion exitosa');
+          });
+      } else {
+        // logica si es anonimo
+        let usuarioActual = await this.authService.getUserActual(
+          this.authService.obtenerAnonimo()
+        );
+      }
+    }
+  }
   //Ruteo
   goRegister() {
     this.router.navigateByUrl('/register');
@@ -94,7 +165,4 @@ export class HomePage implements OnInit {
   goRegisterMaitreAsignaMesa() {
     this.router.navigateByUrl('/maitre');
   }
-
-  //Init - Destroy
-  // ngOnInit() { }
 }

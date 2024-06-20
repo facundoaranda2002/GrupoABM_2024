@@ -28,6 +28,7 @@ import { Observable, from, of, BehaviorSubject } from 'rxjs';
 import { UserInterface } from '../interface/user-interface';
 
 import { map, switchMap } from 'rxjs/operators'; // Importa map
+import { Usuario } from '../clases/Usuario';
 // import { ClienteService } from './cliente.service';
 
 @Injectable({
@@ -59,6 +60,20 @@ export class AuthService {
       return userData['perfil'] || null;
     } else {
       return null;
+    }
+  }
+
+  async getUserActual(email: string | undefined | null): Promise<any> {
+    const usersCollection = collection(this.firestore, 'Usuarios');
+    const q = query(usersCollection, where('mail', '==', email));
+    const usersSnapshot = await getDocs(q);
+
+    if (!usersSnapshot.empty) {
+      const userDoc = usersSnapshot.docs[0];
+      const userData = userDoc.data();
+      return { ...userData, id: userDoc.id }; // Incluimos el ID del documento en el objeto retornado
+    } else {
+      return null; // Si no se encuentra el usuario, retornamos null
     }
   }
 
@@ -146,6 +161,32 @@ export class AuthService {
     } catch (error) {
       console.error('Error al actualizar el estado "online":', error);
       throw error;
+    }
+  }
+
+  updateUsuarioCliente(id: string, cliente: Usuario) {
+    return updateDoc(this.document(id), { ...cliente });
+  }
+  private document(id: string) {
+    const usersCollection = collection(this.firestore, 'Usuarios');
+    return doc(usersCollection, `${id}`);
+  }
+
+  agregarAnonimo(mail: string) {
+    localStorage.setItem('Mail', mail);
+  }
+  obtenerAnonimo() {
+    if (localStorage.getItem('Mail')) {
+      return localStorage.getItem('Mail');
+    } else {
+      return null;
+    }
+  }
+  removerAnonimo() {
+    if (localStorage.getItem('Mail')) {
+      return localStorage.removeItem('Mail');
+    } else {
+      return null;
     }
   }
 }
