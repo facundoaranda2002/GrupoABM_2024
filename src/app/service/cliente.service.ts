@@ -15,9 +15,9 @@ import {
   limit,
 } from '@angular/fire/firestore';
 import { AuthService } from './auth.service';
-import { Cliente } from '../clases/cliente';
 import { firstValueFrom } from 'rxjs';
 import { UserInterface } from '../interface/user-interface';
+import { Usuario } from '../clases/Usuario';
 
 @Injectable({
   providedIn: 'root',
@@ -27,19 +27,21 @@ export class ClienteService {
     private firestore: Firestore,
     private authService: AuthService,
     private auth: AuthService
-  ) { }
+  ) {}
 
-  AltaCliente(user: Cliente) {
+  AltaCliente(user: Usuario) {
     const coleccion = collection(this.firestore, 'Usuarios');
     const documento = doc(coleccion);
-    const id = documento.id;
-    user.id = id;
     let obj = JSON.parse(JSON.stringify(user));
     return setDoc(documento, obj);
   }
 
   //agrega el numero de mesa al cliente
-  async modificarMesaAsignada(email: string, nuevaMesa: number, nuevoQrMesaAsignada: string): Promise<void> {
+  async modificarMesaAsignada(
+    email: string,
+    nuevaMesa: number,
+    nuevoQrMesaAsignada: string
+  ): Promise<void> {
     const coleccion = collection(this.firestore, 'Usuarios');
     const q = query(coleccion, where('mail', '==', email));
 
@@ -54,14 +56,16 @@ export class ClienteService {
           // const mesaAsignada1: nuevaMesa
           await updateDoc(documento, {
             mesaAsignada: nuevaMesa,
-            qrMesaAsignada: nuevoQrMesaAsignada
+            qrMesaAsignada: nuevoQrMesaAsignada,
           });
         } else {
           console.error(`Document with email ${email} does not exist.`);
           throw new Error(`Document with email ${email} does not exist.`);
         }
       } else {
-        console.log(`El usuario con email ${email} no es un cliente, no se actualizó el estado online.`);
+        console.log(
+          `El usuario con email ${email} no es un cliente, no se actualizó el estado online.`
+        );
       }
     } catch (error) {
       console.error('Error updating online status:', error);
@@ -69,12 +73,13 @@ export class ClienteService {
     }
   }
 
-
-
   //obtengo el un perfil que tenga online en true, existe la posibilidad de hacerlo por fecha pero no tengo tiempo
-  async obtenerUltimoPerfilConectado(online: string): Promise<UserInterface | null> {
+  async obtenerUltimoPerfilConectado(
+    online: string
+  ): Promise<UserInterface | null> {
     const usuariosCollection = collection(this.firestore, 'Usuarios');
-    const q = query(usuariosCollection,
+    const q = query(
+      usuariosCollection,
       where('online', '==', online),
       // // orderBy('ultimaConexion', 'desc'),
       where('perfil', '==', 'cliente'),
@@ -92,12 +97,11 @@ export class ClienteService {
         // return userData as UserInterface;
 
         // Mapear mail a email ya ue la interfaz tiene email pero la base mail
-        if (userData["mail"] && !userData['email']) {
-          userData['email'] = userData["mail"];
+        if (userData['mail'] && !userData['email']) {
+          userData['email'] = userData['mail'];
         }
 
         return userData as UserInterface;
-
       } else {
         console.error('No hay usuarios conectados.');
         return null;

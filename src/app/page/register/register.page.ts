@@ -46,7 +46,7 @@ import { BarcodeScanner, LensFacing } from '@capacitor-mlkit/barcode-scanning';
 import { BarcodeScanningModalComponent } from './barcode-scanning-modal.component';
 import Swal from 'sweetalert2';
 import { switchMap } from 'rxjs';
-import { Cliente } from 'src/app/clases/cliente';
+import { Usuario } from 'src/app/clases/Usuario';
 
 @Component({
   selector: 'app-register',
@@ -89,7 +89,7 @@ import { Cliente } from 'src/app/clases/cliente';
   ],
 })
 export class RegisterPage implements OnInit {
-  constructor() { }
+  constructor() {}
 
   authService = inject(AuthService);
   router = inject(Router);
@@ -102,33 +102,40 @@ export class RegisterPage implements OnInit {
   private modalController: ModalController = inject(ModalController);
 
   qrCodeImageUrl: string | undefined;
-  nombreRegistrar: string = '';
   mailRegistrar: string = '';
   passwordRegistrar: string = '';
   scanResoult = '';
 
+  private nombres: string[] = [
+    'juan',
+    'maria',
+    'pedro',
+    'laura',
+    'carlos',
+    'ana',
+    'luis',
+    'jose',
+    'sofia',
+    'elena',
+  ];
+  private dominios: string[] = [
+    'example.com',
+    'correo.com',
+    'mail.com',
+    'test.com',
+    'demo.com',
+    'prueba.com',
+  ];
+
   ngOnInit() {
+    // Permisos
     if (this.platform.is('capacitor')) {
       BarcodeScanner.isSupported().then();
       BarcodeScanner.checkPermissions().then();
       BarcodeScanner.removeAllListeners();
     }
-
-    this.authService.actual().subscribe((email) => {
-      if (email) {
-        console.log('Usuario logueado con email:', email);
-        console.log(
-          'Usuario logueado con this.authService.email:',
-          this.authService.email
-        );
-      } else {
-        console.log('Usuario deslogueado.');
-      }
-    });
   }
-
-  cambiarTipo() { }
-
+  // Scanea
   async startScan() {
     const modal = await this.modalController.create({
       component: BarcodeScanningModalComponent,
@@ -143,35 +150,18 @@ export class RegisterPage implements OnInit {
     const { data } = await modal.onWillDismiss();
     if (data) {
       this.scanResoult = data?.barcode?.displayValue;
-      this.form.patchValue({ DNI: this.scanResoult }); // Actualiza el campo DNI en el formulario
+      this.form.patchValue({ DNI: this.scanResoult });
     }
   }
-
+  // Form
   form = this.fb.nonNullable.group({
-
     tipo: ['anonimo', Validators.required],
     mail: ['', [Validators.required, Validators.email]],
     nombre: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
-    apellido: [''],
-    DNI: [''],
-    password: ['', Validators.required],
-    foto: [''],
-
-
-    // nombre: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
-    // apellido: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
-    // DNI: [
-    //   '',
-    //   [
-    //     Validators.required,
-    //     Validators.pattern('^[0-9]{8}$'),
-    //     Validators.maxLength(8),
-    //   ],
-    // ],
-    // foto: ['', Validators.required],
-    // password: ['', Validators.required],
-    // tipo: ['', Validators.required],
-    // mail: ['', [Validators.required, Validators.email]],
+    apellido: ['', [Validators.required,Validators.pattern('^[a-zA-Z ]*$')]],
+    DNI: ['',[Validators.required,Validators.pattern('^[0-9]{8}$'),Validators.maxLength(8)]],
+    password: ['',[Validators.required, Validators.minLength(6)]],
+    foto: ['',Validators.required],
   });
 
   private Toast = Swal.mixin({
@@ -188,7 +178,6 @@ export class RegisterPage implements OnInit {
   });
 
   async onSubmit(): Promise<void> {
-
     // Ajustar dinámicamente los validadores antes de verificar la validez del formulario
     const tipo = this.form.get('tipo')?.value;
     if (tipo === 'anonimo') {
@@ -198,34 +187,31 @@ export class RegisterPage implements OnInit {
       this.form.get('DNI')?.updateValueAndValidity();
       this.form.get('foto')?.clearValidators();
       this.form.get('foto')?.updateValueAndValidity();
-    } else {
-      this.form.get('apellido')?.setValidators([
-        Validators.required,
-        Validators.pattern('^[a-zA-Z ]*$'),
-      ]);
-      this.form.get('apellido')?.updateValueAndValidity();
-      this.form.get('DNI')?.setValidators([
-        Validators.required,
-        Validators.pattern('^[0-9]{8}$'),
-        Validators.maxLength(8),
-      ]);
-      this.form.get('DNI')?.updateValueAndValidity();
-      this.form.get('foto')?.setValidators([Validators.required]);
-      this.form.get('foto')?.updateValueAndValidity();
+      this.form.get('password')?.clearValidators();
+      this.form.get('password')?.updateValueAndValidity();
+      this.form.get('mail')?.clearValidators();
+      this.form.get('mail')?.updateValueAndValidity();
     }
-
 
     if (this.form.valid) {
       try {
         const cliente = await this.cargarCliente();
         if (cliente) {
           // Se guarda el cliente en la base de datos
-          this.alta(cliente);
+          if (this.form.getRawValue().tipo == 'anonimo') {
+            this.altaAnonimo(cliente);
+            this.router.navigateByUrl("/");
+          } else {
+            this.alta(cliente);
+            this.router.navigateByUrl("/login");
+          }
+
           this.Toast.fire({
             icon: 'success',
             title: 'Alta de cliente exitosa',
             color: '#ffffff',
           });
+          this.authService.logout();
         } else {
           console.error('Error al crear el cliente.');
           this.Toast.fire({
@@ -251,62 +237,52 @@ export class RegisterPage implements OnInit {
       });
     }
   }
-
-  async cargarCliente(): Promise<Cliente | null> {
+  
+  async cargarCliente(): Promise<Usuario | null> {
     const value = this.form.getRawValue();
-    const cliente = new Cliente();
-
+    const cliente = new Usuario();
     switch (value.tipo) {
       case 'anonimo':
-        // cliente.perfil = value.perfil;
-        cliente.tipo = value.tipo;
+        cliente.mail = this.generarEmailAleatorio();
         cliente.nombre = value.nombre;
+        cliente.apellido = '';
+        cliente.DNI = 0;
         cliente.foto = value.foto;
-        cliente.password = value.password;
-        cliente.mail = value.mail;
-
-        this.nombreRegistrar = cliente.nombre;
-        this.mailRegistrar = cliente.mail;
-        this.passwordRegistrar = cliente.password;
-
-        // Generar QR Code solo si es necesario
-        //cliente.qrDNI = await this.generateQRCode(`${value.nombre}`); // Cambiar a lo que necesites para el QR de anónimo
+        cliente.tipo = value.tipo;
+        cliente.qrDNI = '';
+        cliente.password = '';
+        cliente.perfil = 'cliente';
+        cliente.estaValidado = 'aceptado';
+        cliente.listaDeEspera = false;
         break;
       default:
-        cliente.tipo = 'registrado';
+        cliente.mail = value.mail;
         cliente.nombre = value.nombre;
         cliente.apellido = value.apellido;
         cliente.DNI = parseInt(value.DNI, 10);
         cliente.foto = value.foto;
+        cliente.tipo = value.tipo;
+        cliente.qrDNI = '';
         cliente.password = value.password;
-        cliente.mail = value.mail;
-
-        this.nombreRegistrar = cliente.nombre;
+        cliente.perfil = 'cliente';
+        cliente.estaValidado = 'pendiente';
+        cliente.listaDeEspera = false;
+        // Carga Register
         this.mailRegistrar = cliente.mail;
         this.passwordRegistrar = cliente.password;
-
-        // Generar QR Code
-        //cliente.qrDNI = await this.generateQRCode(`${cliente.DNI}`);
         break;
     }
-
     // Set QR Code Image URL
     this.qrCodeImageUrl = cliente.qrDNI;
-
     // Get photo URL
     // this.photoUrl = await this.photoService.getPhotoUrl(value.foto);
-
     return cliente;
   }
 
-  alta(user: Cliente) {
+  alta(user: Usuario) {
     // Registra al usuario en Firebase Authentication
     this.authService
-      .register(
-        this.mailRegistrar,
-        this.nombreRegistrar,
-        this.passwordRegistrar
-      )
+      .register(this.mailRegistrar, this.passwordRegistrar)
       .pipe(
         switchMap(() => {
           // Una vez registrado, guarda los datos adicionales en Firestore
@@ -316,6 +292,7 @@ export class RegisterPage implements OnInit {
       .subscribe({
         next: () => {
           // Éxito: ambas operaciones completadas correctamente
+          this.authService.logout();
           console.log('Usuario registrado y datos guardados correctamente');
           // Aquí podrías mostrar un mensaje de éxito o redirigir a otra página
         },
@@ -326,11 +303,26 @@ export class RegisterPage implements OnInit {
         },
       });
   }
+  altaAnonimo(user: Usuario) {
+    return this.clienteService
+      .AltaCliente(user)
+      .then(() => {
+        console.log('Alta ok');
+      })
+      .catch(() => {
+        console.log('No Alta ok');
+      });
+  }
 
   async takePhoto() {
     const photo = await this.photoService.addClientPhoto();
     if (photo && photo.name) {
       this.form.patchValue({ foto: photo.name });
+      this.Toast.fire({
+        icon: 'success',
+        title: 'Foto Subida',
+        color: '#ffffff',
+      });
     }
   }
 
@@ -348,5 +340,15 @@ export class RegisterPage implements OnInit {
   }
   logout(): void {
     this.authService.logout();
+  }
+
+  generarEmailAleatorio(): string {
+    const nombre =
+      this.nombres[Math.floor(Math.random() * this.nombres.length)];
+    const dominio =
+      this.dominios[Math.floor(Math.random() * this.dominios.length)];
+    const numero = Math.floor(1000 + Math.random() * 9000).toString(); // Genera un número de 4 dígitos
+
+    return `${nombre}${numero}@${dominio}`;
   }
 }

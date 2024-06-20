@@ -10,6 +10,7 @@ import {
   query,
   setDoc,
   updateDoc,
+  where,
 } from '@angular/fire/firestore';
 import { AuthService } from './auth.service';
 
@@ -30,11 +31,21 @@ export class TableService {
   AltaMesa(user: Table) {
     const coleccion = collection(this.firestore, 'table');
     const documento = doc(coleccion);
-    const id = documento.id;
-
-    user.id = id;
     let obj = JSON.parse(JSON.stringify(user));
 
     return setDoc(documento, obj);
+  }
+
+  async getTable(email: string): Promise<any> {
+    const usersCollection = collection(this.firestore, 'table');
+    const q = query(usersCollection, where('mail', '==', email)); // Declaramos explícitamente el tipo de la consulta
+    const usersSnapshot = await getDocs(q);
+    if (!usersSnapshot.empty) {
+      const userDoc = usersSnapshot.docs[0];
+      const userData = userDoc.data();
+      return userData || null;
+    } else {
+      return null;
+    }
   }
 }

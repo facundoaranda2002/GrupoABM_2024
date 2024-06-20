@@ -13,11 +13,12 @@
         </ion-select>
       </ion-item>
       <!-- Correo Electronico -->
-      <ion-item color="secondary">
-        <ion-input label="Correo" type="email" placeholder="Ingrese su correo electronico"
-          formControlName="mail"></ion-input>
-      </ion-item>
-
+      @if(!(form.getRawValue().tipo == "anonimo")){
+        <ion-item color="secondary">
+          <ion-input label="Correo" type="email" placeholder="Ingrese su correo electronico"
+            formControlName="mail"></ion-input>
+        </ion-item> 
+      }
 
       <!-- Estas validaciones son agregadas por Javier -->
       <p class="error-message" *ngIf="form.get('mail')?.touched && form.get('mail')?.hasError('required')">
@@ -60,7 +61,6 @@
       <p class="error-message" *ngIf="form.get('apellido')?.touched && form.get('apellido')?.hasError('pattern')">
         Apellido inválido. Solo letras y espacios.
       </p>
-      <!-- -->
 
 
       <!-- Dni -->
@@ -81,10 +81,13 @@
 
 
       <!-- Contraseña -->
-      <ion-item color="secondary">
-        <ion-input label="Contraseña" type="password" placeholder="Ingrese su contraseña"
-          formControlName="password"></ion-input>
-      </ion-item>
+      @if(!(form.getRawValue().tipo == "anonimo")){
+        <ion-item color="secondary">
+          <ion-input label="Contraseña" type="password" placeholder="Ingrese su contraseña"
+            formControlName="password"></ion-input>
+        </ion-item>
+      }
+ 
 
       <!-- Estas validaciones son agregadas por Javier -->
       <p class="error-message" *ngIf="form.get('password')?.touched && form.get('password')?.hasError('required')">

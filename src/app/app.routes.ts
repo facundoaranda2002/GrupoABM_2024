@@ -39,20 +39,14 @@ export const routes: Routes = [
     canActivate: [logeadoGuard],
   },
   {
-    path: 'alta-cliente',
-    loadComponent: () =>
-      import('./page/alta-cliente/alta-cliente.page').then(
-        (m) => m.AltaClientePage
-      ),
-  },
-  {
     path: 'menu',
     loadComponent: () =>
       import('./page/menu/menu.page').then((m) => m.MenuPage),
   },
   {
     path: 'maitre',
-    loadComponent: () => import('./page/maitre/maitre.page').then(m => m.MaitrePage)
+    loadComponent: () =>
+      import('./page/maitre/maitre.page').then((m) => m.MaitrePage),
   },
   {
     path: '**',
@@ -60,7 +54,7 @@ export const routes: Routes = [
   },
   {
     path: 'maitre',
-    loadComponent: () => import('./page/maitre/maitre.page').then(m => m.MaitrePage)
+    loadComponent: () =>
+      import('./page/maitre/maitre.page').then((m) => m.MaitrePage),
   },
-
 ];

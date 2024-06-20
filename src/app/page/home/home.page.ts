@@ -43,26 +43,25 @@ export class HomePage implements OnInit {
 
   isClientProfile: boolean = false;
 
-  constructor() { }
-
+  constructor() {}
 
   ngOnInit() {
     this.checkUserProfile();
   }
-
+  //
   async checkUserProfile() {
     try {
       const currentUserEmail = await firstValueFrom(this.authService.actual());
-      console.log("currentUserEmail es: ", currentUserEmail);
+      console.log('currentUserEmail es: ', currentUserEmail);
       if (currentUserEmail) {
         const perfil = await this.authService.getUser(currentUserEmail);
         if (perfil === 'cliente') {
           this.isClientProfile = true;
-          console.log("isClientProfile es: ", this.isClientProfile);
+          console.log('isClientProfile es: ', this.isClientProfile);
         }
-        console.log("isClientProfile 2 es: ", this.isClientProfile);
+        console.log('isClientProfile 2 es: ', this.isClientProfile);
       }
-      console.log("isClientProfile es 3: ", this.isClientProfile);
+      console.log('isClientProfile es 3: ', this.isClientProfile);
     } catch (error) {
       console.error('Error obteniendo perfil de usuario:', error);
     }

@@ -1,16 +1,13 @@
 export class Usuario {
-
-    id?:string;
-    nombre?:string;
-    apellido?:string;
-    edad?:number;
-    dni?:number;
-    email?:string;
-    contrasenia?:string;
-    turnos:Array<any> = []
-
-    toObjetJSON(){
-        return JSON.parse(JSON.stringify(this));
-    }
-
+  mail: string = '';
+  nombre: string = '';
+  apellido: string = '';
+  DNI: number = 0;
+  foto: string = '';
+  tipo: string = '';
+  qrDNI: string = '';
+  password: string = '';
+  perfil: string = '';
+  estaValidado: string = '';
+  listaDeEspera: boolean= false;
 }
