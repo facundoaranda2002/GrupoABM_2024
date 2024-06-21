@@ -83,10 +83,10 @@ https://grupoabm.atlassian.net/jira/software/projects/KAN/boards/1?atlOrigin=eyJ
 ### Gamma
 - **Alta de clientes** _(16/06/24)_
     
-    ![Estado](https://img.shields.io/badge/Estado-Estado-Completado-green?style=for-the-badge&labelColor=black)
+    ![Estado](https://img.shields.io/badge/Estado-Completado-green?style=for-the-badge&labelColor=black)
 - **QR de la mesa** _(21/06/24)_   
     
-    ![Estado](https://img.shields.io/badge/Estado-Estado-Completado-green?style=for-the-badge&labelColor=black)
+    ![Estado](https://img.shields.io/badge/Estado-Completado-green?style=for-the-badge&labelColor=black)
 - **Asignar mesa** _(21/06/24)_   
     
     ![Estado](https://img.shields.io/badge/Estado-Completado-green?style=for-the-badge&labelColor=black)     
