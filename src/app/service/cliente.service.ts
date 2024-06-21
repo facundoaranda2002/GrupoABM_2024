@@ -27,7 +27,7 @@ export class ClienteService {
     private firestore: Firestore,
     private authService: AuthService,
     private auth: AuthService
-  ) { }
+  ) {}
 
   AltaCliente(user: Usuario) {
     const coleccion = collection(this.firestore, 'Usuarios');
@@ -82,6 +82,7 @@ export class ClienteService {
       usuariosCollection,
       where('listaDeEspera', '==', listaDeEspera),
       where('perfil', '==', 'cliente'),
+      where('estaValidado', '==', 'aceptado'),
       limit(1)
     );
     try {
@@ -133,5 +134,19 @@ export class ClienteService {
       console.error('Error obteniendo usuarios y mesas asignadas:', error);
       throw error;
     }
+  }
+
+  public async obtenerUsuariosPendientes(): Promise<any | null> {
+    const userCollection = collection(this.firestore, 'Usuarios');
+    const q = query(userCollection, where('estaValidado', '==', 'pendiente'));
+    const querySnapshot = await getDocs(q);
+
+    if (querySnapshot.empty) {
+      return null;
+    }
+
+    const users = querySnapshot.docs.map((doc) => doc.data());
+
+    return users;
   }
 }

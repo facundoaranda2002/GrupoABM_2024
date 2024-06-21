@@ -33,10 +33,10 @@ export class SplashPage implements OnInit {
   ngOnInit() {
     setTimeout(() => {
       this.asoUnaVezService.pasoUnaVez = true;
-      if (this.auth.currentUserSig()) {
+      if (this.auth.currentUserSig() || this.auth.obtenerAnonimo()) {
         this.router.navigateByUrl('/home');
       } else {
-        this.router.navigateByUrl('/menu');
+        this.router.navigateByUrl('/login');
       }
     }, 4500);
   }

@@ -89,7 +89,7 @@ import { Usuario } from 'src/app/clases/usuario';
   ],
 })
 export class RegisterPage implements OnInit {
-  constructor() { }
+  constructor() {}
 
   authService = inject(AuthService);
   router = inject(Router);
@@ -276,7 +276,7 @@ export class RegisterPage implements OnInit {
         cliente.perfil = 'cliente';
         cliente.estaValidado = 'pendiente';
         cliente.listaDeEspera = false;
-        cliente.mesaAsignada = 0;/* JM Creó esto para que al crear un cliente anonimo este este campo*/
+        cliente.mesaAsignada = 0; /* JM Creó esto para que al crear un cliente anonimo este este campo*/
         // Carga Register
         this.mailRegistrar = cliente.mail;
         this.passwordRegistrar = cliente.password;
@@ -344,9 +344,6 @@ export class RegisterPage implements OnInit {
   }
   goHome() {
     this.router.navigateByUrl('/home');
-  }
-  goMenu() {
-    this.router.navigateByUrl('/menu');
   }
   logout(): void {
     this.authService.logout();

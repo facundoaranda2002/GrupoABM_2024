@@ -1,13 +1,15 @@
 <ion-header>
   <ion-toolbar color="primary">
-    @if(this.authService.currentUserSig() == null) {
+    @if(this.authService.currentUserSig() == null &&
+    this.authService.obtenerAnonimo() == null) {
     <ion-buttons slot="secondary">
       <ion-button (click)="goLogin()"> Ingresar </ion-button>
     </ion-buttons>
     <ion-buttons slot="primary">
       <ion-button (click)="goRegister()"> Registrar </ion-button>
     </ion-buttons>
-    } @if(this.authService.currentUserSig()) {
+    } @if(this.authService.currentUserSig() ||
+    this.authService.obtenerAnonimo()) {
     <ion-buttons slot="primary">
       <ion-button (click)="logout()"> Salir </ion-button>
     </ion-buttons>
@@ -21,32 +23,30 @@
   <!-- <ion-button (click)="goRegisterClient()">Alta Cliente</ion-button> -->
   <!-- <ion-button (click)="goRegisterMaitreAsignaMesa()">Maître Asigna Mesa</ion-button> -->
 
-  @if(this.profile === 'cliente')
-  {
-    <ion-button (click)="goRegisterMaitreAsignaMesa()">
-      Ir a tu mesa
-    </ion-button>
-
-    <ion-row>
-      <ion-col size="12">
-        <ion-button class="submit" (click)="asignarSalaDeEspera()" expand="block">
-          Escanear
-          <ion-icon slot="end" name="scan-outline"></ion-icon>
-        </ion-button>
-      </ion-col>
-    </ion-row>
+  @if(this.profile === 'cliente' || this.authService.obtenerAnonimo()) {
+  <!-- <ion-button (click)="goRegisterMaitreAsignaMesa()"> Ir a tu mesa </ion-button> -->
+  @if(!usuarioActual?.listaDeEspera){
+  <ion-row>
+    <ion-col size="12">
+      <ion-button class="submit" (click)="asignarSalaDeEspera()" expand="block">
+        Entrar al local
+        <ion-icon slot="end" name="scan-outline"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
   }
-  @if(this.profile === 'maitre')
-  {
-    <ion-button (click)="goRegisterMaitreAsignaMesa()">
-      Maître Asigna Mesa
-    </ion-button>
-  }
-  @if(this.profile === 'dueno' || this.profile === 'supervisor')
-  {
-    
-  }
+  <!-- boton mesa espera -->
+  <ion-row>
+    <ion-col size="12">
+      <ion-button class="submit" expand="block"> encuesta </ion-button>
+    </ion-col>
+  </ion-row>
 
-  
-
+  } @if(this.profile === 'maitre') {
+  <ion-button (click)="goRegisterMaitreAsignaMesa()">
+    Maître Asigna Mesa
+  </ion-button>
+  } @if(this.profile === 'dueno' || this.profile === 'supervisor') {
+  <ion-button (click)="goAdminClientes()"> Administrar Clientes </ion-button>
+  }
 </ion-content>

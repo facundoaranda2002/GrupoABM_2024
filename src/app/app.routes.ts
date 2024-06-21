@@ -39,22 +39,17 @@ export const routes: Routes = [
     canActivate: [logeadoGuard],
   },
   {
-    path: 'menu',
-    loadComponent: () =>
-      import('./page/menu/menu.page').then((m) => m.MenuPage),
-  },
-  {
     path: 'maitre',
     loadComponent: () =>
       import('./page/maitre/maitre.page').then((m) => m.MaitrePage),
+  },
+  {
+    path: 'admin',
+    loadComponent: () =>
+      import('./page/admin/admin.page').then((m) => m.AdminPage),
   },
   {
     path: '**',
     redirectTo: 'home',
-  },
-  {
-    path: 'maitre',
-    loadComponent: () =>
-      import('./page/maitre/maitre.page').then((m) => m.MaitrePage),
   },
 ];

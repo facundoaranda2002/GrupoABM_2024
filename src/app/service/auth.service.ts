@@ -63,6 +63,7 @@ export class AuthService {
     }
   }
 
+  //Busco en la colección Usuarios si hay un mail cargado igual al que estoy usando para encontrarlo y retornarlo
   async getUserActual(email: string | undefined | null): Promise<any> {
     const usersCollection = collection(this.firestore, 'Usuarios');
     const q = query(usersCollection, where('mail', '==', email));
@@ -92,11 +93,7 @@ export class AuthService {
       email,
       password
       /*agregue this.saveEmail(email); para guardar el mail con el que me logueo y poder cargar clientes*/
-    ).then(() => {
-      /*Guardo su estado de online y ultima conexión*/
-      this.updateUserOnlineStatus(email, 'true');
-      this.agregarCampoOnline();
-    });
+    ).then(() => {});
     return from(promise);
   }
 

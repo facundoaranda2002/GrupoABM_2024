@@ -51,13 +51,15 @@ export class HomePage implements OnInit {
   authService = inject(AuthService);
   router = inject(Router);
 
-  profile: string = "";
+  profile: string = '';
 
   scanResoult = '';
   platform = inject(Platform);
   private modalController: ModalController = inject(ModalController);
 
-  constructor() { }
+  usuarioActual: any;
+
+  constructor() {}
 
   ngOnInit() {
     this.checkUserProfile();
@@ -66,6 +68,7 @@ export class HomePage implements OnInit {
       BarcodeScanner.checkPermissions().then();
       BarcodeScanner.removeAllListeners();
     }
+    this.estoyListaEspera();
   }
   //
   async checkUserProfile() {
@@ -76,10 +79,11 @@ export class HomePage implements OnInit {
         if (perfil) {
           this.profile = perfil;
           console.log('profile es: ', this.profile);
+        } else {
+          console.log('profile es 2: ', this.profile);
         }
-        console.log('profile es 2: ', this.profile);
-      }else{
-        this.authService.obtenerAnonimo();
+      } else {
+        console.log(this.authService.obtenerAnonimo());
       }
     } catch (error) {
       console.error('Error obteniendo perfil de usuario:', error);
@@ -115,7 +119,7 @@ export class HomePage implements OnInit {
         );
       } else {
         // logica si es anonimo
-         usuarioActual = await this.authService.getUserActual(
+        usuarioActual = await this.authService.getUserActual(
           this.authService.obtenerAnonimo()
         );
       }
@@ -131,16 +135,36 @@ export class HomePage implements OnInit {
         perfil: usuarioActual.perfil,
         estaValidado: usuarioActual.estaValidado,
         listaDeEspera: true,
-        mesaAsignada: usuarioActual.mesaAsignada
+        mesaAsignada: usuarioActual.mesaAsignada,
       };
       this.authService
         .updateUsuarioCliente(usuarioActual.id, usuarioAux)
         .then(() => {
           console.log('modiificacion exitosa');
+          this.estoyListaEspera();
         });
-    }
-    else{
+    } else {
       // Mensaje error de lector qr
+    }
+  }
+
+  async estoyListaEspera() {
+    // verifico si hay algun cliente
+    if (
+      this.authService.currentUserSig() ||
+      this.authService.obtenerAnonimo()
+    ) {
+      let usuarioActual;
+      if (this.authService.currentUserSig()?.email) {
+        usuarioActual = await this.authService.getUserActual(
+          this.authService.currentUserSig()?.email
+        );
+      } else {
+        usuarioActual = await this.authService.getUserActual(
+          this.authService.obtenerAnonimo()
+        );
+      }
+      this.usuarioActual = usuarioActual;
     }
   }
   //Ruteo
@@ -156,6 +180,7 @@ export class HomePage implements OnInit {
   logout() {
     this.authService.logout();
     this.router.navigateByUrl('/login');
+    this.authService.removerAnonimo();
   }
 
   goRegisterTable() {
@@ -170,6 +195,6 @@ export class HomePage implements OnInit {
   }
 
   goAdminClientes() {
-    this.router.navigateByUrl('/maitre');
+    this.router.navigateByUrl('/admin');
   }
 }
