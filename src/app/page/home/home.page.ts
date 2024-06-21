@@ -126,6 +126,7 @@ export class HomePage implements OnInit {
           perfil: usuarioActual.perfil,
           estaValidado: usuarioActual.estaValidado,
           listaDeEspera: true,
+          mesaAsignada: usuarioActual.mesaAsignada/* JM Creó esto para que al crear un cliente anonimo este este campo*/
         };
         this.authService
           .updateUsuarioCliente(usuarioActual.id, usuarioAux)

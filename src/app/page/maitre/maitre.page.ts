@@ -116,19 +116,17 @@ export class MaitrePage implements OnInit {
   photoService = inject(PhotoService);
   authService = inject(AuthService);
   clienteService = inject(ClienteService);
-  private modalController: ModalController = inject(ModalController);
+  modalController: ModalController = inject(ModalController);
 
 
   qrCodeImageUrl: string | undefined;
-  mesaAsignada: number | undefined;
-  // photoUrl: string | undefined;
+  mesaAsignada: number | undefined;//esta variable la uso para mostrar la mesa asignada siendo cliente
   scanResoult = '';
-
   // numbers: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   numbers: number[] = [];
   mesasAsignadas: { mesaAsignada: number | undefined, asignada: boolean }[] = [];
-  mesaYaAsignada: boolean = false; // Variable para controlar si la mesa ya está asignada
-
+  mesaYaAsignada: boolean = false; // Variable para controlar si la mesa ya está asignada, la usa cuando ingresa un cliente y escanea un qr asignado a otro cliente
+  numeroMesaMaitre: number = 0;
 
   form = this.fb.nonNullable.group({
     asignarMesa: ['', [Validators.required, Validators.min(1), Validators.max(10)]],
@@ -166,7 +164,7 @@ export class MaitrePage implements OnInit {
     }
   }
 
-  //perfil actual
+  //corrobora si el perfil actual es un cliente y si lo es muestra su mesa asignada
   async checkUserProfile() {
     try {
       const currentUserEmail = await firstValueFrom(this.authService.actual());
@@ -183,6 +181,8 @@ export class MaitrePage implements OnInit {
     }
   }
 
+  //carga la mesa asignada del usuario actual en mesaAsignada que debe ser cliente, trabaja con checkUserProfile()
+  //mesaAsignada luego es usada en asignarNumeroMesa(number: number) para validar que sea == 0 y cargar su qr en la base
   async loadMesaAsignada(email: string) {
     try {
       const ultimoPerfil = await this.clienteService.obtenerClienteEnListaEspera(true);
@@ -201,7 +201,7 @@ export class MaitrePage implements OnInit {
     return [1, 2, 3, 4, 5]; // Números de mesa disponibles
   }
 
-  //carga todas las mesas asignadas en this.mesasAsignadas
+  //carga todas las mesas asignadas de la base en this.mesasAsignadas para trabajar con estaAsignada(number: number) y bloquear las asignadas en la lista desplegable así ya no se pueden elegir
   async loadMesasAsignadas() {
     try {
       const mesas = await this.clienteService.obtenerMesasAsignadas();
@@ -214,12 +214,15 @@ export class MaitrePage implements OnInit {
     }
   }
 
-  estaAsignada(number: number): boolean {
-    return this.mesasAsignadas.some(mesa => mesa.mesaAsignada === number && mesa.asignada);
-  }
+  // //devuelve true si hay alguna mesa ya asignada a algun cliente para bloquear ese numero en la lista de mesas
+  // estaAsignada(number: number): boolean {
+  //   return this.mesasAsignadas.some(mesa => mesa.mesaAsignada === number && mesa.asignada);
+  // }
 
-  // Agrega el numero de mesa y el qr al cliente conectado, que tenga online en true
+
+  // Agrega el numero de mesa y el qr al cliente conectado, que tenga listaDeEspera en true
   async asignarNumeroMesa(number: number) {
+
     try {
       const ultimoPerfil = await this.clienteService.obtenerClienteEnListaEspera(true);
       if (ultimoPerfil) {
@@ -232,30 +235,38 @@ export class MaitrePage implements OnInit {
 
           await this.clienteService.modificarMesaAsignada(ultimoPerfil.email, number, this.qrCodeImageUrl);
           console.log(`Número de mesa asignado: ${number}`);
+          this.numeroMesaMaitre = number;
+
+          this.Toast.fire({
+            icon: 'success',
+            title: `Número de mesa asignado: ${number}`,
+            color: '#ffffff',
+          });
         } else {
-          console.error('El perfil conectado no tiene un correo electrónico o ya tiene una mesa asignada.');
+          this.Toast.fire({
+            icon: 'error',
+            title: 'El cliente ya tiene una mesa asignada.',
+            color: '#ffffff',
+          });
+          console.error('El cliente ya tiene una mesa asignada.');
         }
       } else {
-        console.error('No se encontró ningún perfil conectado.');
+        this.Toast.fire({
+          icon: 'error',
+          title: 'El cliente no está en la lista de espera',
+          color: '#ffffff',
+        });
+        console.error('El cliente no está en la lista de espera');
+
       }
     } catch (error) {
-      console.error('Error al asignar número al último perfil conectado:', error);
+      this.Toast.fire({
+        icon: 'error',
+        title: 'Error al asignar número al perfil en lista de espera',
+        color: '#ffffff',
+      });
+      console.error('Error al asignar número al perfil en lista de espera:', error);
     }
-  }
-
-
-  //numero de mesa en nuemero
-  getSelectedMesaNumero(): number {
-    const value: string | null | undefined = this.form.get('asignarMesa')?.value;
-    const selectedNumber = value !== null && value !== undefined ? parseInt(value, 10) : NaN;
-    return selectedNumber;
-  }
-
-  //numero de mesa en string
-  getSelectedMesaMensaje(): number | string {
-    const value: string | null | undefined = this.form.get('asignarMesa')?.value;
-    const selectedNumber = value !== null && value !== undefined ? parseInt(value, 10) : NaN;
-    return isNaN(selectedNumber) ? 'Aún no hay mesa seleccionada' : selectedNumber;
   }
 
   private Toast = Swal.mixin({
@@ -272,20 +283,6 @@ export class MaitrePage implements OnInit {
   });
 
   async onSubmit(): Promise<void> {
-    if (this.form.valid) {
-      try {
-
-      } catch (error) {
-        console.error('Error al asignar numero de mesa:', error);
-      }
-    } else {
-      console.error('Formulario inválido');
-      this.Toast.fire({
-        icon: 'error',
-        title: 'Ingrese los datos correctos!',
-        color: '#ffffff',
-      });
-    }
   }
 
   atras() {

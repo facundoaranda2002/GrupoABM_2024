@@ -22,29 +22,19 @@ ion-content {
 }
 
 .qr-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  /* Centra horizontalmente */
-  justify-content: center;
-  /* Centra verticalmente */
-  height: 50%;
-  /* Opcional: Ajusta la altura según sea necesario */
+  text-align: center;
+  margin-top: 20px;
+}
+
+.qr-container ion-label {
+  font-size: 24px;
+  /* Tamaño de fuente para la frase */
+  font-weight: bold;
 }
 
 .qr-code-wrapper {
-  margin-top: 16px;
-  /* Espacio superior entre el texto y el QR */
-}
-
-.qr-code {
-  max-width: 100%;
-  /* Ajusta el tamaño máximo del QR */
-  height: auto;
-  /* Mantiene la proporción del QR */
-}
-
-.center-button {
-  margin-top: 16px;
-  /* Espacio superior para separar los botones */
+  font-size: 36px;
+  /* Tamaño de fuente para el número de mesa */
+  font-weight: bold;
+  margin-top: 10px;
 }

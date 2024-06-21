@@ -9,5 +9,6 @@ export class Usuario {
   password: string = '';
   perfil: string = '';
   estaValidado: string = '';
-  listaDeEspera: boolean= false;
+  listaDeEspera: boolean = false;
+  mesaAsignada: number = 0;/* JM Creó esto para que al crear un cliente anonimo este este campo*/
 }

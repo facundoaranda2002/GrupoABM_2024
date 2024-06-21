@@ -4,17 +4,17 @@
 
     <form id="form" [formGroup]="form" (ngSubmit)="onSubmit()">
       <ion-label class="qr-container">Asignar Mesa</ion-label>
-      <ion-item color="primary">
-        <ion-select formControlName="asignarMesa" placeholder="Selecciona un número">
+      <!-- <ion-item color="primary"> -->
+      <!-- <ion-select formControlName="asignarMesa" placeholder="Selecciona un número">
 
           <ion-select-option *ngFor="let number of numbers" [value]="number" [disabled]="estaAsignada(number)">
             {{ number }}
             <span *ngIf="estaAsignada(number)" style="color: gray; margin-left: 8px;">Esta mesa ya está asignada</span>
           </ion-select-option>
 
-        </ion-select>
+        </ion-select> -->
 
-        <div *ngIf="form.controls['asignarMesa'].invalid && form.controls['asignarMesa'].touched">
+      <!-- <div *ngIf="form.controls['asignarMesa'].invalid && form.controls['asignarMesa'].touched">
           <ion-text color="danger" *ngIf="form.controls['asignarMesa'].errors?.['required']">
             El campo es obligatorio.
           </ion-text>
@@ -25,16 +25,15 @@
             El número no debe ser mayor que 10.
           </ion-text>
         </div>
-      </ion-item>
+      </ion-item> -->
+
 
       <ion-item>
         <ion-label>Número de Mesa Seleccionado:</ion-label>
-        <ion-text>{{ getSelectedMesaMensaje() }}</ion-text>
+        <ion-text>{{ mesaAsignada }}</ion-text>
       </ion-item>
 
       <ion-item>
-        <!-- <ion-button (click)="asignarNumeroMesa()">Asignar número de
-          mesa</ion-button> -->
 
         <ion-grid>
           <ion-row>
@@ -50,10 +49,18 @@
     </form>
 
 
-    <div *ngIf="qrCodeImageUrl" class="qr-container">
+    <!-- esto era para mostrar el qr creado por el maitre -->
+    <!-- <div *ngIf="qrCodeImageUrl" class="qr-container">
       <ion-label>QR para ver tu numero de mesa asignado:</ion-label>
       <div class="qr-code-wrapper">
         <img [src]="qrCodeImageUrl" alt="QR Code" class="qr-code" />
+      </div>
+    </div> -->
+
+    <div *ngIf="qrCodeImageUrl" class="qr-container">
+      <ion-label>Al cliente le corresponde la mesa:</ion-label>
+      <div class="qr-code-wrapper">
+        {{ numeroMesaMaitre }}
       </div>
     </div>
 
