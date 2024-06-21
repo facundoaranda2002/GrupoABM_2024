@@ -24,6 +24,7 @@ import {
 } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/service/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -56,6 +57,20 @@ export class LoginPage implements OnInit {
   authService = inject(AuthService);
   elementRef = inject(ElementRef);
   isToastOpen = false;
+  usuario: any = null;
+
+  private Toast = Swal.mixin({
+    toast: true,
+    position: 'top',
+    background: '#008b3c91',
+    showConfirmButton: false,
+    timer: 2500,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer);
+      toast.addEventListener('mouseleave', Swal.resumeTimer);
+    },
+  });
 
   constructor() { }
 
@@ -65,23 +80,61 @@ export class LoginPage implements OnInit {
     password: ['', Validators.required],
   });
 
-  ngOnInit() { }
+  ngOnInit() { 
+    
+  }
   setOpen(isOpen: boolean) {
     this.isToastOpen = isOpen;
   }
-  onSubmit(): void {
+  async onSubmit(): Promise<void>{
     const value = this.form.getRawValue();
-    this.authService.login(value.email, value.password).subscribe({
-      next: () => {
-        setTimeout(() => {
-          this.router.navigateByUrl('/home');
-        }, 1000);
-      },
-      error: () => {
-        this.setOpen(true);
-        this.form.setValue({ email: '', password: '' });
-      },
-    });
+    let pasa = 1;
+    this.usuario = await this.authService.getUserActual(value.email);
+    if(this.usuario!==null)
+    {
+      if(this.usuario.perfil === 'cliente')
+      {
+        if(this.usuario.estaValidado === 'pendiente')
+        {
+          pasa = 0;
+        }
+        else if(this.usuario.estaValidado === 'rechazado')
+        {
+          pasa = -1;
+        }
+      }
+    }
+    if(pasa === 1)
+    {
+      this.authService.login(value.email, value.password).subscribe({
+        next: () => {
+          setTimeout(() => {
+            this.router.navigateByUrl('/home');
+          }, 1000);
+          this.form.reset();
+        },
+        error: () => {
+          this.setOpen(true);
+          this.form.setValue({ email: '', password: '' });
+        },
+      });
+    }
+    else if(pasa === 0)
+    {
+      this.Toast.fire({
+        icon: 'warning',
+        title: 'Su cuenta esta pendiente de ser aceptada, este atento a su mail',
+        color: '#ffffff',
+      });
+    }
+    else if(pasa === -1)
+    {
+        this.Toast.fire({
+          icon: 'error',
+          title: 'Su cuenta a sido rechazada por un supervisor, lo lamentamos',
+          color: '#ffffff',
+        });
+    }
   }
   goRegister() {
     this.router.navigateByUrl('/register');

@@ -17,21 +17,36 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-button (click)="goRegisterTable()">Alta Mesa</ion-button>
-  <ion-button (click)="goRegisterClient()">Alta Cliente</ion-button>
+  <!-- <ion-button (click)="goRegisterTable()">Alta Mesa</ion-button> -->
+  <!-- <ion-button (click)="goRegisterClient()">Alta Cliente</ion-button> -->
   <!-- <ion-button (click)="goRegisterMaitreAsignaMesa()">Maître Asigna Mesa</ion-button> -->
 
-  <ion-button (click)="goRegisterMaitreAsignaMesa()">
-    {{ isClientProfile ? 'Ir a tu mesa' : 'Maître Asigna Mesa' }}
-  </ion-button>
+  @if(this.profile === 'cliente')
+  {
+    <ion-button (click)="goRegisterMaitreAsignaMesa()">
+      Ir a tu mesa
+    </ion-button>
 
-  <ion-row>
-    <ion-col size="12">
-      <ion-button class="submit" (click)="asignarSalaDeEspera()" expand="block">
-        Escanear
-        <ion-icon slot="end" name="scan-outline"></ion-icon>
-      </ion-button>
-    </ion-col>
-  </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <ion-button class="submit" (click)="asignarSalaDeEspera()" expand="block">
+          Escanear
+          <ion-icon slot="end" name="scan-outline"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  }
+  @if(this.profile === 'maitre')
+  {
+    <ion-button (click)="goRegisterMaitreAsignaMesa()">
+      Maître Asigna Mesa
+    </ion-button>
+  }
+  @if(this.profile === 'dueno' || this.profile === 'supervisor')
+  {
+    
+  }
+
+  
 
 </ion-content>

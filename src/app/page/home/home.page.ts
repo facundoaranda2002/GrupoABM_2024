@@ -51,7 +51,7 @@ export class HomePage implements OnInit {
   authService = inject(AuthService);
   router = inject(Router);
 
-  isClientProfile: boolean = false;
+  profile: string = "";
 
   scanResoult = '';
   platform = inject(Platform);
@@ -66,22 +66,21 @@ export class HomePage implements OnInit {
       BarcodeScanner.checkPermissions().then();
       BarcodeScanner.removeAllListeners();
     }
-    console.log(this.authService.obtenerAnonimo());
   }
   //
   async checkUserProfile() {
     try {
       const currentUserEmail = await firstValueFrom(this.authService.actual());
-      console.log('currentUserEmail es: ', currentUserEmail);
       if (currentUserEmail) {
         const perfil = await this.authService.getUser(currentUserEmail);
-        if (perfil === 'cliente') {
-          this.isClientProfile = true;
-          console.log('isClientProfile es: ', this.isClientProfile);
+        if (perfil) {
+          this.profile = perfil;
+          console.log('profile es: ', this.profile);
         }
-        console.log('isClientProfile 2 es: ', this.isClientProfile);
+        console.log('profile es 2: ', this.profile);
+      }else{
+        this.authService.obtenerAnonimo();
       }
-      console.log('isClientProfile es 3: ', this.isClientProfile);
     } catch (error) {
       console.error('Error obteniendo perfil de usuario:', error);
     }
@@ -105,40 +104,43 @@ export class HomePage implements OnInit {
     }
   }
   async asignarSalaDeEspera() {
-    // await this.startScan();
-
+    await this.startScan();
     // Comprobar si el scan es correcto
-    if (this.scanResoult == '') {
+    if (this.scanResoult == 'EntrarListaEspera') {
       // si es correcto compruevo que usuario esta (si es anonimo)
+      let usuarioActual;
       if (this.authService.currentUserSig()?.email) {
-        let usuarioActual = await this.authService.getUserActual(
+        usuarioActual = await this.authService.getUserActual(
           this.authService.currentUserSig()?.email
         );
-        const usuarioAux: Usuario = {
-          mail: usuarioActual.mail,
-          nombre: usuarioActual.nombre,
-          apellido: usuarioActual.apellido,
-          DNI: usuarioActual.DNI,
-          foto: usuarioActual.foto,
-          tipo: usuarioActual.tipo,
-          qrDNI: usuarioActual.qrDNI,
-          password: usuarioActual.password,
-          perfil: usuarioActual.perfil,
-          estaValidado: usuarioActual.estaValidado,
-          listaDeEspera: true,
-          mesaAsignada: usuarioActual.mesaAsignada/* JM Creó esto para que al crear un cliente anonimo este este campo*/
-        };
-        this.authService
-          .updateUsuarioCliente(usuarioActual.id, usuarioAux)
-          .then(() => {
-            console.log('modiificacion exitosa');
-          });
       } else {
         // logica si es anonimo
-        let usuarioActual = await this.authService.getUserActual(
+         usuarioActual = await this.authService.getUserActual(
           this.authService.obtenerAnonimo()
         );
       }
+      const usuarioAux: Usuario = {
+        mail: usuarioActual.mail,
+        nombre: usuarioActual.nombre,
+        apellido: usuarioActual.apellido,
+        DNI: usuarioActual.DNI,
+        foto: usuarioActual.foto,
+        tipo: usuarioActual.tipo,
+        qrDNI: usuarioActual.qrDNI,
+        password: usuarioActual.password,
+        perfil: usuarioActual.perfil,
+        estaValidado: usuarioActual.estaValidado,
+        listaDeEspera: true,
+        mesaAsignada: usuarioActual.mesaAsignada
+      };
+      this.authService
+        .updateUsuarioCliente(usuarioActual.id, usuarioAux)
+        .then(() => {
+          console.log('modiificacion exitosa');
+        });
+    }
+    else{
+      // Mensaje error de lector qr
     }
   }
   //Ruteo
@@ -164,6 +166,10 @@ export class HomePage implements OnInit {
   }
 
   goRegisterMaitreAsignaMesa() {
+    this.router.navigateByUrl('/maitre');
+  }
+
+  goAdminClientes() {
     this.router.navigateByUrl('/maitre');
   }
 }
