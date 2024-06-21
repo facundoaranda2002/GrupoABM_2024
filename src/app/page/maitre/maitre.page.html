@@ -3,7 +3,11 @@
   <ng-container *ngIf="!isClientProfile; else clientView">
 
     <form id="form" [formGroup]="form" (ngSubmit)="onSubmit()">
-      <ion-label class="qr-container">Asignar Mesa</ion-label>
+      <ion-item color="primary" class="center-button">
+        <ion-label style="font-size: 25px; font-weight: bold; text-align: center; display: block;">Asignar
+          Mesa</ion-label>
+      </ion-item>
+
       <!-- <ion-item color="primary"> -->
       <!-- <ion-select formControlName="asignarMesa" placeholder="Selecciona un número">
 
@@ -28,17 +32,18 @@
       </ion-item> -->
 
 
-      <ion-item>
+      <!-- <ion-item>
         <ion-label>Número de Mesa Seleccionado:</ion-label>
         <ion-text>{{ mesaAsignada }}</ion-text>
-      </ion-item>
+      </ion-item> -->
 
       <ion-item>
 
         <ion-grid>
           <ion-row>
-            <ion-col size="6" *ngFor="let number of numbers">
-              <ion-button expand="block" (click)="asignarNumeroMesa(number)">
+            <ion-col size="12" *ngFor="let number of numbers">
+              <ion-button expand="block" (click)="asignarNumeroMesa(number)"
+                style="font-size: 25px; font-weight: bold; text-align: center; display: block;">
                 Mesa {{ number }}
               </ion-button>
             </ion-col>
@@ -58,8 +63,9 @@
     </div> -->
 
     <div *ngIf="qrCodeImageUrl" class="qr-container">
-      <ion-label>Al cliente le corresponde la mesa:</ion-label>
-      <div class="qr-code-wrapper">
+      <ion-label style="font-size: 35px; font-weight: bold; text-align: center; display: block;">Al cliente le
+        corresponde la mesa:</ion-label>
+      <div class="qr-code-wrapper" style="font-size: 100px; font-weight: bold; text-align: center; display: block;">
         {{ numeroMesaMaitre }}
       </div>
     </div>
@@ -67,22 +73,44 @@
   </ng-container>
 
   <ng-template #clientView>
-    <div *ngIf="mesaYaAsignada">
-      <ion-text color="danger">Esta mesa la tiene asignada otro cliente, no la puede usar.</ion-text>
-    </div>
 
     <ion-button class="submit" (click)="startScan()" expand="block">
       Escanear Mesa
       <ion-icon slot="end" name="scan-outline"></ion-icon>
     </ion-button>
-    <h1>Mesa escaneada numero: </h1>
-    <h1>{{scanResoult}}</h1>
+    <!-- <h1>Mesa escaneada numero: </h1>
+    <h1>{{scanResoult}}</h1> -->
+    <div *ngIf="yaEscaneada">
+      <div *ngIf="mesaYaAsignada; else notAssigned">
+        <ion-text color="danger"
+          style="font-size: 50px; font-weight: bold; text-align: center; display: block;"><br><br>
+          Esta mesa la tiene asignada otro cliente, no la puede usar.
+        </ion-text>
+      </div>
+      <ng-template #notAssigned>
+        <ion-text style="font-size: 35px; font-weight: bold; text-align: center; display: block;"><br><br>
+          Su mesa es la numero: <br><br><br><br>
+        </ion-text>
+        <ion-text style="font-size: 150px; font-weight: bold; text-align: center; display: block;">
+          <!-- Su mesa es la numero {{scanResoult}} -->
+          {{ mesaAsignada }}
+        </ion-text>
+      </ng-template>
+    </div>
 
   </ng-template>
 
 
-  <ion-item color="primary" class="center-button">
+  <!-- <ion-item color="primary" class="center-button">
     <ion-button type="button" label="atras" (click)="atras()">Volver al Inicio</ion-button>
-  </ion-item>
+  </ion-item> -->
 
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-item color="primary" class="center-button">
+      <ion-button type="button" label="atras" (click)="atras()">Volver al Inicio</ion-button>
+    </ion-item>
+  </ion-toolbar>
+</ion-footer>

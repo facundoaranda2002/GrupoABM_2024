@@ -38,3 +38,23 @@ ion-content {
   font-weight: bold;
   margin-top: 10px;
 }
+
+.center-button {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.submit {
+  font-size: 1.2em;
+}
+
+ion-text {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+ion-item[color="primary"] {
+  --background: var(--ion-color-primary);
+  color: white;
+}

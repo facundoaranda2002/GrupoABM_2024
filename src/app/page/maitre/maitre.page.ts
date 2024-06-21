@@ -39,7 +39,7 @@ import {
   IonFabList,
   IonInput,
   Platform,
-  ModalController, IonCard
+  ModalController, IonCard, IonFooter
 } from '@ionic/angular/standalone';
 
 import { Table } from '../../clases/table';
@@ -58,7 +58,7 @@ import { BarcodeScanner, LensFacing } from '@capacitor-mlkit/barcode-scanning';
   templateUrl: './maitre.page.html',
   styleUrls: ['./maitre.page.scss'],
   standalone: true,
-  imports: [IonCard,
+  imports: [IonFooter, IonCard,
     IonInput,
     IonFabList,
     IonToast,
@@ -126,7 +126,8 @@ export class MaitrePage implements OnInit {
   numbers: number[] = [];
   mesasAsignadas: { mesaAsignada: number | undefined, asignada: boolean }[] = [];
   mesaYaAsignada: boolean = false; // Variable para controlar si la mesa ya está asignada, la usa cuando ingresa un cliente y escanea un qr asignado a otro cliente
-  numeroMesaMaitre: number = 0;
+  numeroMesaMaitre: number = 0;//sirve para mostrar el numero de mesa que asigna el maitre
+  yaEscaneada: boolean = false;
 
   form = this.fb.nonNullable.group({
     asignarMesa: ['', [Validators.required, Validators.min(1), Validators.max(10)]],
@@ -150,18 +151,42 @@ export class MaitrePage implements OnInit {
     if (data) {
       this.scanResoult = data?.barcode?.displayValue;
       // this.form.patchValue({ mesaAsignada: this.scanResoult }); // Actualiza el campo mesaAsignada en el formulario
-      if (this.mesaAsignada !== parseInt(data?.barcode?.displayValue)) {
-        // if (this.mesaAsignada !== 1) {
+
+      // Extraer el número de mesa del texto del código QR
+      const mesaNumero = this.extractMesaNumber(this.scanResoult);
+      //const mesaNumero = 4;//esto para probar desde la pc, simula el dato devuelto del qr
+      this.yaEscaneada = true;
+      //mesaAsignda es la mesa de la base
+      // if (this.mesaAsignada !== parseInt(data?.barcode?.displayValue)) {
+      if (this.mesaAsignada !== mesaNumero) {
+        this.Toast.fire({
+          icon: 'error',
+          title: `Esta mesa la tiene asignada otro cliente, no la puede usar.`,
+          color: '#ffffff',
+        });
 
         console.log('El código QR escaneado no coincide con la mesa asignada al cliente.');
         // Aquí podrías mostrar un mensaje de error o realizar alguna acción adicional.
         this.mesaYaAsignada = true;
       } else {
+
+        this.Toast.fire({
+          icon: 'success',
+          title: 'Esta es su mesa asignada',
+          color: '#ffffff',
+        });
+
         console.log('El código QR escaneado coincide con la mesa asignada al cliente.');
         // Aquí podrías continuar con la lógica necesaria si el escaneo es correcto.
         this.mesaYaAsignada = false;
       }
     }
+  }
+
+  // Método para extraer el número de mesa del texto del código QR
+  extractMesaNumber(scanResult: string): number | null {
+    const match = scanResult.match(/Mesa\s+(\d+)/i);
+    return match ? parseInt(match[1], 10) : null;
   }
 
   //corrobora si el perfil actual es un cliente y si lo es muestra su mesa asignada
