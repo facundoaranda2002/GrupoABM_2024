@@ -255,7 +255,7 @@ export class RegisterPage implements OnInit {
         cliente.nombre = value.nombre;
         cliente.apellido = '';
         cliente.DNI = 0;
-        cliente.foto = value.foto;
+        cliente.foto = await this.photoService.getPhotoUrlClient(value.foto);;
         cliente.tipo = value.tipo;
         cliente.qrDNI = '';
         cliente.password = '';
@@ -269,7 +269,7 @@ export class RegisterPage implements OnInit {
         cliente.nombre = value.nombre;
         cliente.apellido = value.apellido;
         cliente.DNI = parseInt(value.DNI, 10);
-        cliente.foto = value.foto;
+        cliente.foto = await this.photoService.getPhotoUrlClient(value.foto);
         cliente.tipo = value.tipo;
         cliente.qrDNI = '';
         cliente.password = value.password;

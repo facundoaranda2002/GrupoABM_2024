@@ -187,7 +187,7 @@ export class AltaMesaPage implements OnInit {
     }
     mesa.foto = value.foto;
 
-    this.photoUrl = await this.photoService.getPhotoUrl(value.foto);
+    //this.photoUrl = await this.photoService.getPhotoUrl(value.foto);
 
     mesa.qr = await this.generateQRCode(
       `Mesa: ${mesa.numeroMesa}, Comensales: ${mesa.comensales}, Tipo: ${mesa.tipoMesa}, Foto: ${this.photoUrl}`

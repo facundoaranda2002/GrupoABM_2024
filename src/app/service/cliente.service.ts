@@ -149,4 +149,26 @@ export class ClienteService {
 
     return users;
   }
+
+  public async actualizarEstadoCliente(userUID: string, validado : string): Promise<void> {
+    const userCollection = collection(this.firestore, 'Usuarios');
+    const docRef = doc(userCollection, userUID);
+
+    await updateDoc(docRef, 
+    {
+      estaValidado: validado,
+    });
+  }
+
+  public async GetUserUIDByUserEmail(userEmail: string): Promise<string | null> {
+    const userCollection = collection(this.firestore, 'Usuarios');
+    const q = query(userCollection, where('mail', '==', userEmail));
+    const querySnapshot = await getDocs(q);
+  
+    if (querySnapshot.empty) {
+      return null;
+    }
+    const userDoc = querySnapshot.docs[0];
+    return userDoc.id;
+  }
 }

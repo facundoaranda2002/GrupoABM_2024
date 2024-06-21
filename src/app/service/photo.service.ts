@@ -38,7 +38,7 @@ export class PhotoService {
       .then((res) => {
         res.items.forEach((photo) => {
           getDownloadURL(photo).then((path) => {
-            const [email, timestamp] = photo.name.split(' ');
+            const timestamp = photo.name; // el nombre ahora es solo el timestamp
             photoList.push({
               name: photo.name,
               webViewPath: path,
@@ -53,7 +53,18 @@ export class PhotoService {
       });
   }
 
-  async getPhotoUrl(photoName: string): Promise<string> {
+  async getPhotoUrlClient(photoName: string): Promise<string> {
+    const storageRef = ref(this.storage, `${this.CLIENT_BUCKET}/${photoName}`);
+    try {
+      const url = await getDownloadURL(storageRef);
+      return url;
+    } catch (error) {
+      console.error('Error getting photo URL:', error);
+      return '';
+    }
+  }
+
+  async getPhotoUrlMesa(photoName: string): Promise<string> {
     const storageRef = ref(this.storage, `${this.NICE_BUCKET}/${photoName}`);
     try {
       const url = await getDownloadURL(storageRef);
@@ -83,10 +94,7 @@ export class PhotoService {
     });
 
     const date = Date.now();
-    const storageRef = ref(
-      this.storage,
-      `${bucket}/${this.authService.actual()} ${date}`
-    );
+    const storageRef = ref(this.storage, `${bucket}/${date}`); // el nombre del archivo es solo el timestamp
 
     try {
       await uploadString(

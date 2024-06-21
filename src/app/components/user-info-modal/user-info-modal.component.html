@@ -1,0 +1,36 @@
+<div class="background">
+  <div class="user-name">
+    <span>{{user.mail}}</span>
+  </div>
+  <div class="info-container">
+    <div class="info-row">
+      <span>Nombre</span>
+      <span>{{user.nombre}}</span>
+    </div>
+    <div class="info-row">
+      <span>Apellido</span>
+      <span>{{user.apellido}}</span>
+    </div>
+    <div class="info-row">
+      <span>DNI</span>
+      <span>{{user.DNI}}</span>
+    </div>
+    <div class="image">
+      <img [src]="user.foto">
+    </div>
+  </div>
+  <div class="buttons-container">
+    <button type="button" class="btn btn-light button-option button-back" (click)="onDecideClick(null)">
+      <i class="bi bi-arrow-left"></i>
+      <span>VOLVER</span>
+    </button>
+    <button type="button" class="btn btn-light button-option button-reject" (click)="onDecideClick(false)">
+      <i class="bi bi-x"></i>
+      <span>RECHAZAR</span>
+    </button>
+    <button type="button" class="btn btn-light button-option button-accept" (click)="onDecideClick(true)">
+      <i class="bi bi-check"></i>
+      <span>ACEPTAR</span>
+    </button>
+  </div>
+</div>

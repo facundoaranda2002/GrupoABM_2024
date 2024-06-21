@@ -1,16 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {
-  IonContent,
-  IonHeader,
-  IonTitle,
-  IonToolbar,
-} from '@ionic/angular/standalone';
+import { IonicModule, ModalController } from '@ionic/angular'; // Importa IonicModule y ModalController
 import { ClienteService } from 'src/app/service/cliente.service';
 import { AuthService } from 'src/app/service/auth.service';
-import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { UserInfoModalComponent } from 'src/app/components/user-info-modal/user-info-modal.component';
 
 @Component({
   selector: 'app-admin',
@@ -18,16 +13,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./admin.page.scss'],
   standalone: true,
   imports: [
-    IonContent,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
     CommonModule,
     FormsModule,
+    IonicModule, // Asegúrate de incluir IonicModule aquí
   ],
 })
 export class AdminPage implements OnInit {
   public usersNotAccepted: any[] = [];
+
   constructor(
     public data: ClienteService,
     public modalController: ModalController,
@@ -39,10 +32,8 @@ export class AdminPage implements OnInit {
     this.usersNotAccepted = await this.data.obtenerUsuariosPendientes();
   }
 
-  /*
-  public async onUserClick(userName : string)
-  {
-    let user = await this.data.getUserByUserName(userName);
+  public async onUserClick(mail: string) {
+    let user = await this.auth.getUserActual(mail);
 
     console.log(user['id']);
     const modal = await this.modalController.create({
@@ -52,14 +43,12 @@ export class AdminPage implements OnInit {
       },
     });
 
-    modal.onDidDismiss().then(async () => 
-    {
-      this.usersNotAccepted = await this.data.GetUsersNotAccepted();
+    modal.onDidDismiss().then(async () => {
+      this.usersNotAccepted = await this.data.obtenerUsuariosPendientes();
     });
-  
+
     await modal.present();
   }
-    */
 
   volver() {
     this.router.navigateByUrl('/home');
