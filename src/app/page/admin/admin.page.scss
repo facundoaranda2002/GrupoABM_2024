@@ -7,13 +7,13 @@ ion-content {
     }
 
     .user-container
-{
+    {
     border-radius: 0 10px 10px 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 20px;
-    background-color: #53151430;
+    background-color: #dfc99b;
     margin-bottom: 10px;
     font-size: 20px;
     border-bottom: #70303960 5px solid;
@@ -23,7 +23,7 @@ ion-content {
         padding: 10px;
         border-radius: 8px;
     }
-}
+    }
 
 .users
 {
@@ -35,7 +35,7 @@ ion-content {
 .users-container
 {
     height: 85%;
-    background-color: #b841417b;
+    background-color: #b9b273;
     border-radius: 20px;
 }
 
@@ -43,7 +43,7 @@ h1
 {
     text-align: center;
     font-size: 30px;
-    background-color: #53151490;
+    background-color: #ecbebd;
     padding: 10px;
     border-radius: 20px 20px 20px 0px;
 }
