@@ -40,7 +40,7 @@ export class ClienteService {
   async modificarMesaAsignada(
     email: string,
     nuevaMesa: number,
-    nuevoQrMesaAsignada: string
+    nuevoQrMesaAsignada: string | undefined
   ): Promise<void> {
     const coleccion = collection(this.firestore, 'Usuarios');
     const q = query(coleccion, where('mail', '==', email));
@@ -150,21 +150,25 @@ export class ClienteService {
     return users;
   }
 
-  public async actualizarEstadoCliente(userUID: string, validado : string): Promise<void> {
+  public async actualizarEstadoCliente(
+    userUID: string,
+    validado: string
+  ): Promise<void> {
     const userCollection = collection(this.firestore, 'Usuarios');
     const docRef = doc(userCollection, userUID);
 
-    await updateDoc(docRef, 
-    {
+    await updateDoc(docRef, {
       estaValidado: validado,
     });
   }
 
-  public async GetUserUIDByUserEmail(userEmail: string): Promise<string | null> {
+  public async GetUserUIDByUserEmail(
+    userEmail: string
+  ): Promise<string | null> {
     const userCollection = collection(this.firestore, 'Usuarios');
     const q = query(userCollection, where('mail', '==', userEmail));
     const querySnapshot = await getDocs(q);
-  
+
     if (querySnapshot.empty) {
       return null;
     }

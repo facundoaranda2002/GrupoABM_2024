@@ -58,3 +58,43 @@ ion-item {
   --background: #19101e;
   color: white;
 }
+
+ion-header {
+  --font-size: 40px;
+  --height: 80px;
+}
+
+ion-content {
+  --background: white;
+  font-size: 30px;
+  ion-icon {
+    margin-top: 10px;
+    margin-left: 10px;
+  }
+  .users {
+    padding: 20px;
+    height: 90%;
+    overflow-y: scroll;
+    .user-container {
+      border-radius: 0 10px 10px 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background-color: #f67609;
+      margin-bottom: 10px;
+      border-bottom: #7a0c0f 5px solid;
+      i {
+        margin: 0px 10px;
+        padding: 10px;
+        border-radius: 8px;
+      }
+      h1 {
+        text-align: center;
+        background-color: #461514;
+        padding: 10px;
+        border-radius: 20px 20px 20px 0px;
+      }
+    }
+  }
+}

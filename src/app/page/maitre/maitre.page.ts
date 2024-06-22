@@ -39,7 +39,9 @@ import {
   IonFabList,
   IonInput,
   Platform,
-  ModalController, IonCard, IonFooter
+  ModalController,
+  IonCard,
+  IonFooter,
 } from '@ionic/angular/standalone';
 
 import { Table } from '../../clases/table';
@@ -52,13 +54,16 @@ import { firstValueFrom } from 'rxjs';
 import Swal from 'sweetalert2';
 import { BarcodeScanningModalComponent } from './barcode-scanning-modal.component';
 import { BarcodeScanner, LensFacing } from '@capacitor-mlkit/barcode-scanning';
+import { Usuario } from 'src/app/clases/usuario';
 
 @Component({
   selector: 'app-maitre',
   templateUrl: './maitre.page.html',
   styleUrls: ['./maitre.page.scss'],
   standalone: true,
-  imports: [IonFooter, IonCard,
+  imports: [
+    IonFooter,
+    IonCard,
     IonInput,
     IonFabList,
     IonToast,
@@ -90,11 +95,10 @@ import { BarcodeScanner, LensFacing } from '@capacitor-mlkit/barcode-scanning';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    BarcodeScanningModalComponent
+    BarcodeScanningModalComponent,
   ],
 })
 export class MaitrePage implements OnInit {
-
   ngOnInit() {
     this.numbers = this.generateNumbers(); // Genera los números disponibles
     this.loadMesasAsignadas();
@@ -105,7 +109,38 @@ export class MaitrePage implements OnInit {
       BarcodeScanner.checkPermissions().then();
       BarcodeScanner.removeAllListeners();
     }
+    this.authService.getUsuarios().subscribe((data) => {
+      this.usuariosSinMesa = data.filter((user) => {
+        return (
+          user.mesaAsignada == 0 &&
+          user.perfil == 'cliente' &&
+          user.listaDeEspera
+        );
+      });
+    });
+  }
 
+  usuarioAsignar?: any;
+
+  async onUserClick(mail: string) {
+    let usuarioActual = await this.authService.getUserActual(mail);
+    // console.log(usuarioActual);
+    // const auxUsuario: Usuario = {
+    //   mail: usuarioActual.mail,
+    //   nombre: usuarioActual.nombre,
+    //   apellido: usuarioActual.apellido,
+    //   DNI: usuarioActual.DNI,
+    //   foto: usuarioActual.foto,
+    //   tipo: usuarioActual.tipo,
+    //   qrDNI: usuarioActual.qrDNI,
+    //   password: usuarioActual.password,
+    //   perfil: usuarioActual.perfil,
+    //   estaValidado: usuarioActual.estaValidado,
+    //   listaDeEspera: usuarioActual.listaDeEspera,
+    //   mesaAsignada: 1,
+    // };
+    // this.authService.updateUsuarioCliente(usuarioActual.id, auxUsuario);
+    this.usuarioAsignar = usuarioActual;
   }
 
   platform = inject(Platform);
@@ -118,22 +153,26 @@ export class MaitrePage implements OnInit {
   clienteService = inject(ClienteService);
   modalController: ModalController = inject(ModalController);
 
-
   qrCodeImageUrl: string | undefined;
-  mesaAsignada: number | undefined;//esta variable la uso para mostrar la mesa asignada siendo cliente
+  mesaAsignada: number | undefined; //esta variable la uso para mostrar la mesa asignada siendo cliente
   scanResoult = '';
   // numbers: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   numbers: number[] = [];
-  mesasAsignadas: { mesaAsignada: number | undefined, asignada: boolean }[] = [];
+  mesasAsignadas: { mesaAsignada: number | undefined; asignada: boolean }[] =
+    [];
   mesaYaAsignada: boolean = false; // Variable para controlar si la mesa ya está asignada, la usa cuando ingresa un cliente y escanea un qr asignado a otro cliente
-  numeroMesaMaitre: number = 0;//sirve para mostrar el numero de mesa que asigna el maitre
+  numeroMesaMaitre: number = 0; //sirve para mostrar el numero de mesa que asigna el maitre
   yaEscaneada: boolean = false;
 
   form = this.fb.nonNullable.group({
-    asignarMesa: ['', [Validators.required, Validators.min(1), Validators.max(10)]],
+    asignarMesa: [
+      '',
+      [Validators.required, Validators.min(1), Validators.max(10)],
+    ],
   });
 
   isClientProfile: boolean = false;
+  usuariosSinMesa: Usuario[] = [];
 
   //escaneo
   async startScan() {
@@ -165,18 +204,21 @@ export class MaitrePage implements OnInit {
           color: '#ffffff',
         });
 
-        console.log('El código QR escaneado no coincide con la mesa asignada al cliente.');
+        console.log(
+          'El código QR escaneado no coincide con la mesa asignada al cliente.'
+        );
         // Aquí podrías mostrar un mensaje de error o realizar alguna acción adicional.
         this.mesaYaAsignada = true;
       } else {
-
         this.Toast.fire({
           icon: 'success',
           title: 'Esta es su mesa asignada',
           color: '#ffffff',
         });
 
-        console.log('El código QR escaneado coincide con la mesa asignada al cliente.');
+        console.log(
+          'El código QR escaneado coincide con la mesa asignada al cliente.'
+        );
         // Aquí podrías continuar con la lógica necesaria si el escaneo es correcto.
         this.mesaYaAsignada = false;
       }
@@ -200,6 +242,17 @@ export class MaitrePage implements OnInit {
           // await this.loadQrForClient(currentUserEmail);
           await this.loadMesaAsignada(currentUserEmail);
         }
+      } else {
+        if (this.authService.obtenerAnonimo()) {
+          const perfil = await this.authService.getUser(
+            this.authService.obtenerAnonimo()
+          );
+          if (perfil === 'cliente') {
+            this.isClientProfile = true;
+            // await this.loadQrForClient(currentUserEmail);
+            await this.loadMesaAsignada(this.authService.obtenerAnonimo());
+          }
+        }
       }
     } catch (error) {
       console.error('Error obteniendo perfil de usuario:', error);
@@ -208,14 +261,17 @@ export class MaitrePage implements OnInit {
 
   //carga la mesa asignada del usuario actual en mesaAsignada que debe ser cliente, trabaja con checkUserProfile()
   //mesaAsignada luego es usada en asignarNumeroMesa(number: number) para validar que sea == 0 y cargar su qr en la base
-  async loadMesaAsignada(email: string) {
+  async loadMesaAsignada(email: string | null) {
     try {
-      const ultimoPerfil = await this.clienteService.obtenerClienteEnListaEspera(true);
+      const ultimoPerfil =
+        await this.clienteService.obtenerClienteEnListaEspera(true);
       if (ultimoPerfil && ultimoPerfil.email === email) {
         this.mesaAsignada = ultimoPerfil.mesaAsignada;
-        console.log(" mesaAsignada: ", this.mesaAsignada);
+        console.log(' mesaAsignada: ', this.mesaAsignada);
       } else {
-        console.error('No se encontró ningún perfil conectado o el email no coincide.');
+        console.error(
+          'No se encontró ningún perfil conectado o el email no coincide.'
+        );
       }
     } catch (error) {
       console.error('Error al cargar QR para el cliente:', error);
@@ -230,9 +286,9 @@ export class MaitrePage implements OnInit {
   async loadMesasAsignadas() {
     try {
       const mesas = await this.clienteService.obtenerMesasAsignadas();
-      this.mesasAsignadas = mesas.map(mesa => ({
+      this.mesasAsignadas = mesas.map((mesa) => ({
         mesaAsignada: mesa.mesaAsignada,
-        asignada: typeof mesa.mesaAsignada === 'number'
+        asignada: typeof mesa.mesaAsignada === 'number',
       }));
     } catch (error) {
       console.error('Error al cargar mesas asignadas:', error);
@@ -244,21 +300,22 @@ export class MaitrePage implements OnInit {
   //   return this.mesasAsignadas.some(mesa => mesa.mesaAsignada === number && mesa.asignada);
   // }
 
-
   // Agrega el numero de mesa y el qr al cliente conectado, que tenga listaDeEspera en true
   async asignarNumeroMesa(number: number) {
-
     try {
-      const ultimoPerfil = await this.clienteService.obtenerClienteEnListaEspera(true);
-      if (ultimoPerfil) {
-        console.log('Último perfil conectado:', ultimoPerfil);
-        console.log('Último perfil conectado mail:', ultimoPerfil.email);
+      if (this.usuarioAsignar) {
+        console.log(this.usuarioAsignar);
+        if (this.usuarioAsignar.mail && this.usuarioAsignar.mesaAsignada == 0) {
+          this.usuarioAsignar.qrMesaAsignada = await this.generateQRCode(
+            `${number}`
+          );
+          this.qrCodeImageUrl = this.usuarioAsignar.qrMesaAsignada;
 
-        if (ultimoPerfil.email && ultimoPerfil.mesaAsignada == 0) {
-          ultimoPerfil.qrMesaAsignada = await this.generateQRCode(`${number}`);
-          this.qrCodeImageUrl = ultimoPerfil.qrMesaAsignada;
-
-          await this.clienteService.modificarMesaAsignada(ultimoPerfil.email, number, this.qrCodeImageUrl);
+          await this.clienteService.modificarMesaAsignada(
+            this.usuarioAsignar.mail,
+            number,
+            this.qrCodeImageUrl
+          );
           console.log(`Número de mesa asignado: ${number}`);
           this.numeroMesaMaitre = number;
 
@@ -282,7 +339,6 @@ export class MaitrePage implements OnInit {
           color: '#ffffff',
         });
         console.error('El cliente no está en la lista de espera');
-
       }
     } catch (error) {
       this.Toast.fire({
@@ -290,7 +346,10 @@ export class MaitrePage implements OnInit {
         title: 'Error al asignar número al perfil en lista de espera',
         color: '#ffffff',
       });
-      console.error('Error al asignar número al perfil en lista de espera:', error);
+      console.error(
+        'Error al asignar número al perfil en lista de espera:',
+        error
+      );
     }
   }
 
@@ -307,8 +366,7 @@ export class MaitrePage implements OnInit {
     },
   });
 
-  async onSubmit(): Promise<void> {
-  }
+  async onSubmit(): Promise<void> {}
 
   atras() {
     this.router.navigateByUrl('/home');

@@ -13,34 +13,20 @@
         >
       </ion-item>
 
-      <!-- <ion-item color="primary"> -->
-      <!-- <ion-select formControlName="asignarMesa" placeholder="Selecciona un número">
-
-          <ion-select-option *ngFor="let number of numbers" [value]="number" [disabled]="estaAsignada(number)">
-            {{ number }}
-            <span *ngIf="estaAsignada(number)" style="color: gray; margin-left: 8px;">Esta mesa ya está asignada</span>
-          </ion-select-option>
-
-        </ion-select> -->
-
-      <!-- <div *ngIf="form.controls['asignarMesa'].invalid && form.controls['asignarMesa'].touched">
-          <ion-text color="danger" *ngIf="form.controls['asignarMesa'].errors?.['required']">
-            El campo es obligatorio.
-          </ion-text>
-          <ion-text color="danger" *ngIf="form.controls['asignarMesa'].errors?.['min']">
-            El número debe ser al menos 1.
-          </ion-text>
-          <ion-text color="danger" *ngIf="form.controls['asignarMesa'].errors?.['max']">
-            El número no debe ser mayor que 10.
-          </ion-text>
+      <!-- Listado usuarios sin asignar mesa (campo 0 )-->
+      @if(!usuarioAsignar){
+      <div class="users">
+        <div
+          class="user-container"
+          (click)="onUserClick(user.mail)"
+          *ngFor="let user of this.usuariosSinMesa"
+        >
+          <div>
+            <span>{{user.nombre}}</span>
+          </div>
         </div>
-      </ion-item> -->
-
-      <!-- <ion-item>
-        <ion-label>Número de Mesa Seleccionado:</ion-label>
-        <ion-text>{{ mesaAsignada }}</ion-text>
-      </ion-item> -->
-
+      </div>
+      }@else{
       <ion-item>
         <ion-grid>
           <ion-row>
@@ -61,6 +47,7 @@
           </ion-row>
         </ion-grid>
       </ion-item>
+      }
     </form>
 
     <!-- esto era para mostrar el qr creado por el maitre -->

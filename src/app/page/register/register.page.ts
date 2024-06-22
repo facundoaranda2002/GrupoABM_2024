@@ -192,8 +192,6 @@ export class RegisterPage implements OnInit {
       this.form.get('apellido')?.updateValueAndValidity();
       this.form.get('DNI')?.clearValidators();
       this.form.get('DNI')?.updateValueAndValidity();
-      this.form.get('foto')?.clearValidators();
-      this.form.get('foto')?.updateValueAndValidity();
       this.form.get('password')?.clearValidators();
       this.form.get('password')?.updateValueAndValidity();
       this.form.get('mail')?.clearValidators();
@@ -206,7 +204,10 @@ export class RegisterPage implements OnInit {
         if (cliente) {
           // Se guarda el cliente en la base de datos
           if (this.form.getRawValue().tipo == 'anonimo') {
-            this.altaAnonimo(cliente);
+            this.altaAnonimo(cliente).then(() => {
+              //
+            });
+            //
             this.authService.agregarAnonimo(cliente.mail);
             this.router.navigateByUrl('/home');
           } else {
@@ -255,7 +256,7 @@ export class RegisterPage implements OnInit {
         cliente.nombre = value.nombre;
         cliente.apellido = '';
         cliente.DNI = 0;
-        cliente.foto = await this.photoService.getPhotoUrlClient(value.foto);;
+        cliente.foto = await this.photoService.getPhotoUrlClient(value.foto);
         cliente.tipo = value.tipo;
         cliente.qrDNI = '';
         cliente.password = '';

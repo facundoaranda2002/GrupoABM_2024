@@ -22,6 +22,7 @@ import {
   DocumentData,
   where,
   writeBatch,
+  collectionData,
 } from '@angular/fire/firestore';
 
 import { Observable, from, of, BehaviorSubject } from 'rxjs';
@@ -49,8 +50,15 @@ export class AuthService {
     );
   }
 
+  getUsuarios() {
+    const usersCollection = collection(this.firestore, 'Usuarios');
+    return collectionData(usersCollection, { idField: 'id' }) as Observable<
+      any[]
+    >;
+  }
+
   //Busco en la colección Usuarios si hay un mail cargado igual al que estoy usando para encontrar el perfil
-  async getUser(email: string): Promise<string | null> {
+  async getUser(email: string | null): Promise<string | null> {
     const usersCollection = collection(this.firestore, 'Usuarios');
     const q = query(usersCollection, where('mail', '==', email)); // Declaramos explícitamente el tipo de la consulta
     const usersSnapshot = await getDocs(q);
