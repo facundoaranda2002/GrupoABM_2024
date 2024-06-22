@@ -191,6 +191,8 @@ export class MaitrePage implements OnInit {
       this.scanResoult = data?.barcode?.displayValue;
       // this.form.patchValue({ mesaAsignada: this.scanResoult }); // Actualiza el campo mesaAsignada en el formulario
 
+
+      console.log("MesaAsignada anonimo: ", this.mesaAsignada);
       // Extraer el número de mesa del texto del código QR
       const mesaNumero = this.extractMesaNumber(this.scanResoult);
       //const mesaNumero = 4;//esto para probar desde la pc, simula el dato devuelto del qr
@@ -264,10 +266,17 @@ export class MaitrePage implements OnInit {
   async loadMesaAsignada(email: string | null) {
     try {
       const ultimoPerfil =
-        await this.clienteService.obtenerClienteEnListaEspera(true);
+        // await this.clienteService.obtenerClienteEnListaEspera(true);
+        await this.clienteService.obtenerClienteEnListaEspera(email);
+
+      if (ultimoPerfil) {
+        console.log("ultimoPerfil en loadMesaAsignada(): ", ultimoPerfil.email);
+        console.log("mail de ultimoPerfil en loadMesaAsignada(): ", email);
+      }
+
       if (ultimoPerfil && ultimoPerfil.email === email) {
         this.mesaAsignada = ultimoPerfil.mesaAsignada;
-        console.log(' mesaAsignada: ', this.mesaAsignada);
+        console.log(' mesaAsignada en loadMesaAsignada(): ', this.mesaAsignada);
       } else {
         console.error(
           'No se encontró ningún perfil conectado o el email no coincide.'
@@ -282,7 +291,8 @@ export class MaitrePage implements OnInit {
     return [1, 2, 3, 4, 5]; // Números de mesa disponibles
   }
 
-  //carga todas las mesas asignadas de la base en this.mesasAsignadas para trabajar con estaAsignada(number: number) y bloquear las asignadas en la lista desplegable así ya no se pueden elegir
+  //carga todas las mesas asignadas de la base en this.mesasAsignadas para trabajar con estaAsignada(number: number)
+  // y bloquear las asignadas en la lista desplegable así ya no se pueden elegir
   async loadMesasAsignadas() {
     try {
       const mesas = await this.clienteService.obtenerMesasAsignadas();
@@ -295,10 +305,10 @@ export class MaitrePage implements OnInit {
     }
   }
 
-  // //devuelve true si hay alguna mesa ya asignada a algun cliente para bloquear ese numero en la lista de mesas
-  // estaAsignada(number: number): boolean {
-  //   return this.mesasAsignadas.some(mesa => mesa.mesaAsignada === number && mesa.asignada);
-  // }
+  //devuelve true si hay alguna mesa ya asignada a algun cliente para bloquear ese numero en la lista de mesas
+  estaAsignada(number: number): boolean {
+    return this.mesasAsignadas.some(mesa => mesa.mesaAsignada === number && mesa.asignada);
+  }
 
   // Agrega el numero de mesa y el qr al cliente conectado, que tenga listaDeEspera en true
   async asignarNumeroMesa(number: number) {
@@ -366,7 +376,7 @@ export class MaitrePage implements OnInit {
     },
   });
 
-  async onSubmit(): Promise<void> {}
+  async onSubmit(): Promise<void> { }
 
   atras() {
     this.router.navigateByUrl('/home');

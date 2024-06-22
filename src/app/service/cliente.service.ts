@@ -27,7 +27,7 @@ export class ClienteService {
     private firestore: Firestore,
     private authService: AuthService,
     private auth: AuthService
-  ) {}
+  ) { }
 
   AltaCliente(user: Usuario) {
     const coleccion = collection(this.firestore, 'Usuarios');
@@ -73,16 +73,17 @@ export class ClienteService {
     }
   }
 
-  //obtengo el un perfil que tenga online en true, existe la posibilidad de hacerlo por fecha pero no tengo tiempo
-  async obtenerClienteEnListaEspera(
-    listaDeEspera: boolean
-  ): Promise<UserInterface | null> {
+  //obtengo el perfil cliente con listaDeEspera true, estaValidado aceptado y mail que coincida
+  // async obtenerClienteEnListaEspera(listaDeEspera: boolean): Promise<UserInterface | null> {
+  async obtenerClienteEnListaEspera(email: string | null): Promise<UserInterface | null> {
+
     const usuariosCollection = collection(this.firestore, 'Usuarios');
     const q = query(
       usuariosCollection,
-      where('listaDeEspera', '==', listaDeEspera),
+      where('listaDeEspera', '==', true),
       where('perfil', '==', 'cliente'),
       where('estaValidado', '==', 'aceptado'),
+      where('mail', '==', email),
       limit(1)
     );
     try {
@@ -96,7 +97,7 @@ export class ClienteService {
         console.log('User Data online:', userData);
         // return userData as UserInterface;
 
-        // Mapear mail a email ya ue la interfaz tiene email pero la base mail
+        // Mapear mail a email ya que la interfaz tiene email pero la base mail
         if (userData['mail'] && !userData['email']) {
           userData['email'] = userData['mail'];
         }
@@ -124,7 +125,7 @@ export class ClienteService {
 
       querySnapshot.forEach((doc) => {
         const userData = doc.data() as UserInterface;
-        if (userData.mesaAsignada !== undefined) {
+        if (userData.mesaAsignada !== undefined && userData.mesaAsignada !== 0) {
           usuarios.push(userData);
         }
       });

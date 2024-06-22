@@ -2,45 +2,34 @@
   <ng-container *ngIf="!isClientProfile; else clientView">
     <form id="form" [formGroup]="form" (ngSubmit)="onSubmit()">
       <ion-item color="primary" class="center-button">
-        <ion-label
-          style="
+        <ion-label style="
             font-size: 25px;
             font-weight: bold;
             text-align: center;
             display: block;
-          "
-          >Asignar Mesa</ion-label
-        >
+          ">Asignar Mesa</ion-label>
       </ion-item>
 
       <!-- Listado usuarios sin asignar mesa (campo 0 )-->
       @if(!usuarioAsignar){
       <div class="users">
-        <div
-          class="user-container"
-          (click)="onUserClick(user.mail)"
-          *ngFor="let user of this.usuariosSinMesa"
-        >
+        <div class="user-container" (click)="onUserClick(user.mail)" *ngFor="let user of this.usuariosSinMesa">
           <div>
             <span>{{user.nombre}}</span>
           </div>
         </div>
       </div>
       }@else{
-      <ion-item>
+      <ion-item *ngIf="usuarioAsignar">
         <ion-grid>
           <ion-row>
             <ion-col size="12" *ngFor="let number of numbers">
-              <ion-button
-                expand="block"
-                (click)="asignarNumeroMesa(number)"
-                style="
-                  font-size: 25px;
-                  font-weight: bold;
-                  text-align: center;
-                  display: block;
-                "
-              >
+              <ion-button expand="block" (click)="asignarNumeroMesa(number)" [disabled]="estaAsignada(number)" style="
+                    font-size: 25px;
+                    font-weight: bold;
+                    text-align: center;
+                    display: block;
+                  ">
                 Mesa {{ number }}
               </ion-button>
             </ion-col>
@@ -59,24 +48,21 @@
     </div> -->
 
     <div *ngIf="qrCodeImageUrl" class="qr-container">
-      <ion-label
-        style="
+      <ion-label style="
           font-size: 35px;
           font-weight: bold;
           text-align: center;
           display: block;
-        "
-        >Al cliente le corresponde la mesa:</ion-label
-      >
-      <div
-        class="qr-code-wrapper"
-        style="
-          font-size: 100px;
-          font-weight: bold;
-          text-align: center;
-          display: block;
-        "
-      >
+        ">Mesa asignada numero:</ion-label>
+      <div class="qr-code-wrapper" style="
+      font-size: 150px;
+      font-weight: bold;
+      text-align: center;
+      display: block;
+      font-family: 'Arial', sans-serif; /* Puedes cambiar 'Arial' por cualquier fuente que prefieras */
+      -webkit-font-smoothing: antialiased; /* Mejora la nitidez en navegadores basados en WebKit */
+      -moz-osx-font-smoothing: grayscale; /* Mejora la nitidez en Firefox */
+    ">
         {{ numeroMesaMaitre }}
       </div>
     </div>
@@ -91,37 +77,30 @@
     <h1>{{scanResoult}}</h1> -->
     <div *ngIf="yaEscaneada">
       <div *ngIf="mesaYaAsignada; else notAssigned">
-        <ion-text
-          color="danger"
-          style="
+        <ion-text color="danger" style="
             font-size: 50px;
             font-weight: bold;
             text-align: center;
             display: block;
-          "
-          ><br /><br />
+          "><br /><br />
           Esta mesa la tiene asignada otro cliente, no la puede usar.
         </ion-text>
       </div>
       <ng-template #notAssigned>
-        <ion-text
-          style="
+        <ion-text style="
             font-size: 35px;
             font-weight: bold;
             text-align: center;
             display: block;
-          "
-          ><br /><br />
+          "><br /><br />
           Su mesa es la numero: <br /><br /><br /><br />
         </ion-text>
-        <ion-text
-          style="
+        <ion-text style="
             font-size: 150px;
             font-weight: bold;
             text-align: center;
             display: block;
-          "
-        >
+          ">
           <!-- Su mesa es la numero {{scanResoult}} -->
           {{ mesaAsignada }}
         </ion-text>
@@ -137,9 +116,7 @@
 <ion-footer>
   <ion-toolbar color="primary">
     <ion-item color="primary" class="center-button">
-      <ion-button type="button" label="atras" (click)="atras()"
-        >Volver al Inicio</ion-button
-      >
+      <ion-button type="button" label="atras" (click)="atras()">Volver al Inicio</ion-button>
     </ion-item>
   </ion-toolbar>
 </ion-footer>

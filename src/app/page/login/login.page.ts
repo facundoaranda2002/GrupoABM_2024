@@ -72,7 +72,7 @@ export class LoginPage implements OnInit {
     },
   });
 
-  constructor() {}
+  constructor() { }
 
   form = this.fb.nonNullable.group({
     // email: ['', Validators.required],
@@ -80,7 +80,7 @@ export class LoginPage implements OnInit {
     password: ['', Validators.required],
   });
 
-  ngOnInit() {}
+  ngOnInit() { }
   setOpen(isOpen: boolean) {
     this.isToastOpen = isOpen;
   }
@@ -168,6 +168,6 @@ export class LoginPage implements OnInit {
     });
   }
   userG() {
-    this.form.setValue({ email: 'nepag22962@exeneli.com', password: '123123' });
+    this.form.setValue({ email: 'sanegaj640@dovinou.com', password: '123123' });
   }
 }
