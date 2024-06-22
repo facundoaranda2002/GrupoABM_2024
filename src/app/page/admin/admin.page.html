@@ -1,20 +1,30 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-icon
+        (click)="volver()"
+        size="large"
+        name="arrow-back-outline"
+      ></ion-icon>
+    </ion-buttons>
+    <ion-title>Validar usuarios</ion-title>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content [fullscreen]="true">
-  
+  <!-- Icono -->
   <ion-fab (click)="volver()" slot="fixed" vertical="top" horizontal="start">
-    <ion-icon size="large" name="arrow-back-outline"></ion-icon>
   </ion-fab>
-  <div class="users-container">
-    <div>
-      <h1>Validar usuarios</h1>
-    </div>
-    <div class="users">
-      <div class="user-container" (click)="onUserClick(user.mail)" *ngFor="let user of this.usersNotAccepted">
-        <div>
-          <i class="bi bi-person-circle"></i>
-          <span>{{user.mail}}</span>
-        </div>
+  <!-- Lista Usuarios Pendientes -->
+  <div class="users">
+    <div
+      class="user-container"
+      (click)="onUserClick(user.mail)"
+      *ngFor="let user of this.usersNotAccepted"
+    >
+      <div>
+        <span>{{user.mail}}</span>
       </div>
     </div>
   </div>
-  
 </ion-content>

@@ -34,7 +34,6 @@ export class AdminPage implements OnInit {
 
   public async onUserClick(mail: string) {
     let user = await this.auth.getUserActual(mail);
-
     console.log(user['id']);
     const modal = await this.modalController.create({
       component: UserInfoModalComponent,
@@ -42,11 +41,9 @@ export class AdminPage implements OnInit {
         user: user,
       },
     });
-
     modal.onDidDismiss().then(async () => {
       this.usersNotAccepted = await this.data.obtenerUsuariosPendientes();
     });
-
     await modal.present();
   }
 
