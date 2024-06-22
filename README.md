@@ -40,53 +40,72 @@ https://grupoabm.atlassian.net/jira/software/projects/KAN/boards/1?atlOrigin=eyJ
 ### Alfa
 
 - **Solucionado splash estatico** _(20/06/24)_
+  
   ![Estado](https://img.shields.io/badge/Estado-Completado-green?style=for-the-badge&labelColor=black)
 - **Solucionado credenciales que se quedan al desloguearse** _(20/06/24)_
+  
   ![Estado](https://img.shields.io/badge/Estado-Completado-green?style=for-the-badge&labelColor=black)
 - **Agregar un nuevo cliente registrado** _(21/06/24)_
+  
   ![Estado](https://img.shields.io/badge/Estado-Completado-green?style=for-the-badge&labelColor=black)
 - **Encuesta clientes** _(22/06/2024 - 29/06/24)_
+  
   ![Estado](https://img.shields.io/badge/Estado-En%20Curso-FFD700?style=for-the-badge&labelColor=black)
 - **Push notification: agregar cliente nuevo** _(29/06/2024 - 06/07/24)_
+  
   ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)
 - **Push notification: pedir la cuenta** _(29/06/2024 - 06/07/24)_
 
   ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)
 
 - **QR de propina** _(29/06/2024 - 06/07/24)_
+  
   ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)
 
 ### Beta
 
 - **Diseño de login, splash y logo** _(14/06/24)_
+  
   ![Estado](https://img.shields.io/badge/Estado-Completado-green?style=for-the-badge&labelColor=black)
 - **Solucionado primer pantalla de mas** _(21/06/24)_
+  
   ![Estado](https://img.shields.io/badge/Estado-Completado-green?style=for-the-badge&labelColor=black)
 - **Solucionado registro anonimo** _(21/06/24)_
+  
   ![Estado](https://img.shields.io/badge/Estado-Completado-green?style=for-the-badge&labelColor=black)
 - **QR de ingreso al local** _(21/06/24)_
+  
   ![Estado](https://img.shields.io/badge/Estado-Completado-green?style=for-the-badge&labelColor=black)
 - **Ingresar al local** _(21/06/24)_
+  
   ![Estado](https://img.shields.io/badge/Estado-Completado-green?style=for-the-badge&labelColor=black)
 - **Confirmar pedidos** _(22/06/2024 - 29/06/24)_
+  
   ![Estado](https://img.shields.io/badge/Estado-En%20Curso-FFD700?style=for-the-badge&labelColor=black)
 - **Push notification: confirmar pedido(por parte del mozo)** _(29/06/2024 - 06/07/24)_
+  
   ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)
-- **Push notification: confirmar realización del pedido(por parte del cocinero o bartender)** \_(29/06/2024 - 06/07/24)
+- **Push notification: confirmar realización del pedido(por parte del cocinero o bartender)** _(29/06/2024 - 06/07/24)_
+  
   ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)  
 
 
 ### Gamma
 
 - **Alta de clientes** _(16/06/24)_
+  
   ![Estado](https://img.shields.io/badge/Estado-Completado-green?style=for-the-badge&labelColor=black)
 - **QR de la mesa** _(21/06/24)_
+  
   ![Estado](https://img.shields.io/badge/Estado-Completado-green?style=for-the-badge&labelColor=black)
 - **Asignar mesa** _(21/06/24)_
+  
   ![Estado](https://img.shields.io/badge/Estado-Completado-green?style=for-the-badge&labelColor=black)
 - **Realizar pedidos(platos y bebidas)** _(22/06/2024 - 29/06/24)_
+  
   ![Estado](https://img.shields.io/badge/Estado-En%20Curso-FFD700?style=for-the-badge&labelColor=black)
 - **Push notification: ingresar al local** _(29/06/2024 - 06/07/24)_
+  
   ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)
 - **Push notification: consultar al mozo** _(29/06/2024 - 06/07/24)_
 
