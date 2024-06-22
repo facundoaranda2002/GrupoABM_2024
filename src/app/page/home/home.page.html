@@ -53,9 +53,12 @@
   </ion-row>
 
   } @if(this.profile === 'maitre') {
-  <ion-button (click)="goRegisterMaitreAsignaMesa()">
-    Maître Asigna Mesa
-  </ion-button>
+  <div class="contenedorBtnAdmin">
+    <ion-button expand="block" (click)="goRegisterMaitreAsignaMesa()">
+      Maître Asigna Mesa
+    </ion-button>
+  </div>
+
   } @if(this.profile === 'dueno' || this.profile === 'supervisor') {
   <div class="contenedorBtnAdmin">
     <ion-button expand="block" (click)="goAdminClientes()">

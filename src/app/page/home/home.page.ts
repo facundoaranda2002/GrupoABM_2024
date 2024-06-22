@@ -62,7 +62,10 @@ export class HomePage implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    this.checkUserProfile();
+    setTimeout(() => {
+      this.checkUserProfile();
+    }, 1000);
+
     if (this.platform.is('capacitor')) {
       BarcodeScanner.isSupported().then();
       BarcodeScanner.checkPermissions().then();
