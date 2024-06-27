@@ -23,6 +23,7 @@ export class UserInfoModalComponent implements OnInit {
     if (validated != null) {
       let userUID = await this.data.GetUserUIDByUserEmail(this.user.mail);
       let estaValidado;
+      let template;
       if (validated)
         estaValidado = 'aceptado';
       else
@@ -32,12 +33,14 @@ export class UserInfoModalComponent implements OnInit {
       let mensaje = "";
       if (estaValidado === 'aceptado') {
         mensaje = this.mensajes[0];
+        template = "template_8roq68a";
       }
       else {
         mensaje = this.mensajes[1];
+        template = "template_qs6co4o";
       }
       emailjs.init("zy9ZbGaMjTB6ScJGM");
-      await emailjs.send("service_ldf8519", "template_8roq68a", {
+      await emailjs.send("service_ldf8519", template, {
         from_name: 'Grupo ABM',
         to_name: this.user.nombre,
         to_email: this.user.mail,
