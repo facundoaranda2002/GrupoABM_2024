@@ -1,15 +1,25 @@
 ion-content {
   --background: #19101e;
-  // align-items: center;
-  .contenedorBtnAdmin {
-    width: 90%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    ion-button {
-      height: 200px;
-      font-size: 50px;
+  .contenedorFull {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    .imgLogo {
+      width: 80%;
+    }
+    .contenedorBtnAdmin {
+      width: 90%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      ion-button {
+        height: 200px;
+        font-size: 50px;
+      }
     }
   }
 }

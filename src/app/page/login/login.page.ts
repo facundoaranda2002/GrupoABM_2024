@@ -72,7 +72,7 @@ export class LoginPage implements OnInit {
     },
   });
 
-  constructor() { }
+  constructor() {}
 
   form = this.fb.nonNullable.group({
     // email: ['', Validators.required],
@@ -80,7 +80,7 @@ export class LoginPage implements OnInit {
     password: ['', Validators.required],
   });
 
-  ngOnInit() { }
+  ngOnInit() {}
   setOpen(isOpen: boolean) {
     this.isToastOpen = isOpen;
   }
@@ -102,7 +102,7 @@ export class LoginPage implements OnInit {
         next: () => {
           setTimeout(() => {
             this.router.navigateByUrl('/home');
-          }, 1000);
+          }, 2000);
           this.form.reset();
         },
         error: () => {

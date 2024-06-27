@@ -64,14 +64,16 @@ export class HomePage implements OnInit {
   ngOnInit() {
     setTimeout(() => {
       this.checkUserProfile();
-    }, 1000);
+    }, 2000);
 
     if (this.platform.is('capacitor')) {
       BarcodeScanner.isSupported().then();
       BarcodeScanner.checkPermissions().then();
       BarcodeScanner.removeAllListeners();
     }
-    this.estoyListaEspera();
+    setTimeout(() => {
+      this.estoyListaEspera();
+    }, 2000);
   }
   //
   async checkUserProfile() {

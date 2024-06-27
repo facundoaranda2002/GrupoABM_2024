@@ -19,52 +19,63 @@
 </ion-header>
 
 <ion-content>
-  @if(this.profile === 'cliente' || this.authService.obtenerAnonimo()) {
-  <!-- <ion-button (click)="goRegisterMaitreAsignaMesa()"> Ir a tu mesa </ion-button> -->
-  @if(!usuarioActual?.listaDeEspera){
-  <ion-row>
-    <ion-col size="12">
-      <ion-button class="submit" (click)="asignarSalaDeEspera()" expand="block">
-        Entrar al local
-        <ion-icon slot="end" name="scan-outline"></ion-icon>
-      </ion-button>
-    </ion-col>
-  </ion-row>
-  }@else {
-  <!-- boton ir a tu mesa -->
-  <ion-row>
-    <ion-col size="12">
-      <ion-button
-        class="submit"
-        expand="block"
-        (click)="goRegisterMaitreAsignaMesa()"
-      >
-        Ir a tu mesa
-      </ion-button>
-    </ion-col>
-  </ion-row>
+  <div class="contenedorFull">
+    <img
+      class="imgLogo"
+      src="../../../assets/img/splashanimated.png"
+      alt="User"
+    />
+    <div class="contenedorBtn">
+      <!-- Es Cliente Anonimo O Registrado -->
+      @if(this.profile === 'cliente' || this.authService.obtenerAnonimo()) {
+      @if(!usuarioActual?.listaDeEspera){
+      <ion-row>
+        <ion-col size="12">
+          <ion-button
+            class="submit"
+            (click)="asignarSalaDeEspera()"
+            expand="block"
+          >
+            Entrar al local
+            <ion-icon slot="end" name="scan-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+      }@else {
+      <!-- boton ir a tu mesa -->
+      <ion-row>
+        <ion-col size="12">
+          <ion-button
+            class="submit"
+            expand="block"
+            (click)="goRegisterMaitreAsignaMesa()"
+          >
+            Ir a tu mesa
+          </ion-button>
+        </ion-col>
+      </ion-row>
 
-  }
-  <!-- boton mesa espera -->
-  <ion-row>
-    <ion-col size="12">
-      <ion-button class="submit" expand="block"> encuesta </ion-button>
-    </ion-col>
-  </ion-row>
-
-  } @if(this.profile === 'maitre') {
-  <div class="contenedorBtnAdmin">
-    <ion-button expand="block" (click)="goRegisterMaitreAsignaMesa()">
-      Maître Asigna Mesa
-    </ion-button>
+      }
+      <ion-row>
+        <ion-col size="12">
+          <ion-button class="submit" expand="block"> Encuesta </ion-button>
+        </ion-col>
+      </ion-row>
+      <!-- Es Maitre -->
+      } @if(this.profile === 'maitre') {
+      <div class="contenedorBtnAdmin">
+        <ion-button expand="block" (click)="goRegisterMaitreAsignaMesa()">
+          Maître Asigna Mesa
+        </ion-button>
+      </div>
+      <!-- Es Admin -->
+      } @if(this.profile === 'dueno' || this.profile === 'supervisor') {
+      <div class="contenedorBtnAdmin">
+        <ion-button expand="block" (click)="goAdminClientes()">
+          Administrar Clientes
+        </ion-button>
+      </div>
+      }
+    </div>
   </div>
-
-  } @if(this.profile === 'dueno' || this.profile === 'supervisor') {
-  <div class="contenedorBtnAdmin">
-    <ion-button expand="block" (click)="goAdminClientes()">
-      Administrar Clientes
-    </ion-button>
-  </div>
-
-  }
 </ion-content>

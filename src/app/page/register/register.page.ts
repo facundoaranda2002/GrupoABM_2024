@@ -204,10 +204,7 @@ export class RegisterPage implements OnInit {
         if (cliente) {
           // Se guarda el cliente en la base de datos
           if (this.form.getRawValue().tipo == 'anonimo') {
-            this.altaAnonimo(cliente).then(() => {
-              //
-            });
-            //
+            this.altaAnonimo(cliente).then(() => {});
             this.authService.agregarAnonimo(cliente.mail);
             this.router.navigateByUrl('/home');
           } else {
