@@ -44,9 +44,8 @@ import {
   IonFooter,
 } from '@ionic/angular/standalone';
 
-import { Table } from '../../clases/table';
 import { TableService } from '../../service/table.service';
-import { PhotoService, UserPhoto } from '../../service/photo.service';
+import { PhotoService } from '../../service/photo.service';
 type TipoMesa = 'VIP' | 'discapacitados' | 'estandar';
 
 import * as QRCode from 'qrcode';
@@ -99,6 +98,32 @@ import { Usuario } from 'src/app/clases/usuario';
   ],
 })
 export class MaitrePage implements OnInit {
+  // Inject
+  platform = inject(Platform);
+  router = inject(Router);
+  tableService = inject(TableService);
+  fb = inject(FormBuilder);
+  elementRef = inject(ElementRef);
+  photoService = inject(PhotoService);
+  authService = inject(AuthService);
+  clienteService = inject(ClienteService);
+  modalController: ModalController = inject(ModalController);
+  // Atributos
+  usuarioAsignar?: any;
+  isClientProfile: boolean = false;
+  usuariosSinMesa: Usuario[] = [];
+
+  qrCodeImageUrl: string | undefined;
+  mesaAsignada: number | undefined; //esta variable la uso para mostrar la mesa asignada siendo cliente
+  scanResoult = '';
+  // numbers: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  numbers: number[] = [];
+  mesasAsignadas: { mesaAsignada: number | undefined; asignada: boolean }[] =
+    [];
+  mesaYaAsignada: boolean = false; // Variable para controlar si la mesa ya está asignada, la usa cuando ingresa un cliente y escanea un qr asignado a otro cliente
+  numeroMesaMaitre: number = 0; //sirve para mostrar el numero de mesa que asigna el maitre
+  yaEscaneada: boolean = false;
+
   ngOnInit() {
     this.numbers = this.generateNumbers(); // Genera los números disponibles
     this.loadMesasAsignadas();
@@ -120,49 +145,10 @@ export class MaitrePage implements OnInit {
     });
   }
 
-  usuarioAsignar?: any;
-
   async onUserClick(mail: string) {
     let usuarioActual = await this.authService.getUserActual(mail);
-    // console.log(usuarioActual);
-    // const auxUsuario: Usuario = {
-    //   mail: usuarioActual.mail,
-    //   nombre: usuarioActual.nombre,
-    //   apellido: usuarioActual.apellido,
-    //   DNI: usuarioActual.DNI,
-    //   foto: usuarioActual.foto,
-    //   tipo: usuarioActual.tipo,
-    //   qrDNI: usuarioActual.qrDNI,
-    //   password: usuarioActual.password,
-    //   perfil: usuarioActual.perfil,
-    //   estaValidado: usuarioActual.estaValidado,
-    //   listaDeEspera: usuarioActual.listaDeEspera,
-    //   mesaAsignada: 1,
-    // };
-    // this.authService.updateUsuarioCliente(usuarioActual.id, auxUsuario);
     this.usuarioAsignar = usuarioActual;
   }
-
-  platform = inject(Platform);
-  router = inject(Router);
-  tableService = inject(TableService);
-  fb = inject(FormBuilder);
-  elementRef = inject(ElementRef);
-  photoService = inject(PhotoService);
-  authService = inject(AuthService);
-  clienteService = inject(ClienteService);
-  modalController: ModalController = inject(ModalController);
-
-  qrCodeImageUrl: string | undefined;
-  mesaAsignada: number | undefined; //esta variable la uso para mostrar la mesa asignada siendo cliente
-  scanResoult = '';
-  // numbers: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  numbers: number[] = [];
-  mesasAsignadas: { mesaAsignada: number | undefined; asignada: boolean }[] =
-    [];
-  mesaYaAsignada: boolean = false; // Variable para controlar si la mesa ya está asignada, la usa cuando ingresa un cliente y escanea un qr asignado a otro cliente
-  numeroMesaMaitre: number = 0; //sirve para mostrar el numero de mesa que asigna el maitre
-  yaEscaneada: boolean = false;
 
   form = this.fb.nonNullable.group({
     asignarMesa: [
@@ -170,9 +156,6 @@ export class MaitrePage implements OnInit {
       [Validators.required, Validators.min(1), Validators.max(10)],
     ],
   });
-
-  isClientProfile: boolean = false;
-  usuariosSinMesa: Usuario[] = [];
 
   //escaneo
   async startScan() {
@@ -191,8 +174,7 @@ export class MaitrePage implements OnInit {
       this.scanResoult = data?.barcode?.displayValue;
       // this.form.patchValue({ mesaAsignada: this.scanResoult }); // Actualiza el campo mesaAsignada en el formulario
 
-
-      console.log("MesaAsignada anonimo: ", this.mesaAsignada);
+      console.log('MesaAsignada anonimo: ', this.mesaAsignada);
       // Extraer el número de mesa del texto del código QR
       const mesaNumero = this.extractMesaNumber(this.scanResoult);
       //const mesaNumero = 4;//esto para probar desde la pc, simula el dato devuelto del qr
@@ -270,8 +252,8 @@ export class MaitrePage implements OnInit {
         await this.clienteService.obtenerClienteEnListaEspera(email);
 
       if (ultimoPerfil) {
-        console.log("ultimoPerfil en loadMesaAsignada(): ", ultimoPerfil.email);
-        console.log("mail de ultimoPerfil en loadMesaAsignada(): ", email);
+        console.log('ultimoPerfil en loadMesaAsignada(): ', ultimoPerfil.email);
+        console.log('mail de ultimoPerfil en loadMesaAsignada(): ', email);
       }
 
       if (ultimoPerfil && ultimoPerfil.email === email) {
@@ -307,7 +289,9 @@ export class MaitrePage implements OnInit {
 
   //devuelve true si hay alguna mesa ya asignada a algun cliente para bloquear ese numero en la lista de mesas
   estaAsignada(number: number): boolean {
-    return this.mesasAsignadas.some(mesa => mesa.mesaAsignada === number && mesa.asignada);
+    return this.mesasAsignadas.some(
+      (mesa) => mesa.mesaAsignada === number && mesa.asignada
+    );
   }
 
   // Agrega el numero de mesa y el qr al cliente conectado, que tenga listaDeEspera en true
@@ -375,8 +359,6 @@ export class MaitrePage implements OnInit {
       toast.addEventListener('mouseleave', Swal.resumeTimer);
     },
   });
-
-  async onSubmit(): Promise<void> { }
 
   atras() {
     this.router.navigateByUrl('/home');
