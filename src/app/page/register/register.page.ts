@@ -168,6 +168,7 @@ export class RegisterPage implements OnInit {
       ],
     ],
     password: ['', [Validators.required, Validators.minLength(6)]],
+    confirmpassword: ['', [Validators.required]],
     foto: ['', Validators.required],
   });
 
@@ -196,41 +197,56 @@ export class RegisterPage implements OnInit {
       this.form.get('password')?.updateValueAndValidity();
       this.form.get('mail')?.clearValidators();
       this.form.get('mail')?.updateValueAndValidity();
+      this.form.get('confirmpassword')?.clearValidators();
+      this.form.get('confirmpassword')?.updateValueAndValidity();
     }
 
     if (this.form.valid) {
-      try {
-        const cliente = await this.cargarCliente();
-        if (cliente) {
-          // Se guarda el cliente en la base de datos
-          if (this.form.getRawValue().tipo == 'anonimo') {
-            this.altaAnonimo(cliente).then(() => {});
-            this.authService.agregarAnonimo(cliente.mail);
-            this.router.navigateByUrl('/home');
-          } else {
-            this.alta(cliente);
-            this.router.navigateByUrl('/login');
-          }
+      if (
+        (tipo == 'registrado' &&
+          this.form.getRawValue().confirmpassword ==
+            this.form.getRawValue().password) ||
+        tipo == 'anonimo'
+      ) {
+        try {
+          const cliente = await this.cargarCliente();
+          if (cliente) {
+            // Se guarda el cliente en la base de datos
+            if (this.form.getRawValue().tipo == 'anonimo') {
+              this.altaAnonimo(cliente).then(() => {});
+              this.authService.agregarAnonimo(cliente.mail);
+              this.router.navigateByUrl('/home');
+            } else {
+              this.alta(cliente);
+              this.router.navigateByUrl('/login');
+            }
 
-          this.Toast.fire({
-            icon: 'success',
-            title: 'Alta de cliente exitosa',
-            color: '#ffffff',
-          });
-          this.authService.logout();
-        } else {
-          console.error('Error al crear el cliente.');
+            this.Toast.fire({
+              icon: 'success',
+              title: 'Alta de cliente exitosa',
+              color: '#ffffff',
+            });
+            this.authService.logout();
+          } else {
+            console.error('Error al crear el cliente.');
+            this.Toast.fire({
+              icon: 'error',
+              title: 'Error al crear el cliente.',
+              color: '#ffffff',
+            });
+          }
+        } catch (error) {
+          console.error('Error al obtener el perfil del usuario:', error);
           this.Toast.fire({
             icon: 'error',
-            title: 'Error al crear el cliente.',
+            title: 'Error al obtener el perfil del usuario.',
             color: '#ffffff',
           });
         }
-      } catch (error) {
-        console.error('Error al obtener el perfil del usuario:', error);
+      } else {
         this.Toast.fire({
           icon: 'error',
-          title: 'Error al obtener el perfil del usuario.',
+          title: 'Las contraseñas no coiciden.',
           color: '#ffffff',
         });
       }

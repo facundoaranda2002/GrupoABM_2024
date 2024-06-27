@@ -1,5 +1,6 @@
 ion-content {
   --background: #19101e;
+  font-weight: 100;
 
   ion-icon {
     margin-top: 10px;
@@ -8,7 +9,7 @@ ion-content {
 
   h1 {
     font-weight: 700;
-    font-size: 26px;
+    font-size: 30px;
     color: white;
     margin-bottom: 5%;
     margin-top: 10%;
@@ -22,9 +23,11 @@ ion-content {
     ion-item {
       height: 75px;
       --border-radius: 20px;
-
+      ion-select {
+        font-size: 30px;
+      }
       ion-input {
-        font-size: 20px;
+        font-size: 27px;
       }
     }
 
@@ -34,7 +37,7 @@ ion-content {
       margin-bottom: 20px;
 
       ion-button {
-        font-size: 15px;
+        font-size: 27px;
         width: 50%;
 
         ion-icon {
@@ -51,7 +54,7 @@ ion-content {
       margin-bottom: 20px;
 
       ion-button {
-        font-size: 15px;
+        font-size: 25px;
         width: 80%;
 
         ion-icon {
@@ -64,7 +67,7 @@ ion-content {
 
     .btnRegistrar {
       // height: 65px;
-      font-size: 22px;
+      font-size: 30px;
       --padding-top: 0px;
       --padding-bottom: 0px;
       margin-top: 10px;

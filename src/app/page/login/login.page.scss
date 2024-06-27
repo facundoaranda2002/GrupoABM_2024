@@ -7,7 +7,7 @@ ion-content {
   }
 
   .contenedorImg {
-    margin-top: 60px;
+    margin-top: 30px;
     width: 100%;
     display: flex;
     align-items: center;
@@ -30,28 +30,32 @@ ion-content {
   #form {
     padding-left: 30px;
     padding-right: 30px;
-
+    p {
+      font-size: 28px;
+    }
     ion-item {
       height: 75px;
       --border-radius: 20px;
 
       ion-input {
-        font-size: 20px;
+        font-size: 27px;
       }
     }
 
     ion-button {
-      font-size: 20px;
+      font-size: 40px;
       --padding-top: 0px;
       --padding-bottom: 0px;
-      margin-top: 25px;
+      margin-top: 10px;
+      height: 10px;
     }
   }
 
   .terminos {
+    font-size: 30px;
     text-align: center;
     color: #b6b6b6;
-    margin-top: 40px;
+    margin-top: 20px;
   }
 
   .labelParrafo {
@@ -69,5 +73,5 @@ ion-content {
 }
 
 .registroP {
-  color: white;
+  color: #f67609;
 }

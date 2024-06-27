@@ -16,14 +16,12 @@
       @if(!(form.getRawValue().tipo == "anonimo")){
       <ion-item color="secondary">
         <ion-input
-          label="Correo"
           type="email"
           placeholder="Ingrese su correo electronico"
           formControlName="mail"
         ></ion-input>
       </ion-item>
       }
-
       <!-- Estas validaciones son agregadas por Javier -->
       <p
         class="error-message"
@@ -31,25 +29,20 @@
       >
         El correo es obligatorio.
       </p>
-
       <p
         class="error-message"
         *ngIf="form.get('mail')?.touched && form.get('mail')?.hasError('email')"
       >
         Ingrese un correo válido.
       </p>
-      <!-- -->
-
       <!-- Nombre -->
       <ion-item color="secondary">
         <ion-input
-          label="Nombre"
           type="text"
           placeholder="Ingrese su Nombre"
           formControlName="nombre"
         ></ion-input>
       </ion-item>
-
       <!-- Estas validaciones son agregadas por Javier -->
       <p
         class="error-message"
@@ -63,13 +56,10 @@
       >
         Nombre inválido. Solo letras y espacios.
       </p>
-      <!-- -->
-
       @if(!(form.getRawValue().tipo == "anonimo")){
       <!-- Apellido -->
       <ion-item color="secondary">
         <ion-input
-          label="Apellido"
           type="text"
           placeholder="Ingrese su Apellido"
           formControlName="apellido"
@@ -93,14 +83,12 @@
       <!-- Dni -->
       <ion-item color="secondary">
         <ion-input
-          label="Dni"
           type="number"
           placeholder="Ingrese su DNI"
           formControlName="DNI"
         ></ion-input>
       </ion-item>
       }
-
       <!-- Estas validaciones son agregadas por Javier -->
       <p
         class="error-message"
@@ -114,20 +102,26 @@
       >
         El DNI debe tener 8 dígitos numéricos.
       </p>
-      <!-- -->
-
       <!-- Contraseña -->
       @if(!(form.getRawValue().tipo == "anonimo")){
       <ion-item color="secondary">
         <ion-input
-          label="Contraseña"
           type="password"
           placeholder="Ingrese su contraseña"
           formControlName="password"
         ></ion-input>
       </ion-item>
       }
-
+      <!-- Confirmacion Contraseña -->
+      @if(!(form.getRawValue().tipo == "anonimo")){
+      <ion-item color="secondary">
+        <ion-input
+          type="password"
+          placeholder="Repita su Contraseña"
+          formControlName="confirmpassword"
+        ></ion-input>
+      </ion-item>
+      }
       <!-- Estas validaciones son agregadas por Javier -->
       <p
         class="error-message"
@@ -135,8 +129,13 @@
       >
         La contraseña es obligatoria.
       </p>
-      <!-- -->
-
+      <!-- Estas validaciones son agregadas por Javier -->
+      <p
+        class="error-message"
+        *ngIf="form.get('confirmpassword')?.touched && form.get('confirmpassword')?.hasError('required')"
+      >
+        La Confirmacion es obligatoria.
+      </p>
       <div
         [ngClass]="{
         'btnFoto': form.getRawValue().tipo == 'anonimo',
@@ -144,13 +143,13 @@
       }"
       >
         <!-- Foto -->
-        <ion-button color="secondary" (click)="takePhoto()"
+        <ion-button color="primary" (click)="takePhoto()" expand="full"
           >Tomar Foto</ion-button
         >
 
         @if(!(form.getRawValue().tipo == "anonimo")){
         <!-- Scan Dni -->
-        <ion-button color="secondary" (click)="startScan()">
+        <ion-button color="primary" (click)="startScan()" expand="full">
           Escanear DNI
           <ion-icon slot="end" name="scan-outline"></ion-icon>
         </ion-button>
@@ -162,7 +161,6 @@
         color="secondary"
         type="submit"
         expand="block"
-        shape="round"
         >Registrar</ion-button
       >
     </form>
