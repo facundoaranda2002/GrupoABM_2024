@@ -29,7 +29,7 @@ conformado por:
 
 La pantalla de ingreso pide el correo y la contraseña, además cuenta con un desplegable abajo a la izquierda que cuenta con los usuarios pre registrados, a fin de hacer un ingreso rapido para probar la aplicación. En caso de no tener una cuenta este tiene un enlace para redirigirse al registro
 
-<img src="src/assets/img/login.PNG">
+<img src="src/assets/img/login.png">
 
 ## Registro
 
