@@ -141,6 +141,7 @@ export class HomePage implements OnInit {
         estaValidado: usuarioActual.estaValidado,
         listaDeEspera: true,
         mesaAsignada: usuarioActual.mesaAsignada,
+        estadoEncuesta: usuarioActual.estadoEncuesta
       };
       this.authService
         .updateUsuarioCliente(usuarioActual.id, usuarioAux)
@@ -186,6 +187,10 @@ export class HomePage implements OnInit {
     this.authService.logout();
     this.router.navigateByUrl('/login');
     this.authService.removerAnonimo();
+     // Limpiar el estado del componente
+    this.profile = '';
+    this.usuarioActual = null;
+    this.scanResoult = '';
   }
 
   goRegisterTable() {
@@ -201,5 +206,13 @@ export class HomePage implements OnInit {
 
   goAdminClientes() {
     this.router.navigateByUrl('/admin');
+  }
+
+  goEncuestas() {
+    this.router.navigateByUrl('/encuesta');
+  }
+
+  goGraficos() {
+    this.router.navigateByUrl('/graficos');
   }
 }

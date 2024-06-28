@@ -42,8 +42,13 @@
         Ir a tu mesa
       </ion-button>
       }
-      <ion-button color="secondary" class="submit" expand="full">
+      <!--
+      <ion-button color="secondary" (click)="goEncuestas()" class="submit" expand="full">
         Encuesta
+      </ion-button>
+      -->
+      <ion-button color="secondary" (click)="goGraficos()" class="submit" expand="full">
+        Encuestas Previas
       </ion-button>
       <!-- Es Maitre -->
       } @if(this.profile === 'maitre') {
