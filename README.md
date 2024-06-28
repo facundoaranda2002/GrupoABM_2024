@@ -51,6 +51,9 @@ https://grupoabm.atlassian.net/jira/software/projects/KAN/boards/1?atlOrigin=eyJ
 - **Encuesta clientes** _(22/06/2024 - 29/06/24)_
   
   ![Estado](https://img.shields.io/badge/Estado-En%20Curso-FFD700?style=for-the-badge&labelColor=black)
+- **Graficos encuesta clientes** _(22/06/2024 - 29/06/24)_
+  
+  ![Estado](https://img.shields.io/badge/Estado-Completado-green?style=for-the-badge&labelColor=black)
 - **Push notification: agregar cliente nuevo** _(29/06/2024 - 06/07/24)_
   
   ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)
