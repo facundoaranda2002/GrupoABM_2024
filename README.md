@@ -29,7 +29,7 @@ conformado por:
 
 La pantalla de ingreso pide el correo y la contraseña, además cuenta con un desplegable abajo a la izquierda que cuenta con los usuarios pre registrados, a fin de hacer un ingreso rapido para probar la aplicación. En caso de no tener una cuenta este tiene un enlace para redirigirse al registro
 
-<img src="src/assets/img/login.png">
+<img src="src/assets/img/login.PNG">
 
 ## Registro
 
@@ -49,7 +49,7 @@ Por otro lado el usuario anonimo tendra que ingresar nada mas que su nombre y un
 
 ## Pantalla del dueño/supervisor
 
-En esta pantalla el dueño o un supervisor podra tocar un voton para acceder a la lista de usuarios pendientes de aprobacion.
+En esta pantalla el dueño o un supervisor podra tocar un boton para acceder a la lista de usuarios pendientes de aprobacion.
 
 <img src="src/assets/img/pantallaSupYDuenio.PNG">
 
