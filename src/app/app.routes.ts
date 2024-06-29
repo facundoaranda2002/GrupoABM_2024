@@ -50,18 +50,18 @@ export const routes: Routes = [
   },
   {
     path: 'encuesta',
-    loadComponent: () => import('./page/encuesta/encuesta.page').then( m => m.EncuestaPage)
+    loadComponent: () => import('./page/encuesta/encuesta.page').then(m => m.EncuestaPage)
   },
   {
     path: 'graficos',
-    loadComponent: () => import('./page/graficos/graficos.page').then( m => m.GraficosPage)
+    loadComponent: () => import('./page/graficos/graficos.page').then(m => m.GraficosPage)
   },
   {
     path: '**',
     redirectTo: 'home',
   },
-  
 
-  
+
+
 
 ];

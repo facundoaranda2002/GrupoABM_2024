@@ -2,11 +2,7 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-icon
-        (click)="atras()"
-        size="large"
-        name="arrow-back-outline"
-      ></ion-icon>
+      <ion-icon (click)="atras()" size="large" name="arrow-back-outline"></ion-icon>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -20,11 +16,7 @@
       <h2>Seleccione un cliente:</h2>
     </ion-text>
     <div class="users">
-      <div
-        class="user-container"
-        (click)="onUserClick(user.mail)"
-        *ngFor="let user of this.usuariosSinMesa"
-      >
+      <div class="user-container" (click)="onUserClick(user.mail)" *ngFor="let user of this.usuariosSinMesa">
         <div>
           <span>{{user.nombre}}</span>
         </div>
@@ -38,13 +30,8 @@
     <ion-grid>
       <ion-row>
         <ion-col size="12" *ngFor="let number of numbers">
-          <ion-button
-            color="secondary"
-            expand="block"
-            (click)="asignarNumeroMesa(number)"
-            [disabled]="estaAsignada(number)"
-            style="font-size: 30px; font-weight: bold"
-          >
+          <ion-button color="secondary" expand="block" (click)="asignarNumeroMesa(number)"
+            [disabled]="estaAsignada(number)" style="font-size: 30px; font-weight: bold">
             Mesa {{ number }}
           </ion-button>
         </ion-col>
@@ -58,7 +45,13 @@
         <h2>Mesa asignada numero:</h2>
       </ion-text>
       <ion-text color="white">
-        <h2>{{ numeroMesaMaitre }}</h2>
+        <h2 style="
+        font-size: 150px;
+        font-weight: bold;
+        text-align: center;
+        display: block;
+        font-family: 'Times New Roman', Times, serif;
+      ">{{ numeroMesaMaitre }}</h2>
       </ion-text>
     </div>
     }
@@ -73,37 +66,33 @@
     <h1>{{scanResoult}}</h1> -->
     <div *ngIf="yaEscaneada">
       <div *ngIf="mesaYaAsignada; else notAssigned">
-        <ion-text
-          color="danger"
-          style="
-            font-size: 50px;
+        <ion-text color="danger" style="
+            font-size: 60px;
             font-weight: bold;
             text-align: center;
             display: block;
-          "
-          ><br /><br />
+            font-family: 'Times New Roman', Times, serif;
+          "><br />
           Esta mesa la tiene asignada otro cliente, no la puede usar.
         </ion-text>
       </div>
       <ng-template #notAssigned>
-        <ion-text
-          style="
-            font-size: 35px;
-            font-weight: bold;
+        <ion-text style="
+            font-size: 65px;
             text-align: center;
             display: block;
-          "
-          ><br /><br />
-          Su mesa es la numero: <br /><br /><br /><br />
+            color: white;
+            font-family: 'Times New Roman', Times, serif;
+          "><br />
+          Su mesa es la numero: <br />
         </ion-text>
-        <ion-text
-          style="
-            font-size: 150px;
-            font-weight: bold;
+        <ion-text style="
+            font-size: 250px;
             text-align: center;
             display: block;
-          "
-        >
+            color: white;
+            font-family: 'Times New Roman', Times, serif;
+          ">
           <!-- Su mesa es la numero {{scanResoult}} -->
           {{ mesaAsignada }}
         </ion-text>

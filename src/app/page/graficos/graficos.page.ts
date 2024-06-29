@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   TooltipComponent,
   TooltipComponentOption,
@@ -7,7 +7,7 @@ import {
   GridComponent
 } from 'echarts/components';
 
-import { BarChart, BarSeriesOption, PieChart, PieSeriesOption, LineChart} from 'echarts/charts';
+import { BarChart, BarSeriesOption, PieChart, PieSeriesOption, LineChart } from 'echarts/charts';
 import * as echarts from 'echarts/core';
 import { CanvasRenderer } from 'echarts/renderers';
 import { LabelLayout } from 'echarts/features';
@@ -21,7 +21,7 @@ echarts.use([
   LegendComponent,
   CanvasRenderer,
   LabelLayout,
-  PieChart,  
+  PieChart,
   BarChart,
   LineChart,
   GridComponent
@@ -41,42 +41,40 @@ type EChartsOption = echarts.ComposeOption<
 })
 export class GraficosPage implements OnInit {
 
-  public chartBarDom : HTMLElement | any;
-  public myBarChart : any;
+  public chartBarDom: HTMLElement | any;
+  public myBarChart: any;
   public optionBar: any;
 
-  public chartPieDom : HTMLElement | any;
-  public myPieChart : any;
+  public chartPieDom: HTMLElement | any;
+  public myPieChart: any;
   public optionPie: any;
 
-  public chartLineDom : HTMLElement | any;
-  public myLineChart : any;
+  public chartLineDom: HTMLElement | any;
+  public myLineChart: any;
   public optionLine: any;
 
 
 
   constructor(private firestore: ClienteService,
-              public auth: AuthService,
-              private router: Router,
-              private navController : NavController) { }
+    public auth: AuthService,
+    private router: Router,
+    private navController: NavController) { }
 
   ngOnInit() {
   }
 
-  public async onBackClick()
-  {
+  public async onBackClick() {
     this.navController.back();
   }
 
-  async ngAfterViewInit() 
-  {
+  async ngAfterViewInit() {
     let data = await this.firestore.getVotosComida();
     this.chartBarDom = document.getElementById('bar');
     this.myBarChart = echarts.init(this.chartBarDom);
     this.optionBar = {
       xAxis: {
         type: 'category',
-        data: ["1","2","3","4","5"],
+        data: ["1", "2", "3", "4", "5"],
         name: "Puntaje elegido",
         nameLocation: "middle",
         nameTextStyle: {
@@ -90,7 +88,7 @@ export class GraficosPage implements OnInit {
         }
       },
       yAxis: {
-        type: 'value',        
+        type: 'value',
         minInterval: 1,
         axisLabel: {
           fontSize: 16, // Aumenta el tamaño de los números en el eje y
@@ -126,7 +124,7 @@ export class GraficosPage implements OnInit {
     this.optionPie = {
       tooltip: {
         trigger: 'item'
-      },      
+      },
       color: colorPalette,  // Utiliza la gama de colores definida
       series: [
         {
@@ -163,7 +161,7 @@ export class GraficosPage implements OnInit {
     this.optionPie && this.myPieChart.setOption(this.optionPie);
     window.addEventListener('resize', this.myPieChart.resize);
 
-    let data3 = await this.firestore.getVotosPrecio();    
+    let data3 = await this.firestore.getVotosPrecio();
 
     this.chartLineDom = document.getElementById('line');
     this.myLineChart = echarts.init(this.chartLineDom);
@@ -184,7 +182,7 @@ export class GraficosPage implements OnInit {
         }
       },
       yAxis: {
-        type: 'value',        
+        type: 'value',
         minInterval: 1,
         axisLabel: {
           fontSize: 16, // Aumenta el tamaño de los números en el eje y
@@ -196,7 +194,7 @@ export class GraficosPage implements OnInit {
           data: data3,
           type: 'line',
           itemStyle: {
-            color: '#B84141', // Puedes cambiar este valor al color que desees            
+            color: '#B84141', // Puedes cambiar este valor al color que desees
           },
         }
       ]
@@ -207,8 +205,7 @@ export class GraficosPage implements OnInit {
 
   }
 
-  onClick()
-  {
+  onClick() {
     this.router.navigateByUrl("/encuesta")
   }
 

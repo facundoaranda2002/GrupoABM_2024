@@ -177,7 +177,8 @@ export class MaitrePage implements OnInit {
       console.log('MesaAsignada anonimo: ', this.mesaAsignada);
       // Extraer el número de mesa del texto del código QR
       const mesaNumero = this.extractMesaNumber(this.scanResoult);
-      //const mesaNumero = 4;//esto para probar desde la pc, simula el dato devuelto del qr
+      //const mesaNumero = 4;//esto para probar desde la pc, simula el dato devuelto del qr.
+      //Comentar const mesaNumero = this.extractMesaNumber(this.scanResoult); para que funcione esta prueba
       this.yaEscaneada = true;
       //mesaAsignda es la mesa de la base
       // if (this.mesaAsignada !== parseInt(data?.barcode?.displayValue)) {
