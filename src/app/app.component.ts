@@ -29,16 +29,16 @@ export class AppComponent {
       this.platform.ready().then(() => {
         this.asoUnaVezService.pasoUnaVez = true;
         if (this.auth.currentUserSig() || this.auth.obtenerAnonimo()) {
-          this.router.navigateByUrl('/home');
+          // this.router.navigateByUrl('/home');
         } else {
-          this.router.navigateByUrl('/login');
+          // this.router.navigateByUrl('/login');
         }
       });
     }, 5000);
   }
 
   ngOnInit(): void {
-    this.router.navigateByUrl('/');
+    // this.router.navigateByUrl('/');
     this.authService.user$.subscribe((user) => {
       if (user) {
         this.authService.currentUserSig.set({

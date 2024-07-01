@@ -1,0 +1,78 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Menu comidas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Categorias -->
+  <div class="categories">
+    <div
+      class="wrapper"
+      [ngClass]="categoria == 'todo'? 'active' : ''"
+      (click)="clickCategoria('todo')"
+    >
+      <div class="image-card">
+        <ion-img
+          src="../../../assets/img/cuchillo-tenedor.png"
+          alt="Todos"
+        ></ion-img>
+      </div>
+      <p class="ion-no-margin">Todos</p>
+    </div>
+    <div
+      class="wrapper"
+      [ngClass]="categoria == 'comida'? 'active' : ''"
+      (click)="clickCategoria('comida')"
+    >
+      <div class="image-card">
+        <ion-img
+          src="../../../assets/img/porcion-pizza.png"
+          alt="Comidas"
+        ></ion-img>
+      </div>
+      <p class="ion-no-margin">Comidas</p>
+    </div>
+    <div
+      class="wrapper"
+      [ngClass]="categoria == 'bebida'? 'active' : ''"
+      (click)="clickCategoria('bebida')"
+    >
+      <div class="image-card">
+        <ion-img
+          src="../../../assets/img/vaso-con-gaseosa.png"
+          alt="Bebidas"
+        ></ion-img>
+      </div>
+      <p class="ion-no-margin">Bebidas</p>
+    </div>
+    <div
+      class="wrapper"
+      [ngClass]="categoria == 'postre'? 'active' : ''"
+      (click)="clickCategoria('postre')"
+    >
+      <div class="image-card">
+        <ion-img src="../../../assets/img/helado.png" alt="Postres"></ion-img>
+      </div>
+      <p class="ion-no-margin">Postres</p>
+    </div>
+  </div>
+  <!-- Catalogo -->
+  <div class="food-list">
+    @for (menuComida of arrayMenu; track $index) { @if (menuComida.sector ==
+    categoria || categoria == "todo") {
+    <div class="card">
+      <ion-img [src]="menuComida.img" [alt]="menuComida.nombre"></ion-img>
+      <div class="card-content">
+        <h3 class="title">{{menuComida.nombre}}</h3>
+        <h3 class="subtitle"><sup>$</sup>{{menuComida.precio}}</h3>
+        <ion-buttons>
+          <ion-button (click)="onClick()">
+            <ion-icon name="add"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </div>
+    </div>
+    } }
+  </div>
+</ion-content>

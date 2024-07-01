@@ -49,7 +49,18 @@ export const routes: Routes = [
       import('./page/admin/admin.page').then((m) => m.AdminPage),
   },
   {
+    path: 'menu-comidas',
+    loadComponent: () =>
+      import('./page/menu-comidas/menu-comidas.page').then(
+        (m) => m.MenuComidasPage
+      ),
+  },
+  {
     path: '**',
     redirectTo: 'home',
+  },  {
+    path: 'carrito-compras',
+    loadComponent: () => import('./page/carrito-compras/carrito-compras.page').then( m => m.CarritoComprasPage)
   },
+
 ];

@@ -12,7 +12,7 @@
 </ion-header>
 <!-- Contenido Principal -->
 <ion-content>
-  <!-- Si es cliente -->
+  <!-- Si es Mozo -->
   <ng-container *ngIf="!isClientProfile; else clientView">
     <!-- Listado usuarios sin asignar mesa-->
     @if(!usuarioAsignar){
@@ -63,7 +63,7 @@
     </div>
     }
   </ng-container>
-  <!-- Si es Mozo -->
+  <!-- Si es Cliente -->
   <ng-template #clientView>
     <ion-button class="submit" (click)="startScan()" expand="block">
       Escanear Mesa

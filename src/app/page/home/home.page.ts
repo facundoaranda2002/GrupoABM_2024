@@ -202,4 +202,7 @@ export class HomePage implements OnInit {
   goAdminClientes() {
     this.router.navigateByUrl('/admin');
   }
+  goMenuComidas() {
+    this.router.navigateByUrl('/menu-comidas');
+  }
 }
