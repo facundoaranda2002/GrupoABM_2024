@@ -277,6 +277,7 @@ export class RegisterPage implements OnInit {
         cliente.estaValidado = 'aceptado';
         cliente.listaDeEspera = false;
         cliente.mesaAsignada = 0;
+        cliente.estadoEncuesta = false;
         break;
       default:
         cliente.mail = value.mail;
@@ -291,6 +292,7 @@ export class RegisterPage implements OnInit {
         cliente.estaValidado = 'pendiente';
         cliente.listaDeEspera = false;
         cliente.mesaAsignada = 0; /* JM Creó esto para que al crear un cliente anonimo este este campo*/
+        cliente.estadoEncuesta = false;
         // Carga Register
         this.mailRegistrar = cliente.mail;
         this.passwordRegistrar = cliente.password;

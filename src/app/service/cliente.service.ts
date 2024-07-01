@@ -13,6 +13,8 @@ import {
   where,
   orderBy,
   limit,
+  addDoc,
+  QuerySnapshot
 } from '@angular/fire/firestore';
 import { AuthService } from './auth.service';
 import { firstValueFrom } from 'rxjs';
@@ -163,6 +165,18 @@ export class ClienteService {
     });
   }
 
+  public async actualizarEstadoClienteEncuesta(
+    userUID: string,
+    encuesta: boolean
+  ): Promise<void> {
+    const userCollection = collection(this.firestore, 'Usuarios');
+    const docRef = doc(userCollection, userUID);
+
+    await updateDoc(docRef, {
+      estadoEncuesta: encuesta,
+    });
+  }
+
   public async GetUserUIDByUserEmail(
     userEmail: string
   ): Promise<string | null> {
@@ -175,5 +189,78 @@ export class ClienteService {
     }
     const userDoc = querySnapshot.docs[0];
     return userDoc.id;
+  }
+
+  public async saveEncuesta(encuestaData : any)
+  {
+    const encuestaCollection = collection(this.firestore, 'encuestas');
+    const docRef = await addDoc(encuestaCollection, encuestaData);  
+
+    return docRef.id;
+  }
+
+  async getVotosComida(): Promise<number[]> {
+    const encuestaCollection = collection(this.firestore, 'encuestas');
+    
+    // Realizar la consulta para obtener los datos de la colección 'encuestas'
+    const q = query(encuestaCollection, where('comida', '>=', 1), where('comida', '<=', 5));
+    const querySnapshot: QuerySnapshot<any> = await getDocs(q);
+
+    // Inicializar un array para contar los votos en cada categoría (1 al 5)
+    const conteoVotos = [0, 0, 0, 0, 0];
+
+    // Contar los votos en cada categoría
+    querySnapshot.forEach(doc => {
+      const voto = doc.data().comida;
+      if (voto >= 1 && voto <= 5) {
+        conteoVotos[voto - 1]++;
+      }
+    });
+
+    return conteoVotos;
+  }
+
+  async getVotosServicio(){
+    const encuestaCollection = collection(this.firestore, 'encuestas');
+    
+    // Realizar la consulta para obtener los datos de la colección 'encuestas'
+    const q = query(encuestaCollection, where('servicio', '>=', 1), where('servicio', '<=', 5));
+    const querySnapshot: QuerySnapshot<any> = await getDocs(q);
+
+    // Inicializar un array para contar los votos en cada categoría (1 al 5)
+    const conteoVotos = [{name: "1", value: 0}, {name: "2", value: 0}, {name: "3", value: 0}, {name: "4", value: 0}, {name: "5", value: 0}];
+
+    // Contar los votos en cada categoría
+    querySnapshot.forEach(doc => {
+      const voto = doc.data().servicio;
+      if (voto >= 1 && voto <= 5) {
+        conteoVotos[voto - 1]["value"]++;
+      }
+    });
+
+    const votosFiltrados = conteoVotos.filter(voto => voto.value > 0);
+
+    return votosFiltrados;
+  }
+
+  async getVotosPrecio(): Promise<number[]> {
+    const encuestaCollection = collection(this.firestore, 'encuestas');
+    
+    // Realizar la consulta para obtener los datos de la colección 'encuestas'
+    const q = query(encuestaCollection, where('precio', '>=', 1), where('precio', '<=', 5));
+    const querySnapshot: QuerySnapshot<any> = await getDocs(q);
+
+    // Inicializar un array para contar los votos en cada categoría (1 al 5)
+    const conteoVotos = [0, 0, 0, 0, 0];
+
+    // Contar los votos en cada categoría
+    querySnapshot.forEach(doc => {
+      const voto = doc.data().precio;
+      if (voto >= 1 && voto <= 5) {
+        conteoVotos[voto - 1]++;
+      }
+    });
+
+    return conteoVotos;
   }
 }

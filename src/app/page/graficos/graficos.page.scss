@@ -1,0 +1,35 @@
+ion-header {
+    --font-size: 40px;
+    --height: 80px;
+  }
+
+ion-content {
+    --background: #d2e493;
+
+    .contenedor{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    h1{
+        color: #271F30;
+        font-size: 45px;
+    }
+
+    .separador {
+        width: 100%;
+        height: 1px;
+        background-color: #27221f; /* Color de la línea separadora */
+        margin: 10px 0; /* Ajusta según sea necesario */
+    }
+
+    .boton{
+        margin-top: 30px;
+        margin-bottom: 20px;
+        --border-radius: 20px;
+        --background: #B84141;
+        font-size: 20px;
+    }
+}
