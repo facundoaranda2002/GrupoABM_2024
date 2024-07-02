@@ -223,4 +223,12 @@ export class HomePage implements OnInit {
   goGraficos() {
     this.router.navigateByUrl('/graficos');
   }
+
+  goCuenta() {
+    this.router.navigateByUrl('/cuenta');
+  }
+
+  goConfirmarPago() {
+    this.router.navigateByUrl('/pagos');
+  }
 }

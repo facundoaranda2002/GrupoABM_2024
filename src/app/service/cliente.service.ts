@@ -14,10 +14,11 @@ import {
   orderBy,
   limit,
   addDoc,
-  QuerySnapshot
+  QuerySnapshot,
+  deleteDoc
 } from '@angular/fire/firestore';
 import { AuthService } from './auth.service';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom , Observable} from 'rxjs';
 import { UserInterface } from '../interface/user-interface';
 import { Usuario } from '../clases/usuario';
 
@@ -262,5 +263,109 @@ export class ClienteService {
     });
 
     return conteoVotos;
+  }
+
+  public async getCuentaFromUser(userMail : string) : Promise<any | null>
+  {
+    console.log('Mail' + userMail);
+    const userCollection = collection(this.firestore, 'pedidos');
+    const q = query(userCollection, where('cliente', '==', userMail));
+    const querySnapshot = await getDocs(q);
+  
+    if (querySnapshot.empty) 
+    {
+      return null;
+    }
+
+    const pedidos = querySnapshot.docs.map(doc => doc.data());
+
+    return pedidos;
+  }
+
+  public async pagarCuenta(userMail : string, status : string, monto: number)
+  {
+    const EstadoPedidoCollection = collection(this.firestore, 'pedidos');
+    const querySnapshot = await getDocs(query(EstadoPedidoCollection, where('cliente', '==', userMail)));
+    const docRef = querySnapshot.docs[0].ref;
+    await updateDoc(docRef, 
+    {
+      estadoPedido: status,
+      precioTotal: monto
+    });
+  }
+
+  public escucharConfirmacionMozo(userMail : string): Observable<any[]> {
+    const userCollection = collection(this.firestore,"pedidos");
+    const q = query(userCollection, where('cliente', '==', userMail));
+
+    return new Observable<any[]>((observer) => {
+      const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        const users = querySnapshot.docs.map((doc) => doc.data());
+        if (users == null)
+        {
+          observer.next(users);
+        }
+      });
+
+      return () => unsubscribe();
+    });
+  } 
+
+  public async liberarMesa(userMail: string) {
+    //Eliminar pedido.
+    let userCollection = collection(this.firestore, 'pedidos');
+    let q = query(userCollection, where('cliente', '==', userMail));
+    let querySnapshot = await getDocs(q);
+
+    if (!querySnapshot.empty) 
+    {
+      querySnapshot.docs.forEach(doc => 
+      {
+        deleteDoc(doc.ref);
+      });
+    }
+
+    //Eliminar al usuario de la mesa
+    userCollection = collection(this.firestore, 'Usuarios');
+    q = query(userCollection, where('mail', '==', userMail));
+    querySnapshot = await getDocs(q);
+
+    
+    if (!querySnapshot.empty) 
+    {
+      const Doc = querySnapshot.docs[0];
+      const DocRef = doc(userCollection, Doc.id);
+  
+      await updateDoc(DocRef, {
+        estadoEncuesta: false,
+        listaDeEspera: false,
+        mesaAsignada: 0
+      });
+    }
+  }
+
+  public getPedidosPorPagar(): Observable<any[]> {
+    const userCollection = collection(this.firestore,"pedidos");
+    const q = query(userCollection, where('estadoPedido', '==', 'pagando'));
+
+    return new Observable<any[]>((observer) => {
+      const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        const users = querySnapshot.docs.map((doc) => doc.data());
+        observer.next(users);
+      });
+
+      return () => unsubscribe();
+    });
+  } 
+
+  public async cambiarEstadoPedido(userMail : string, estado : string)
+  {
+    const EstadoPedidoCollection = collection(this.firestore, 'pedidos');
+    const querySnapshot = await getDocs(query(EstadoPedidoCollection, where('cliente', '==', userMail)));
+    const docRef = querySnapshot.docs[0].ref;
+    await updateDoc(docRef, 
+    {
+      orderStatus: estado
+    });
   }
 }

@@ -84,7 +84,16 @@ export const routes: Routes = [
       import('./page/chat/chat.page').then((m) => m.ChatPage),
   },
   {
+    path: 'cuenta',
+    loadComponent: () => import('./page/cuenta/cuenta.page').then( m => m.CuentaPage)
+  },
+  {
+    path: 'pagos',
+    loadComponent: () => import('./page/pagos/pagos.page').then( m => m.PagosPage)
+  },
+  {
     path: '**',
     redirectTo: 'home',
-  },
+  }
+
 ];
