@@ -23,25 +23,19 @@
 
 <ion-content>
   <div class="contenedorFull">
-    <img
-      class="imgLogo"
-      src="../../../assets/img/splashanimated.png"
-      alt="User"
-    />
+    <img class="imgLogo" src="../../../assets/img/splashanimated.png" alt="User" />
     <div class="contenedorBtn">
       <!-- Es Cliente Anonimo O Registrado -->
       @if(this.profile === 'cliente' || this.authService.obtenerAnonimo()) {
+      <!--NO Esta en lista de espera -->
       @if(!usuarioActual?.listaDeEspera){
       <ion-button class="submit" (click)="asignarSalaDeEspera()" expand="block">
         Entrar al local
         <ion-icon slot="end" name="scan-outline"></ion-icon>
       </ion-button>
       }@else {
-      <ion-button
-        class="submit"
-        expand="block"
-        (click)="goRegisterMaitreAsignaMesa()"
-      >
+      <!-- Esta en lista de espera -->
+      <ion-button class="submit" expand="block" (click)="goRegisterMaitreAsignaMesa()">
         Ir a tu mesa
       </ion-button>
       }

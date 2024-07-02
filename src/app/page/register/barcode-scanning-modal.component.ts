@@ -96,7 +96,8 @@ import {
 export class BarcodeScanningModalComponent
   implements OnInit, AfterViewInit, OnDestroy {
   @Input()
-  public formats: BarcodeFormat[] = [];
+  // public formats: BarcodeFormat[] = [];PDF_417
+  public formats: BarcodeFormat[] = [BarcodeFormat.Pdf417]; // Incluye PDF417
   @Input()
   public lensFacing: LensFacing = LensFacing.Back;
 

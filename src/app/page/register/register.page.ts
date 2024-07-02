@@ -89,7 +89,7 @@ import { Usuario } from 'src/app/clases/usuario';
   ],
 })
 export class RegisterPage implements OnInit {
-  constructor() {}
+  constructor() { }
 
   authService = inject(AuthService);
   router = inject(Router);
@@ -149,7 +149,8 @@ export class RegisterPage implements OnInit {
     await modal.present();
     const { data } = await modal.onWillDismiss();
     if (data) {
-      this.scanResoult = data?.barcode?.displayValue;
+      // this.scanResoult = data?.barcode?.displayValue;
+      this.scanResoult = data?.barcode?.displayValue || 'No se pudo escanear el DNI';
       this.form.patchValue({ DNI: this.scanResoult });
     }
   }
@@ -205,7 +206,7 @@ export class RegisterPage implements OnInit {
       if (
         (tipo == 'registrado' &&
           this.form.getRawValue().confirmpassword ==
-            this.form.getRawValue().password) ||
+          this.form.getRawValue().password) ||
         tipo == 'anonimo'
       ) {
         try {
@@ -213,7 +214,7 @@ export class RegisterPage implements OnInit {
           if (cliente) {
             // Se guarda el cliente en la base de datos
             if (this.form.getRawValue().tipo == 'anonimo') {
-              this.altaAnonimo(cliente).then(() => {});
+              this.altaAnonimo(cliente).then(() => { });
               this.authService.agregarAnonimo(cliente.mail);
               this.router.navigateByUrl('/home');
             } else {

@@ -1,0 +1,94 @@
+ion-content {
+  --background: white;
+
+  h1 {
+    font-weight: 700;
+    font-size: 26px;
+    color: #010100;
+    margin-bottom: 15%;
+    margin-top: 15%;
+    text-align: center;
+  }
+}
+
+.cardContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.card-body {
+  padding: 0.5rem;
+  overflow: scroll;
+}
+
+.card-body::-webkit-scrollbar {
+  display: none;
+}
+
+.imgSend {
+  width: 30px;
+  height: 30px;
+}
+
+.imgSend:active {
+  transform: scale(0.9);
+}
+
+.enviado {
+  padding: 0.5rem;
+  display: block;
+  float: right;
+  color: white;
+  min-width: 50.01%;
+  border-radius: 10px;
+  text-align: left;
+  max-width: 80%;
+  padding-top: 1rem;
+  background-color: #d62828;
+}
+
+p span {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.699);
+}
+
+.recibido {
+  padding: 0.5rem;
+  display: block;
+  float: left;
+  color: white;
+  min-width: 50.01%;
+  border-radius: 10px;
+  text-align: left;
+  max-width: 80%;
+  background-color: #e69f9f;
+}
+
+.iconoChat {
+  width: 60px;
+  height: 60px;
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  z-index: 12;
+}
+
+.iconoChat:active {
+  transform: scale(0.9);
+}
+
+.contenedorFooter {
+  width: 100%;
+}
+
+.mensajeItem {
+  padding-top: 0;
+}
+
+.titulo4A {
+  --background: #d62828 !important;
+}

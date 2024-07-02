@@ -175,6 +175,8 @@ export class MaitrePage implements OnInit {
       // this.form.patchValue({ mesaAsignada: this.scanResoult }); // Actualiza el campo mesaAsignada en el formulario
 
       console.log('MesaAsignada anonimo: ', this.mesaAsignada);
+      // Agregar routerlink
+
       // Extraer el número de mesa del texto del código QR
       const mesaNumero = this.extractMesaNumber(this.scanResoult);
       //const mesaNumero = 4;//esto para probar desde la pc, simula el dato devuelto del qr.

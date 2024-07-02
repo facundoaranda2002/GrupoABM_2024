@@ -1,0 +1,39 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class="titulo4A">
+    <ion-buttons slot="primary">
+      <ion-button (click)="goHome()"> Atras </ion-button>
+    </ion-buttons>
+    <ion-title>Chat </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  @if(this.authService.currentUserSig()) {
+  <!-- Contenido Main -->
+  <div class="card text-center cardContainer">
+    <div class="card-body">
+      <div data-bs-spy="scroll" class="contenedorMensajes">
+        <p class="mensajeItem" *ngFor="let message of messages" [ngClass]="agregarClase(message.userName)">
+          @if(!(this.authService.currentUserSig()?.username ==
+          message.userName)){
+          <span> {{ message.userName }} </span> <br />
+          } {{ message.text }} <br />
+          <span> {{ message.date }} </span>
+        </p>
+      </div>
+    </div>
+    <div class="card-footer text-body-secondary contenedorFooter">
+      <form [formGroup]="form" (ngSubmit)="enviarMensaje()">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Ingrese su mensaje" formControlName="mensaje" />
+          <button class="input-group-text" id="basic-addon2">
+            <img src="../../../assets/img/telegram.svg" class="imgSend icon-telegram" alt="Send" />
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  } @else {
+  <img class="iconoChat" src="../../../assets/img/telegram.svg" alt="" (click)="cambiarEstado()" />
+  }
+</ion-content>

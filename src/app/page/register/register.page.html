@@ -15,139 +15,83 @@
       <!-- Correo Electronico -->
       @if(!(form.getRawValue().tipo == "anonimo")){
       <ion-item color="secondary">
-        <ion-input
-          type="email"
-          placeholder="Ingrese su correo electronico"
-          formControlName="mail"
-        ></ion-input>
+        <ion-input type="email" placeholder="Ingrese su correo electronico" formControlName="mail"></ion-input>
       </ion-item>
       }
       <!-- Estas validaciones son agregadas por Javier -->
-      <p
-        class="error-message"
-        *ngIf="form.get('mail')?.touched && form.get('mail')?.hasError('required')"
-      >
+      <p class="error-message" *ngIf="form.get('mail')?.touched && form.get('mail')?.hasError('required')">
         El correo es obligatorio.
       </p>
-      <p
-        class="error-message"
-        *ngIf="form.get('mail')?.touched && form.get('mail')?.hasError('email')"
-      >
+      <p class="error-message" *ngIf="form.get('mail')?.touched && form.get('mail')?.hasError('email')">
         Ingrese un correo válido.
       </p>
       <!-- Nombre -->
       <ion-item color="secondary">
-        <ion-input
-          type="text"
-          placeholder="Ingrese su Nombre"
-          formControlName="nombre"
-        ></ion-input>
+        <ion-input type="text" placeholder="Ingrese su Nombre" formControlName="nombre"></ion-input>
       </ion-item>
       <!-- Estas validaciones son agregadas por Javier -->
-      <p
-        class="error-message"
-        *ngIf="form.get('nombre')?.touched && form.get('nombre')?.hasError('required')"
-      >
+      <p class="error-message" *ngIf="form.get('nombre')?.touched && form.get('nombre')?.hasError('required')">
         El nombre es obligatorio.
       </p>
-      <p
-        class="error-message"
-        *ngIf="form.get('nombre')?.touched && form.get('nombre')?.hasError('pattern')"
-      >
+      <p class="error-message" *ngIf="form.get('nombre')?.touched && form.get('nombre')?.hasError('pattern')">
         Nombre inválido. Solo letras y espacios.
       </p>
       @if(!(form.getRawValue().tipo == "anonimo")){
       <!-- Apellido -->
       <ion-item color="secondary">
-        <ion-input
-          type="text"
-          placeholder="Ingrese su Apellido"
-          formControlName="apellido"
-        ></ion-input>
+        <ion-input type="text" placeholder="Ingrese su Apellido" formControlName="apellido"></ion-input>
       </ion-item>
 
       <!-- Estas validaciones son agregadas por Javier -->
-      <p
-        class="error-message"
-        *ngIf="form.get('apellido')?.touched && form.get('apellido')?.hasError('required')"
-      >
+      <p class="error-message" *ngIf="form.get('apellido')?.touched && form.get('apellido')?.hasError('required')">
         El apellido es obligatorio.
       </p>
-      <p
-        class="error-message"
-        *ngIf="form.get('apellido')?.touched && form.get('apellido')?.hasError('pattern')"
-      >
+      <p class="error-message" *ngIf="form.get('apellido')?.touched && form.get('apellido')?.hasError('pattern')">
         Apellido inválido. Solo letras y espacios.
       </p>
 
       <!-- Dni -->
       <ion-item color="secondary">
-        <ion-input
-          type="number"
-          placeholder="Ingrese su DNI"
-          formControlName="DNI"
-        ></ion-input>
+        <ion-input type="number" placeholder="Ingrese su DNI" formControlName="DNI"></ion-input>
       </ion-item>
       }
       <!-- Estas validaciones son agregadas por Javier -->
-      <p
-        class="error-message"
-        *ngIf="form.get('DNI')?.touched && form.get('DNI')?.hasError('required')"
-      >
+      <p class="error-message" *ngIf="form.get('DNI')?.touched && form.get('DNI')?.hasError('required')">
         El DNI es obligatorio.
       </p>
-      <p
-        class="error-message"
-        *ngIf="form.get('DNI')?.touched && form.get('DNI')?.hasError('pattern')"
-      >
+      <p class="error-message" *ngIf="form.get('DNI')?.touched && form.get('DNI')?.hasError('pattern')">
         El DNI debe tener 8 dígitos numéricos.
       </p>
       <!-- Contraseña -->
       @if(!(form.getRawValue().tipo == "anonimo")){
       <ion-item color="secondary">
-        <ion-input
-          type="password"
-          placeholder="Ingrese su contraseña"
-          formControlName="password"
-        ></ion-input>
+        <ion-input type="password" placeholder="Ingrese su contraseña" formControlName="password"></ion-input>
       </ion-item>
       }
       <!-- Confirmacion Contraseña -->
       @if(!(form.getRawValue().tipo == "anonimo")){
       <ion-item color="secondary">
-        <ion-input
-          type="password"
-          placeholder="Repita su Contraseña"
-          formControlName="confirmpassword"
-        ></ion-input>
+        <ion-input type="password" placeholder="Repita su Contraseña" formControlName="confirmpassword"></ion-input>
       </ion-item>
       }
       <!-- Estas validaciones son agregadas por Javier -->
-      <p
-        class="error-message"
-        *ngIf="form.get('password')?.touched && form.get('password')?.hasError('required')"
-      >
+      <p class="error-message" *ngIf="form.get('password')?.touched && form.get('password')?.hasError('required')">
         La contraseña es obligatoria.
       </p>
       <!-- Estas validaciones son agregadas por Javier -->
-      <p
-        class="error-message"
-        *ngIf="form.get('confirmpassword')?.touched && form.get('confirmpassword')?.hasError('required')"
-      >
+      <p class="error-message"
+        *ngIf="form.get('confirmpassword')?.touched && form.get('confirmpassword')?.hasError('required')">
         La Confirmacion es obligatoria.
       </p>
-      <div
-        [ngClass]="{
+      <div [ngClass]="{
         'btnFoto': form.getRawValue().tipo == 'anonimo',
         'btnScanFoto': !(form.getRawValue().tipo == 'anonimo'),
-      }"
-      >
+      }">
         <!-- Foto -->
-        <ion-button color="primary" (click)="takePhoto()" expand="full"
-          >Tomar Foto</ion-button
-        >
+        <ion-button color="primary" (click)="takePhoto()" expand="full">Tomar Foto</ion-button>
 
         @if(!(form.getRawValue().tipo == "anonimo")){
+        <p *ngIf="scanResoult">{{ scanResoult }}</p>
         <!-- Scan Dni -->
         <ion-button color="primary" (click)="startScan()" expand="full">
           Escanear DNI
@@ -156,13 +100,7 @@
         }
       </div>
       <!-- Boton -->
-      <ion-button
-        class="btnRegistrar"
-        color="secondary"
-        type="submit"
-        expand="block"
-        >Registrar</ion-button
-      >
+      <ion-button class="btnRegistrar" color="secondary" type="submit" expand="block">Registrar</ion-button>
     </form>
     <p class="terminos">
       Precione el boton registrar para aceptar <br />
