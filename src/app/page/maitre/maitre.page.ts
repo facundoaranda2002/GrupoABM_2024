@@ -110,7 +110,11 @@ export class MaitrePage implements OnInit {
   modalController: ModalController = inject(ModalController);
   // Atributos
   usuarioAsignar?: any;
+
+  isMaitreProfile: boolean = false;
   isClientProfile: boolean = false;
+  isMozoProfile: boolean = false;
+
   usuariosSinMesa: Usuario[] = [];
 
   qrCodeImageUrl: string | undefined;
@@ -227,8 +231,14 @@ export class MaitrePage implements OnInit {
           this.isClientProfile = true;
           // await this.loadQrForClient(currentUserEmail);
           await this.loadMesaAsignada(currentUserEmail);
+        } else if (perfil === 'maitre') {
+          this.isMaitreProfile = true;
         }
-      } else {
+        else if (perfil === 'mozo') {
+          this.isMozoProfile = true;
+        }
+      }
+      else {
         if (this.authService.obtenerAnonimo()) {
           const perfil = await this.authService.getUser(
             this.authService.obtenerAnonimo()
@@ -237,6 +247,10 @@ export class MaitrePage implements OnInit {
             this.isClientProfile = true;
             // await this.loadQrForClient(currentUserEmail);
             await this.loadMesaAsignada(this.authService.obtenerAnonimo());
+          } else if (perfil === 'maitre') {
+            this.isMaitreProfile = true;
+          } else if (perfil === 'mozo') {
+            this.isMozoProfile = true;
           }
         }
       }
@@ -244,6 +258,35 @@ export class MaitrePage implements OnInit {
       console.error('Error obteniendo perfil de usuario:', error);
     }
   }
+
+
+
+  // async checkUserProfile() {
+  //   try {
+  //     const currentUserEmail = await firstValueFrom(this.authService.actual());
+  //     if (currentUserEmail) {
+  //       const perfil = await this.authService.getUser(currentUserEmail);
+  //       if (perfil === 'cliente') {
+  //         this.isClientProfile = true;
+  //         // await this.loadQrForClient(currentUserEmail);
+  //         await this.loadMesaAsignada(currentUserEmail);
+  //       }
+  //     } else {
+  //       if (this.authService.obtenerAnonimo()) {
+  //         const perfil = await this.authService.getUser(
+  //           this.authService.obtenerAnonimo()
+  //         );
+  //         if (perfil === 'cliente') {
+  //           this.isClientProfile = true;
+  //           // await this.loadQrForClient(currentUserEmail);
+  //           await this.loadMesaAsignada(this.authService.obtenerAnonimo());
+  //         }
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.error('Error obteniendo perfil de usuario:', error);
+  //   }
+  // }
 
   usuarioActual: Usuario | null = null;
 

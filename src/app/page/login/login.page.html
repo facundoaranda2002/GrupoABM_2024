@@ -6,56 +6,32 @@
   <form id="form" [formGroup]="form" (ngSubmit)="onSubmit()">
     <p class="labelParrafo">Correo electronico</p>
     <ion-item color="secondary">
-      <ion-input
-        type="email"
-        placeholder="Ingrese su correo electronico"
-        formControlName="email"
-      ></ion-input>
+      <ion-input type="email" placeholder="Ingrese su correo electronico" formControlName="email"></ion-input>
     </ion-item>
 
     <!-- Estas validaciones son agregadas por Javier -->
-    <p
-      class="error-message"
-      *ngIf="form.get('email')?.touched && form.get('email')?.hasError('required')"
-    >
+    <p class="error-message" *ngIf="form.get('email')?.touched && form.get('email')?.hasError('required')">
       El correo es obligatorio.
     </p>
-    <p
-      class="error-message"
-      *ngIf="form.get('email')?.touched && form.get('email')?.hasError('email')"
-    >
+    <p class="error-message" *ngIf="form.get('email')?.touched && form.get('email')?.hasError('email')">
       Ingrese un correo válido.
     </p>
     <!-- -->
 
     <p class="labelParrafo">Contraseña</p>
     <ion-item color="secondary">
-      <ion-input
-        type="password"
-        placeholder="Ingrese su contraseña"
-        formControlName="password"
-      ></ion-input>
+      <ion-input type="password" placeholder="Ingrese su contraseña" formControlName="password"></ion-input>
     </ion-item>
 
     <!-- Estas validaciones son agregadas por Javier -->
-    <p
-      class="error-message"
-      *ngIf="form.get('password')?.touched && form.get('password')?.hasError('required')"
-    >
+    <p class="error-message" *ngIf="form.get('password')?.touched && form.get('password')?.hasError('required')">
       La contraseña es obligatoria.
     </p>
     <!-- -->
 
-    <ion-button color="primary" type="submit" expand="block"
-      >Ingresar</ion-button
-    >
-    <ion-toast
-      color="danger"
-      [isOpen]="isToastOpen"
-      message="contraseña o correo incorrecto"
-      [duration]="3000"
-      (didDismiss)="setOpen(false)"
-    ></ion-toast>
+    <ion-button color="primary" type="submit" expand="block">Ingresar</ion-button>
+    <ion-toast color="danger" [isOpen]="isToastOpen" message="contraseña o correo incorrecto" [duration]="3000"
+      (didDismiss)="setOpen(false)"></ion-toast>
   </form>
   <p class="terminos">
     No tienes una cuenta? <br />
@@ -66,14 +42,14 @@
       <ion-icon name="restaurant-outline"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="top">
-      <ion-fab-button color="primary" (click)="userA()"> A </ion-fab-button>
-      <ion-fab-button color="primary" (click)="userB()"> B </ion-fab-button>
-      <ion-fab-button color="primary" (click)="userC()"> C </ion-fab-button>
-      <ion-fab-button color="primary" (click)="userD()"> D </ion-fab-button>
+      <ion-fab-button color="primary" (click)="userA()"> Dueño </ion-fab-button>
+      <ion-fab-button color="primary" (click)="userB()"> Supervisor </ion-fab-button>
+      <ion-fab-button color="primary" (click)="userC()"> Maitre </ion-fab-button>
+      <ion-fab-button color="primary" (click)="userD()"> Cocinero </ion-fab-button>
       <!--Agregué estos botones extras-->
-      <ion-fab-button color="primary" (click)="userE()"> E </ion-fab-button>
-      <ion-fab-button color="primary" (click)="userF()"> F </ion-fab-button>
-      <ion-fab-button color="primary" (click)="userG()"> G </ion-fab-button>
+      <ion-fab-button color="primary" (click)="userE()"> Mozo </ion-fab-button>
+      <ion-fab-button color="primary" (click)="userF()"> Bartender </ion-fab-button>
+      <ion-fab-button color="primary" (click)="userG()"> Cliente </ion-fab-button>
     </ion-fab-list>
   </ion-fab>
 </ion-content>
