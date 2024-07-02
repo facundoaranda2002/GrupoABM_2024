@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { PasoUnaVezService } from 'src/app/service/paso-una-vez.service';
+import { FcmService } from './service/fcm.service';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +21,15 @@ export class AppComponent {
   auth = inject(AuthService);
   showBlackScreen: boolean = false;
 
-  constructor(private platform: Platform) {
+  constructor(private platform: Platform, private fcm: FcmService) {
+    this.platform
+      .ready()
+      .then(() => {
+        this.fcm.initPush();
+      })
+      .catch((e) => {
+        console.log('error fcm: ', e);
+      });
     this.initializeApp();
   }
 

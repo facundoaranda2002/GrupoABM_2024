@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "281289826400",
+    "project_id": "ppsabm-1a5eb",
+    "storage_bucket": "ppsabm-1a5eb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:281289826400:android:e9b01b597c426db41f6305",
+        "android_client_info": {
+          "package_name": "io.ionic.starter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBs-gcBuTiDPANtUdPgsI8S7YrXCfCXYdQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
