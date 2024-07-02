@@ -6,4 +6,5 @@ export class Pedido {
   tiempoTotalEstimado: string = '';
   estadoPedido: string = '';
   id?: string;
+  cliente: string = '';
 }

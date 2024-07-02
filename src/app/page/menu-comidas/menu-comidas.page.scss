@@ -37,7 +37,7 @@ ion-content {
     }
   }
   .food-list {
-    margin: 4rem 1rem 1rem 1rem;
+    margin: 1rem 1rem 1rem 1rem;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
@@ -93,4 +93,24 @@ ion-content {
       }
     }
   }
+}
+.wraperr {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+.contenedorPrecio {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f67609;
+  color: #fff;
+  border-radius: 1.8rem;
+  height: 70px;
+  width: 80%;
+  font-size: 2rem;
+  font-weight: 500;
 }

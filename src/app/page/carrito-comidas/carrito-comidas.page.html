@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="goMenuComidas()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Carrito</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @if(!(pedidoService.comidasPedidos.length == 0)){
+  <h3 class="title">Lista Productos</h3>
+  }
+  <ion-list lines="none">
+    @for (comida of pedidoService.comidasPedidos; track $index) {
+    <ion-item-sliding>
+      <ion-item>
+        <div class="cardContainer">
+          <div class="cart-item">
+            <div class="image">
+              <ion-img [src]="comida.img"></ion-img>
+            </div>
+            <div class="description">
+              <h3>{{comida.nombre}}</h3>
+              <p><sup>$</sup>{{comida.precio}}</p>
+            </div>
+            <div class="actions">
+              <ion-buttons>
+                <ion-button (click)="agregarComidaPedido(comida)">
+                  <ion-icon slot="icon-only" name="add"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+              <div class="counter">{{comida.cantidad}}</div>
+              <ion-buttons>
+                <ion-button (click)="removerComidaPedido(comida)">
+                  <ion-icon slot="icon-only" name="remove"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </div>
+          </div>
+        </div>
+      </ion-item>
+      <ion-item-options side="end">
+        <ion-item-option (click)="removerTodaComidaPedido(comida)">
+          <ion-icon name="trash-outline" size="large" color="danger"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+    }
+  </ion-list>
+  @if(pedidoService.comidasPedidos.length != 0){
+  <div class="contenedorPrecio">
+    <p>Precio: {{pedidoService.calcularPrecioTotal()}}</p>
+  </div>
+  <ion-button (click)="agregarPedido()" expand="block" shape="round">
+    Agregar al carrito
+  </ion-button>
+  } @if(pedidoService.comidasPedidos.length == 0){
+  <div class="empty-cart">
+    <ion-icon name="cart-outline"></ion-icon>
+    <p>El carrito esta vacio</p>
+  </div>
+  }
+</ion-content>

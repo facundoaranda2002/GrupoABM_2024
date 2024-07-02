@@ -1,6 +1,17 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Menu comidas</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="goHome()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Menu</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="goCarritoComidas()">
+        <div class="count">{{pedidoService.contarTotalCantidad()}}</div>
+        <ion-icon name="cart-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -58,16 +69,25 @@
     </div>
   </div>
   <!-- Catalogo -->
+  <div class="wraperr">
+    <div class="contenedorPrecio">
+      <p>Precio: {{pedidoService.calcularPrecioTotal()}}</p>
+    </div>
+  </div>
   <div class="food-list">
     @for (menuComida of arrayMenu; track $index) { @if (menuComida.sector ==
     categoria || categoria == "todo") {
     <div class="card">
-      <ion-img [src]="menuComida.img" [alt]="menuComida.nombre"></ion-img>
+      <ion-img
+        [src]="menuComida.img"
+        [alt]="menuComida.nombre"
+        (click)="clickMenuComida(menuComida.id)"
+      ></ion-img>
       <div class="card-content">
         <h3 class="title">{{menuComida.nombre}}</h3>
         <h3 class="subtitle"><sup>$</sup>{{menuComida.precio}}</h3>
         <ion-buttons>
-          <ion-button (click)="onClick()">
+          <ion-button (click)="agregarComidaPedido(menuComida)">
             <ion-icon name="add"></ion-icon>
           </ion-button>
         </ion-buttons>

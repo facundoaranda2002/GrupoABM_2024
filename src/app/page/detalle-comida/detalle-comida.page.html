@@ -1,0 +1,39 @@
+<ion-content [fullscreen]="true">
+  <div class="header">
+    <ion-buttons>
+      <ion-button (click)="goMenuComidas()">
+        <ion-icon slot="icon-only" color="light" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </div>
+
+  <div class="card">
+    @if(comidaMenu?.img){
+    <div class="image">
+      <ion-img [src]="comidaMenu?.img"></ion-img>
+    </div>
+    <div class="card-content">
+      <div class="card-title">
+        <h1 class="ion-no-margin">{{comidaMenu.nombre}}</h1>
+        <p class="ion-no-margin"><sup>$</sup>{{comidaMenu.precio}}</p>
+      </div>
+    </div>
+    <div class="rates">
+      <div class="badge">
+        <ion-icon name="timer-outline"></ion-icon>{{comidaMenu.tiempoEstimado}}m
+      </div>
+    </div>
+    <div class="about">
+      <h1>Descripcion</h1>
+      <p>{{comidaMenu.descripcion}}</p>
+    </div>
+    <ion-button
+      (click)="agregarComidaPedido(comidaMenu)"
+      expand="block"
+      shape="round"
+    >
+      Agregar al carrito
+    </ion-button>
+    }
+  </div>
+</ion-content>

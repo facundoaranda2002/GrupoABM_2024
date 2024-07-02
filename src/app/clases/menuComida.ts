@@ -7,11 +7,11 @@ export class MenuComida {
   img: string = '';
   id?: string;
 }
-
-//   menu: (esta vinculado a comida , pero son estaticos sirven para mostrar el menu)
-//   nombre (string)
-//   precio (string)
-// descripcion(string)
-//   tiempoEstimado (string)
-// sector (string) (comidas, bebidas, postres)
-//   img (string)
+// nombre: string = '';
+// precio: number = 0;
+// descripcion: string = '';
+// tiempoEstimado: string = '';
+// estadoComida: string = '';
+// sector: string = '';
+// cantidad: number = 1;
+// img: string = '';

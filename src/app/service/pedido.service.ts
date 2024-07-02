@@ -13,6 +13,7 @@ import {
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Pedido } from '../clases/pedido';
+import { Comida } from '../clases/comida';
 
 const PATH = 'pedidos';
 
@@ -20,11 +21,13 @@ const PATH = 'pedidos';
   providedIn: 'root',
 })
 export class PedidoService {
+  comidasPedidos: Comida[] = [];
+
   private _firestore = inject(Firestore);
   private _collection = collection(this._firestore, PATH);
 
   savePedido(pedido: Pedido) {
-    return addDoc(this._collection, pedido);
+    return addDoc(this._collection, { ...pedido });
   }
   getPedidos() {
     return collectionData(this._collection, { idField: 'id' }) as Observable<
@@ -49,5 +52,57 @@ export class PedidoService {
   deletePedido(id: string) {
     const documet = doc(this._collection, id);
     deleteDoc(documet);
+  }
+
+  agregarComida(comida: Comida): void {
+    const comidaExistente = this.comidasPedidos.find(
+      (c) => c.nombre.toLowerCase() === comida.nombre.toLowerCase()
+    );
+    if (comidaExistente) {
+      comidaExistente.cantidad += comida.cantidad;
+    } else {
+      this.comidasPedidos.push({ ...comida });
+    }
+  }
+
+  eliminarComida(comida: Comida): void {
+    const comidaExistente = this.comidasPedidos.find(
+      (c) => c.nombre.toLowerCase() === comida.nombre.toLowerCase()
+    );
+    if (comidaExistente) {
+      if (comidaExistente.cantidad > 1) {
+        comidaExistente.cantidad -= 1;
+      } else {
+        const index = this.comidasPedidos.indexOf(comidaExistente);
+        if (index > -1) {
+          this.comidasPedidos.splice(index, 1);
+        }
+      }
+    }
+  }
+  eliminarTodoComida(comida: Comida): void {
+    const comidaExistente = this.comidasPedidos.find(
+      (c) => c.nombre.toLowerCase() === comida.nombre.toLowerCase()
+    );
+    if (comidaExistente) {
+      const index = this.comidasPedidos.indexOf(comidaExistente);
+      if (index > -1) {
+        this.comidasPedidos.splice(index, 1);
+      }
+    }
+  }
+
+  calcularPrecioTotal(): number {
+    return this.comidasPedidos.reduce(
+      (total, comida) => total + comida.precio * comida.cantidad,
+      0
+    );
+  }
+
+  contarTotalCantidad(): number {
+    return this.comidasPedidos.reduce(
+      (total, comida) => total + comida.cantidad,
+      0
+    );
   }
 }

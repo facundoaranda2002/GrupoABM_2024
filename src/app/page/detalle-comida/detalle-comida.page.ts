@@ -6,31 +6,27 @@ import {
   IonHeader,
   IonTitle,
   IonToolbar,
-  IonImg,
   IonButtons,
-  IonTabButton,
   IonButton,
   IonIcon,
-  IonCard,
+  IonImg,
 } from '@ionic/angular/standalone';
-import { MenuComidaService } from 'src/app/service/menu-comida.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MenuComida } from 'src/app/clases/menuComida';
-import { Router } from '@angular/router';
+import { MenuComidaService } from 'src/app/service/menu-comida.service';
 import { PedidoService } from 'src/app/service/pedido.service';
 import { Comida } from 'src/app/clases/comida';
 
 @Component({
-  selector: 'app-menu-comidas',
-  templateUrl: './menu-comidas.page.html',
-  styleUrls: ['./menu-comidas.page.scss'],
+  selector: 'app-detalle-comida',
+  templateUrl: './detalle-comida.page.html',
+  styleUrls: ['./detalle-comida.page.scss'],
   standalone: true,
   imports: [
-    IonCard,
+    IonImg,
     IonIcon,
     IonButton,
-    IonTabButton,
     IonButtons,
-    IonImg,
     IonContent,
     IonHeader,
     IonTitle,
@@ -39,26 +35,31 @@ import { Comida } from 'src/app/clases/comida';
     FormsModule,
   ],
 })
-export class MenuComidasPage implements OnInit {
-  constructor() {}
+export class DetalleComidaPage implements OnInit {
+  route = inject(ActivatedRoute);
   menuService = inject(MenuComidaService);
   router = inject(Router);
   pedidoService = inject(PedidoService);
 
-  arrayMenu: MenuComida[] = [];
-  categoria: string = 'todo';
+  id?: string | null;
+  comidaMenu?: any;
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.route.paramMap.subscribe((params) => {
+      this.id = params.get('id');
+    });
     this.menuService.getMenuComidas().subscribe((data) => {
-      this.arrayMenu = data;
+      this.comidaMenu = data.find((comida) => comida.id == this.id);
     });
   }
-  clickMenuComida(id: string | undefined) {
-    this.router.navigate(['/detalle-comida', id]);
+
+  goMenuComidas() {
+    this.router.navigateByUrl('/menu-comidas');
   }
-  clickCategoria(categoria: string) {
-    this.categoria = categoria;
+  goHome() {
+    this.router.navigateByUrl('/');
   }
+
   agregarComidaPedido(comidaMenu: MenuComida) {
     const auxComida: Comida = new Comida();
     auxComida.cantidad = 1;
@@ -70,12 +71,5 @@ export class MenuComidasPage implements OnInit {
     auxComida.sector = comidaMenu.sector;
     auxComida.tiempoEstimado = comidaMenu.tiempoEstimado;
     this.pedidoService.agregarComida(auxComida);
-  }
-
-  goHome() {
-    this.router.navigateByUrl('/home');
-  }
-  goCarritoComidas() {
-    this.router.navigateByUrl('/carrito-comidas');
   }
 }
