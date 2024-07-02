@@ -54,6 +54,9 @@
   <div class="contenedorPrecio">
     <p>Precio: {{pedidoService.calcularPrecioTotal()}}</p>
   </div>
+  <div class="contenedorPrecio">
+    <p>Tiempo estimado: {{pedidoService.calcularEstimacionTotal()}} m</p>
+  </div>
   <ion-button (click)="agregarPedido()" expand="block" shape="round">
     Agregar al carrito
   </ion-button>

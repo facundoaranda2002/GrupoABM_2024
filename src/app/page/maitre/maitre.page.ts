@@ -128,6 +128,7 @@ export class MaitrePage implements OnInit {
     this.numbers = this.generateNumbers(); // Genera los números disponibles
     this.loadMesasAsignadas();
     this.checkUserProfile();
+    this.checkMesaAsignada();
 
     if (this.platform.is('capacitor')) {
       BarcodeScanner.isSupported().then();
@@ -173,10 +174,7 @@ export class MaitrePage implements OnInit {
     if (data) {
       this.scanResoult = data?.barcode?.displayValue;
       // this.form.patchValue({ mesaAsignada: this.scanResoult }); // Actualiza el campo mesaAsignada en el formulario
-
       console.log('MesaAsignada anonimo: ', this.mesaAsignada);
-      // Agregar routerlink
-
       // Extraer el número de mesa del texto del código QR
       const mesaNumero = this.extractMesaNumber(this.scanResoult);
       //const mesaNumero = 4;//esto para probar desde la pc, simula el dato devuelto del qr.
@@ -208,6 +206,7 @@ export class MaitrePage implements OnInit {
         );
         // Aquí podrías continuar con la lógica necesaria si el escaneo es correcto.
         this.mesaYaAsignada = false;
+        this.router.navigateByUrl('/menu-comidas');
       }
     }
   }
@@ -244,6 +243,35 @@ export class MaitrePage implements OnInit {
     } catch (error) {
       console.error('Error obteniendo perfil de usuario:', error);
     }
+  }
+
+  usuarioActual: Usuario | null = null;
+
+  async checkMesaAsignada() {
+    try {
+      const currentUserEmail = await firstValueFrom(this.authService.actual());
+      if (currentUserEmail) {
+        const usuario = await this.authService.getUserActual(currentUserEmail);
+        if (usuario.mesaAsignada != 0) {
+          this.usuarioActual = usuario;
+        }
+      } else {
+        if (this.authService.obtenerAnonimo()) {
+          const usuario = await this.authService.getUserActual(
+            this.authService.obtenerAnonimo()
+          );
+          if (usuario.mesaAsignada != 0) {
+            this.usuarioActual = usuario;
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Error obteniendo perfil de usuario:', error);
+    }
+  }
+
+  goChat() {
+    this.router.navigateByUrl('/chat');
   }
 
   //carga la mesa asignada del usuario actual en mesaAsignada que debe ser cliente, trabaja con checkUserProfile()

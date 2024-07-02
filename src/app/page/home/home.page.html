@@ -13,9 +13,6 @@
     <ion-buttons slot="primary">
       <ion-button (click)="logout()"> Salir </ion-button>
     </ion-buttons>
-    <ion-buttons slot="primary">
-      <ion-button (click)="goMenuComidas()"> menu </ion-button>
-    </ion-buttons>
     }
     <ion-title>ABM</ion-title>
   </ion-toolbar>
@@ -23,7 +20,11 @@
 
 <ion-content>
   <div class="contenedorFull">
-    <img class="imgLogo" src="../../../assets/img/splashanimated.png" alt="User" />
+    <img
+      class="imgLogo"
+      src="../../../assets/img/splashanimated.png"
+      alt="User"
+    />
     <div class="contenedorBtn">
       <!-- Es Cliente Anonimo O Registrado -->
       @if(this.profile === 'cliente' || this.authService.obtenerAnonimo()) {
@@ -33,9 +34,13 @@
         Entrar al local
         <ion-icon slot="end" name="scan-outline"></ion-icon>
       </ion-button>
-      }@else {
-      <!-- Esta en lista de espera -->
-      <ion-button class="submit" expand="block" (click)="goRegisterMaitreAsignaMesa()">
+      }@else if(this.profile === 'mozo'){ } @else {
+      <!-- Esta en lista de espera (True) -->
+      <ion-button
+        class="submit"
+        expand="block"
+        (click)="goRegisterMaitreAsignaMesa()"
+      >
         Ir a tu mesa
       </ion-button>
       }
@@ -44,7 +49,12 @@
         Encuesta
       </ion-button>
       -->
-      <ion-button color="secondary" (click)="goGraficos()" class="submit" expand="full">
+      <ion-button
+        color="secondary"
+        (click)="goGraficos()"
+        class="submit"
+        expand="full"
+      >
         Encuestas Previas
       </ion-button>
       <!-- Es Maitre -->
@@ -52,6 +62,7 @@
       <ion-button expand="block" (click)="goRegisterMaitreAsignaMesa()">
         Asignar Mesa
       </ion-button>
+      <ion-button expand="block" (click)="goChat()"> Chat Clientes </ion-button>
       <!-- Es Admin -->
       } @if(this.profile === 'dueno' || this.profile === 'supervisor') {
       <ion-button expand="block" (click)="goAdminClientes()">

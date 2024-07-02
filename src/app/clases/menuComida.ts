@@ -2,7 +2,7 @@ export class MenuComida {
   nombre: string = '';
   precio: number = 0;
   descripcion: string = '';
-  tiempoEstimado: string = '';
+  tiempoEstimado: number = 0;
   sector: string = '';
   img: string = '';
   id?: string;

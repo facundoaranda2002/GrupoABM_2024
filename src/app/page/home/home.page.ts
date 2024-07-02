@@ -204,6 +204,10 @@ export class HomePage implements OnInit {
     this.router.navigateByUrl('/maitre');
   }
 
+  goChat() {
+    this.router.navigateByUrl('/chat');
+  }
+
   goAdminClientes() {
     this.router.navigateByUrl('/admin');
   }

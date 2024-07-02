@@ -99,6 +99,13 @@ export class PedidoService {
     );
   }
 
+  calcularEstimacionTotal(): number {
+    return this.comidasPedidos.reduce(
+      (total, comida) => total + comida.tiempoEstimado * comida.cantidad,
+      0
+    );
+  }
+
   contarTotalCantidad(): number {
     return this.comidasPedidos.reduce(
       (total, comida) => total + comida.cantidad,

@@ -16,6 +16,7 @@ import { MenuComida } from 'src/app/clases/menuComida';
 import { MenuComidaService } from 'src/app/service/menu-comida.service';
 import { PedidoService } from 'src/app/service/pedido.service';
 import { Comida } from 'src/app/clases/comida';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-detalle-comida',
@@ -71,5 +72,23 @@ export class DetalleComidaPage implements OnInit {
     auxComida.sector = comidaMenu.sector;
     auxComida.tiempoEstimado = comidaMenu.tiempoEstimado;
     this.pedidoService.agregarComida(auxComida);
+    this.Toast.fire({
+      icon: 'success',
+      title: `Comida agregada`,
+      color: '#ffffff',
+    });
   }
+
+  private Toast = Swal.mixin({
+    toast: true,
+    position: 'top',
+    background: '#008b3c91',
+    showConfirmButton: false,
+    timer: 1000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer);
+      toast.addEventListener('mouseleave', Swal.resumeTimer);
+    },
+  });
 }

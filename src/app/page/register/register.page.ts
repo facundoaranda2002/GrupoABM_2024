@@ -89,7 +89,7 @@ import { Usuario } from 'src/app/clases/usuario';
   ],
 })
 export class RegisterPage implements OnInit {
-  constructor() { }
+  constructor() {}
 
   authService = inject(AuthService);
   router = inject(Router);
@@ -104,7 +104,7 @@ export class RegisterPage implements OnInit {
   qrCodeImageUrl: string | undefined;
   mailRegistrar: string = '';
   passwordRegistrar: string = '';
-  scanResoult = '';
+  scanResult = '';
 
   private nombres: string[] = [
     'juan',
@@ -150,9 +150,29 @@ export class RegisterPage implements OnInit {
     const { data } = await modal.onWillDismiss();
     if (data) {
       // this.scanResoult = data?.barcode?.displayValue;
-      this.scanResoult = data?.barcode?.displayValue || 'No se pudo escanear el DNI';
-      this.form.patchValue({ DNI: this.scanResoult });
+      this.scanResult =
+        data?.barcode?.displayValue || 'No se pudo escanear el DNI';
+
+      // LLamo a parseScanResult para separar y luego asignar esos valores a patchValue
+      const { apellido, nombre, dni } = this.parseScanResult(this.scanResult);
+      this.form.patchValue({ apellido, nombre, DNI: dni });
+
+      // this.form.patchValue({ DNI: this.scanResult });
     }
+  }
+
+  // Separa y devuelve el nombre, apellido, DNI del string devuelto por el qr de DNI
+  parseScanResult(scanResult: string): {
+    apellido: string;
+    nombre: string;
+    dni: string;
+  } {
+    const parts = scanResult.split('@');
+    const apellido = parts[1];
+    const nombre = parts[2];
+    const dni = parts[4];
+
+    return { apellido, nombre, dni };
   }
   // Form
   form = this.fb.nonNullable.group({
@@ -206,7 +226,7 @@ export class RegisterPage implements OnInit {
       if (
         (tipo == 'registrado' &&
           this.form.getRawValue().confirmpassword ==
-          this.form.getRawValue().password) ||
+            this.form.getRawValue().password) ||
         tipo == 'anonimo'
       ) {
         try {
@@ -214,7 +234,7 @@ export class RegisterPage implements OnInit {
           if (cliente) {
             // Se guarda el cliente en la base de datos
             if (this.form.getRawValue().tipo == 'anonimo') {
-              this.altaAnonimo(cliente).then(() => { });
+              this.altaAnonimo(cliente).then(() => {});
               this.authService.agregarAnonimo(cliente.mail);
               this.router.navigateByUrl('/home');
             } else {

@@ -24,6 +24,7 @@ import { Comida } from 'src/app/clases/comida';
 import { MenuComida } from 'src/app/clases/menuComida';
 import { Pedido } from 'src/app/clases/pedido';
 import { AuthService } from 'src/app/service/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-carrito-comidas',
@@ -64,6 +65,11 @@ export class CarritoComidasPage implements OnInit {
 
   removerTodaComidaPedido(comida: Comida) {
     this.pedidoService.eliminarTodoComida(comida);
+    this.Toast.fire({
+      icon: 'success',
+      title: `Comida Eliminada`,
+      color: '#ffffff',
+    });
   }
 
   goMenuComidas() {
@@ -84,10 +90,24 @@ export class CarritoComidasPage implements OnInit {
       auxPedido.comidas = this.pedidoService.comidasPedidos;
       auxPedido.estadoPedido = 'pendiente';
       auxPedido.precioTotal = this.pedidoService.calcularPrecioTotal();
-      auxPedido.tiempoTotalEstimado = '100';
+      auxPedido.tiempoTotalEstimado =
+        this.pedidoService.calcularEstimacionTotal();
       this.pedidoService.savePedido(auxPedido);
     }
   }
+
+  private Toast = Swal.mixin({
+    toast: true,
+    position: 'top',
+    background: '#008b3c91',
+    showConfirmButton: false,
+    timer: 1000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer);
+      toast.addEventListener('mouseleave', Swal.resumeTimer);
+    },
+  });
 
   ngOnInit() {}
 }

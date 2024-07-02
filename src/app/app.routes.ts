@@ -79,12 +79,12 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'chat',
+    loadComponent: () =>
+      import('./page/chat/chat.page').then((m) => m.ChatPage),
+  },
+  {
     path: '**',
     redirectTo: 'home',
   },
-  {
-    path: 'chat',
-    loadComponent: () => import('./page/chat/chat.page').then(m => m.ChatPage)
-  },
-
 ];

@@ -3,7 +3,7 @@ import { Comida } from './comida';
 export class Pedido {
   comidas: Comida[] = [];
   precioTotal: number = 0;
-  tiempoTotalEstimado: string = '';
+  tiempoTotalEstimado: number = 0;
   estadoPedido: string = '';
   id?: string;
   cliente: string = '';
