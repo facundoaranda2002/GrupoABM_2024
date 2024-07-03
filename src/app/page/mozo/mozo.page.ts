@@ -140,10 +140,32 @@ export class MozoPage implements OnInit {
       if (pedido.estadoPedido == "pendiente") {
         // Actualizar el estado del pedido a 'En Proceso'
         pedido.estadoPedido = 'en proceso';
+
+        for (let comida of pedido.comidas) {
+          // Actualizar el estado de la comida según la lógica necesaria
+          if (comida.estadoComida === 'pendiente') {
+            comida.estadoComida = 'en proceso';
+          }
+        }
       } else if (pedido.estadoPedido == "en proceso") {
         pedido.estadoPedido = 'preparado';
+
+        for (let comida of pedido.comidas) {
+          // Actualizar el estado de la comida según la lógica necesaria
+          if (comida.estadoComida === 'en proceso') {
+            comida.estadoComida = 'preparado';
+          }
+        }
+
       } else {
         pedido.estadoPedido = 'entregado';
+
+        for (let comida of pedido.comidas) {
+          // Actualizar el estado de la comida según la lógica necesaria
+          if (comida.estadoComida === 'preparado') {
+            comida.estadoComida = 'entregado';
+          }
+        }
       }
 
 

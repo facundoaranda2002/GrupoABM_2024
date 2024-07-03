@@ -20,8 +20,13 @@
             <p>Comidas:</p>
             <ul>
               <li *ngFor="let comida of pedido.comidas">
+                <p>Cantidad: {{ comida.cantidad }}</p>
+                <p>Descripción: {{ comida.descripcion }}</p>
+                <p>Estado Comida: {{ comida.estadoComida }}</p>
+                <img src="{{ comida.img }}" alt="Imagen de comida">
                 <p>Nombre: {{ comida.nombre }}</p>
                 <p>Precio: {{ comida.precio | currency }}</p>
+                <p>Tiempo Estimado: {{ comida.tiempoEstimado }}</p>
               </li>
             </ul>
           </div>
@@ -52,8 +57,13 @@
             <p>Comidas:</p>
             <ul>
               <li *ngFor="let comida of pedido.comidas">
+                <p>Cantidad: {{ comida.cantidad }}</p>
+                <p>Descripción: {{ comida.descripcion }}</p>
+                <p>Estado Comida: {{ comida.estadoComida }}</p>
+                <img src="{{ comida.img }}" alt="Imagen de comida">
                 <p>Nombre: {{ comida.nombre }}</p>
                 <p>Precio: {{ comida.precio | currency }}</p>
+                <p>Tiempo Estimado: {{ comida.tiempoEstimado }}</p>
               </li>
             </ul>
             <button (click)="cambiarEstadoPedido(pedido)">Pedido Terminado</button>
@@ -82,8 +92,13 @@
             <p>Comidas:</p>
             <ul>
               <li *ngFor="let comida of pedido.comidas">
+                <p>Cantidad: {{ comida.cantidad }}</p>
+                <p>Descripción: {{ comida.descripcion }}</p>
+                <img src="{{ comida.img }}" alt="Imagen de comida">
+                <img src={{ comida.img }} alt="Imagen de comida">
                 <p>Nombre: {{ comida.nombre }}</p>
                 <p>Precio: {{ comida.precio | currency }}</p>
+                <p>Tiempo Estimado: {{ comida.tiempoEstimado }}</p>
               </li>
             </ul>
             <button (click)="cambiarEstadoPedido(pedido)">Pedido Terminado</button>
