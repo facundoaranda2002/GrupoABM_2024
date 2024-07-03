@@ -125,9 +125,11 @@
             <div class="textoPedidoEstado">
               <p>Tu pedido está: <span>{{ pedido.estadoPedido }}</span></p>
             </div>
+            @if(estadoEncuesta == false){
             <ion-button expand="block" (click)="goEncuesta()"
               >Ir a Escuesta</ion-button
             >
+            }
             <ion-button expand="full" (click)="goCuenta()"
               >Pedir La Cuenta</ion-button
             >

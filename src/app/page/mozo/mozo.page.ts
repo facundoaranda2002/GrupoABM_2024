@@ -101,6 +101,7 @@ export class MozoPage implements OnInit {
   pedidoService = inject(PedidoService);
   authService = inject(AuthService);
   http = inject(HttpClient);
+  router = inject(Router);
   pedidos$: Observable<Pedido[]> | undefined;
 
   allComidas: Comida[] = [];
@@ -259,5 +260,9 @@ export class MozoPage implements OnInit {
     return this.http.post<any>(apiUrl, payload).subscribe((r) => {
       console.log(r);
     });
+  }
+
+  goHome() {
+    this.router.navigateByUrl('/home');
   }
 }

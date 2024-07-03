@@ -100,10 +100,10 @@ export class PedidoService {
   }
 
   calcularEstimacionTotal(): number {
-    return this.comidasPedidos.reduce(
-      (total, comida) => total + comida.tiempoEstimado * comida.cantidad,
-      0
+    const estimaciones = this.comidasPedidos.map(
+      (comida) => comida.tiempoEstimado
     );
+    return Math.max(...estimaciones);
   }
 
   contarTotalCantidad(): number {

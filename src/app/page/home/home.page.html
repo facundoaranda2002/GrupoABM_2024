@@ -20,11 +20,14 @@
 
 <ion-content>
   <div class="contenedorFull">
-    <img class="imgLogo" src="../../../assets/img/splashanimated.png" alt="User" />
+    <img
+      class="imgLogo"
+      src="../../../assets/img/splashanimated.png"
+      alt="User"
+    />
     <div class="contenedorBtn">
       <!-- Es Cliente Anonimo O Registrado -->
-      @if(this.profile === 'cliente' || this.authService.obtenerAnonimo())
-      {
+      @if(this.profile === 'cliente' || this.authService.obtenerAnonimo()) {
       <!--NO Esta en lista de espera -->
       @if(!usuarioActual?.listaDeEspera){
       <ion-button class="submit" (click)="asignarSalaDeEspera()" expand="block">
@@ -34,7 +37,11 @@
       }
       <!-- Esta en lista de espera (True) -->
       @else {
-      <ion-button class="submit" expand="block" (click)="goRegisterMaitreAsignaMesa()">
+      <ion-button
+        class="submit"
+        expand="block"
+        (click)="goRegisterMaitreAsignaMesa()"
+      >
         Ir a tu mesa
       </ion-button>
       }
@@ -43,17 +50,29 @@
         Encuesta
       </ion-button>
       -->
-      <ion-button color="secondary" (click)="goGraficos()" class="submit" expand="full">
+      <ion-button
+        color="secondary"
+        (click)="goGraficos()"
+        class="submit"
+        expand="full"
+      >
         Encuestas Previas
       </ion-button>
+      <!--
       <ion-button color="secondary" (click)="goCuenta()" class="submit" expand="full">
         Cuenta
       </ion-button>
+      -->
       }
       <!-- Es Mozo -->
       @if(this.profile === 'mozo'){
       <ion-button expand="block" (click)="goChat()"> Chat Clientes </ion-button>
-      <ion-button color="secondary" (click)="goConfirmarPago()" class="submit" expand="full">
+      <ion-button
+        color="secondary"
+        (click)="goConfirmarPago()"
+        class="submit"
+        expand="full"
+      >
         Pendiente de pago
       </ion-button>
       <ion-button expand="block" (click)="goMozos()">
@@ -82,9 +101,7 @@
 
       <!-- Es Bartender -->
       @if(this.profile === 'bartender'){
-      <ion-button expand="block" (click)="goMozos()">
-        Ir al bar
-      </ion-button>
+      <ion-button expand="block" (click)="goMozos()"> Ir al bar </ion-button>
       }
     </div>
   </div>

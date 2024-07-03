@@ -250,12 +250,11 @@ export class RegisterPage implements OnInit {
               this.alta(cliente);
               this.sendNotificationToRole(
                 'Nuevo registro',
-                'Se agrego un cliente a la lista de velidados',
+                'Se agrego un cliente a la lista de validados',
                 'supervisor'
               );
               this.router.navigateByUrl('/login');
             }
-
             this.Toast.fire({
               icon: 'success',
               title: 'Alta de cliente exitosa',
