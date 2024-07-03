@@ -23,7 +23,7 @@
                 <p>Cantidad: {{ comida.cantidad }}</p>
                 <p>Descripción: {{ comida.descripcion }}</p>
                 <p>Estado Comida: {{ comida.estadoComida }}</p>
-                <img src="{{ comida.img }}" alt="Imagen de comida">
+                <img src="{{ comida.img }}" alt="Imagen de comida" />
                 <p>Nombre: {{ comida.nombre }}</p>
                 <p>Precio: {{ comida.precio | currency }}</p>
                 <p>Tiempo Estimado: {{ comida.tiempoEstimado }}</p>
@@ -31,7 +31,9 @@
             </ul>
           </div>
           @if(pedido.estadoPedido == "pendiente"){
-          <button (click)="cambiarEstadoPedido(pedido)">Confirmar pedido</button>
+          <button (click)="cambiarEstadoPedido(pedido)">
+            Confirmar pedido
+          </button>
           }@else if(pedido.estadoPedido == "preparado"){
           <button (click)="cambiarEstadoPedido(pedido)">Entregar pedido</button>
           }
@@ -47,28 +49,26 @@
   <ng-container *ngIf="isBartenderProfile">
     <div *ngIf="pedidos$ | async as pedidos; else loading">
       <ul>
-        <li *ngFor="let pedido of pedidos">
-          <div class="test">
-            <p>ID: {{ pedido.id }}</p>
-            <p>Cliente: {{ pedido.cliente }}</p>
-            <p>Precio Total: {{ pedido.precioTotal | currency }}</p>
-            <p>Tiempo Total Estimado: {{ pedido.tiempoTotalEstimado }} mins</p>
-            <p>Estado: {{ pedido.estadoPedido }}</p>
-            <p>Comidas:</p>
-            <ul>
-              <li *ngFor="let comida of pedido.comidas">
-                <p>Cantidad: {{ comida.cantidad }}</p>
-                <p>Descripción: {{ comida.descripcion }}</p>
-                <p>Estado Comida: {{ comida.estadoComida }}</p>
-                <img src="{{ comida.img }}" alt="Imagen de comida">
-                <p>Nombre: {{ comida.nombre }}</p>
-                <p>Precio: {{ comida.precio | currency }}</p>
-                <p>Tiempo Estimado: {{ comida.tiempoEstimado }}</p>
-              </li>
-            </ul>
-            <button (click)="cambiarEstadoPedido(pedido)">Pedido Terminado</button>
-          </div>
+        @for (pedido of pedidos; track $index) { @if(pedido.comidas){
+        @for(comida of pedido.comidas; track $index) { @if(( comida.sector ==
+        "bebida") && comida.estadoComida == 'enProceso') {
+        <li>
+          <p>Cantidad: {{ comida.cantidad }}</p>
+          <p>Descripción: {{ comida.descripcion }}</p>
+          <img src="{{ comida.img }}" alt="Imagen de comida" />
+          <p>Nombre: {{ comida.nombre }}</p>
+          <p>Precio: {{ comida.precio | currency }}</p>
+          <p>Tiempo Estimado: {{ comida.tiempoEstimado }}</p>
+          <ion-button
+            (click)="cambiarEstadoComida(pedido, comida)"
+            expand="block"
+            fill="clear"
+            shape="round"
+          >
+            Cambiar estado
+          </ion-button>
         </li>
+        } } } }
       </ul>
     </div>
     <ng-template #loading>
@@ -76,34 +76,31 @@
     </ng-template>
   </ng-container>
 
-
-
   <!-- Si es Cocinero -->
   <ng-container *ngIf="isCocineroProfile">
     <div *ngIf="pedidos$ | async as pedidos; else loading">
       <ul>
-        <li *ngFor="let pedido of pedidos">
-          <div class="test">
-            <p>ID: {{ pedido.id }}</p>
-            <p>Cliente: {{ pedido.cliente }}</p>
-            <p>Precio Total: {{ pedido.precioTotal | currency }}</p>
-            <p>Tiempo Total Estimado: {{ pedido.tiempoTotalEstimado }} mins</p>
-            <p>Estado: {{ pedido.estadoPedido }}</p>
-            <p>Comidas:</p>
-            <ul>
-              <li *ngFor="let comida of pedido.comidas">
-                <p>Cantidad: {{ comida.cantidad }}</p>
-                <p>Descripción: {{ comida.descripcion }}</p>
-                <img src="{{ comida.img }}" alt="Imagen de comida">
-                <img src={{ comida.img }} alt="Imagen de comida">
-                <p>Nombre: {{ comida.nombre }}</p>
-                <p>Precio: {{ comida.precio | currency }}</p>
-                <p>Tiempo Estimado: {{ comida.tiempoEstimado }}</p>
-              </li>
-            </ul>
-            <button (click)="cambiarEstadoPedido(pedido)">Pedido Terminado</button>
-          </div>
+        @for (pedido of pedidos; track $index) { @if(pedido.comidas){
+        @for(comida of pedido.comidas; track $index) { @if((comida.sector ==
+        "comida" || comida.sector == "postre") && comida.estadoComida ==
+        'enProceso') {
+        <li>
+          <p>Cantidad: {{ comida.cantidad }}</p>
+          <p>Descripción: {{ comida.descripcion }}</p>
+          <img src="{{ comida.img }}" alt="Imagen de comida" />
+          <p>Nombre: {{ comida.nombre }}</p>
+          <p>Precio: {{ comida.precio | currency }}</p>
+          <p>Tiempo Estimado: {{ comida.tiempoEstimado }}</p>
+          <ion-button
+            (click)="cambiarEstadoComida(pedido, comida)"
+            expand="block"
+            fill="clear"
+            shape="round"
+          >
+            Cambiar estado
+          </ion-button>
         </li>
+        } } } }
       </ul>
     </div>
     <ng-template #loading>

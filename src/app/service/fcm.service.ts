@@ -60,7 +60,9 @@ export class FcmService {
     }
   }
   async registrarToken() {
-    await PushNotifications.register();
+    if (Capacitor.getPlatform() !== 'web') {
+      await PushNotifications.register();
+    }
   }
 
   private async registerPush() {

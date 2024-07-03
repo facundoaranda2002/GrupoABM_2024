@@ -53,7 +53,8 @@ import { Pedido } from '../../clases/pedido';
 import { firstValueFrom } from 'rxjs';
 import Swal from 'sweetalert2';
 import { Usuario } from 'src/app/clases/usuario';
-
+import { Comida } from 'src/app/clases/comida';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-mozo',
@@ -97,11 +98,12 @@ import { Usuario } from 'src/app/clases/usuario';
   ],
 })
 export class MozoPage implements OnInit {
-
   pedidoService = inject(PedidoService);
   authService = inject(AuthService);
+  http = inject(HttpClient);
   pedidos$: Observable<Pedido[]> | undefined;
 
+  allComidas: Comida[] = [];
   isMozoProfile: boolean = false;
   isBartenderProfile: boolean = false;
   isCocineroProfile: boolean = false;
@@ -129,7 +131,6 @@ export class MozoPage implements OnInit {
     }
   }
 
-
   loadPedidos() {
     this.pedidos$ = this.pedidoService.getPedidos();
   }
@@ -137,26 +138,30 @@ export class MozoPage implements OnInit {
   async cambiarEstadoPedido(pedido: Pedido) {
     // Verificar si pedido.id tiene un valor
     if (pedido.id) {
-      if (pedido.estadoPedido == "pendiente") {
-        // Actualizar el estado del pedido a 'En Proceso'
-        pedido.estadoPedido = 'en proceso';
-
+      if (pedido.estadoPedido == 'pendiente') {
+        // Actualizar el estado del pedido a 'enProceso'
+        this.sendNotificationToRole(
+          'Cocina',
+          'Se agrego un pedido',
+          'cocinero'
+        );
+        this.sendNotificationToRole('Bar', 'Se agrego un pedido', 'bartender');
+        pedido.estadoPedido = 'enProceso';
         for (let comida of pedido.comidas) {
           // Actualizar el estado de la comida según la lógica necesaria
           if (comida.estadoComida === 'pendiente') {
-            comida.estadoComida = 'en proceso';
+            comida.estadoComida = 'enProceso';
           }
         }
-      } else if (pedido.estadoPedido == "en proceso") {
+      } else if (pedido.estadoPedido == 'enProceso') {
         pedido.estadoPedido = 'preparado';
 
         for (let comida of pedido.comidas) {
           // Actualizar el estado de la comida según la lógica necesaria
-          if (comida.estadoComida === 'en proceso') {
+          if (comida.estadoComida === 'enProceso') {
             comida.estadoComida = 'preparado';
           }
         }
-
       } else {
         pedido.estadoPedido = 'entregado';
 
@@ -168,7 +173,6 @@ export class MozoPage implements OnInit {
         }
       }
 
-
       try {
         // Llamar al servicio para actualizar el pedido en Firebase Firestore
         await this.pedidoService.updatePedido(pedido.id, pedido);
@@ -179,7 +183,6 @@ export class MozoPage implements OnInit {
           title: `Pedido Confirmado`,
           color: '#ffffff',
         });
-
       } catch (error) {
         console.error('Error al cambiar el estado del pedido:', error);
 
@@ -193,6 +196,49 @@ export class MozoPage implements OnInit {
     }
   }
 
+  async cambiarEstadoComida(pedido: Pedido, comidaPedido: Comida) {
+    // Verificar si pedido.id tiene un valor
+    if (pedido.id) {
+      if (pedido.estadoPedido == 'enProceso') {
+        let flag = true;
+        for (let comida of pedido.comidas) {
+          if (comida == comidaPedido && comida.estadoComida === 'enProceso') {
+            comida.estadoComida = 'preparado';
+          }
+          if (comida.estadoComida != 'preparado') {
+            flag = false;
+          }
+        }
+        if (flag) {
+          pedido.estadoPedido = 'preparado';
+          this.sendNotificationToRole(
+            'Mozo',
+            'Pedido Listo para servir',
+            'mozo'
+          );
+        }
+        try {
+          // Llamar al servicio para actualizar el pedido en Firebase Firestore
+          await this.pedidoService.updatePedido(pedido.id, pedido);
+          // Mostrar el toast de éxito
+          this.Toast.fire({
+            icon: 'success',
+            title: `Pedido Confirmado`,
+            color: '#ffffff',
+          });
+        } catch (error) {
+          console.error('Error al cambiar el estado del pedido:', error);
+
+          // Mostrar un toast de error si ocurre algún problema
+          this.Toast.fire({
+            icon: 'error',
+            title: `Error al confirmar pedido`,
+            color: '#ffffff',
+          });
+        }
+      }
+    }
+  }
   private Toast = Swal.mixin({
     toast: true,
     position: 'top',
@@ -205,4 +251,13 @@ export class MozoPage implements OnInit {
       toast.addEventListener('mouseleave', Swal.resumeTimer);
     },
   });
+
+  sendNotificationToRole(title: string, body: string, perfil: string) {
+    const apiUrl = 'https://appiamb.onrender.com/notify-role';
+    const payload = { title, body, perfil };
+    console.log(payload);
+    return this.http.post<any>(apiUrl, payload).subscribe((r) => {
+      console.log(r);
+    });
+  }
 }

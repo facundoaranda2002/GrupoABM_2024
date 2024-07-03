@@ -2,7 +2,11 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-icon (click)="atras()" size="large" name="arrow-back-outline"></ion-icon>
+      <ion-icon
+        (click)="atras()"
+        size="large"
+        name="arrow-back-outline"
+      ></ion-icon>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -16,7 +20,11 @@
       <h2>Seleccione un cliente:</h2>
     </ion-text>
     <div class="users">
-      <div class="user-container" (click)="onUserClick(user.mail)" *ngFor="let user of this.usuariosSinMesa">
+      <div
+        class="user-container"
+        (click)="onUserClick(user.mail)"
+        *ngFor="let user of this.usuariosSinMesa"
+      >
         <div>
           <span>{{user.nombre}}</span>
         </div>
@@ -30,8 +38,13 @@
     <ion-grid>
       <ion-row>
         <ion-col size="12" *ngFor="let number of numbers">
-          <ion-button color="secondary" expand="block" (click)="asignarNumeroMesa(number)"
-            [disabled]="estaAsignada(number)" style="font-size: 30px; font-weight: bold">
+          <ion-button
+            color="secondary"
+            expand="block"
+            (click)="asignarNumeroMesa(number)"
+            [disabled]="estaAsignada(number)"
+            style="font-size: 30px; font-weight: bold"
+          >
             Mesa {{ number }}
           </ion-button>
         </ion-col>
@@ -45,13 +58,15 @@
         <h2>Mesa asignada numero:</h2>
       </ion-text>
       <ion-text color="white">
-        <h2 style="
+        <h2
+          style="
             font-size: 150px;
             font-weight: bold;
             text-align: center;
             display: block;
             font-family: 'Times New Roman', Times, serif;
-          ">
+          "
+        >
           {{ numeroMesaMaitre }}
         </h2>
       </ion-text>
@@ -60,86 +75,66 @@
   </ng-container>
   <!-- Si es Cliente -->
   <ng-template #clientView>
-    <ion-button class="submit" (click)="startScan()" expand="block">
+    <ion-button class="submit btnMesaMozo" (click)="startScan()" expand="block">
       Escanear Mesa
       <ion-icon slot="end" name="scan-outline"></ion-icon>
     </ion-button>
     @if(usuarioActual != null){
-    <ion-button class="submit" (click)="goChat()" expand="block">
+    <ion-button class="submit btnMesaMozo" (click)="goChat()" expand="block">
       Consultar Mozo
     </ion-button>
     }
     <!-- <h1>Mesa escaneada numero: </h1>
     <h1>{{scanResoult}}</h1> -->
     <div *ngIf="yaEscaneada">
-      <div *ngIf="mesaYaAsignada; else notAssigned">
-        <ion-text color="danger" style="
-            font-size: 60px;
-            font-weight: bold;
-            text-align: center;
-            display: block;
-            font-family: 'Times New Roman', Times, serif;
-          "><br />
-          Esta mesa la tiene asignada otro cliente, no la puede usar.
-        </ion-text>
-      </div>
+      <div *ngIf="mesaYaAsignada; else notAssigned"></div>
       <ng-template #notAssigned>
-        <ion-text style="
-            font-size: 65px;
-            text-align: center;
-            display: block;
-            color: white;
-            font-family: 'Times New Roman', Times, serif;
-          "><br />
-          Su mesa es la numero: <br />
-        </ion-text>
-        <ion-text style="
-            font-size: 250px;
-            text-align: center;
-            display: block;
-            color: white;
-            font-family: 'Times New Roman', Times, serif;
-          ">
-          <!-- Su mesa es la numero {{scanResoult}} -->
-          {{ mesaAsignada }}
-          <div *ngIf="pedidos$ | async as pedidos;">
-            <ul>
-              <li *ngFor="let pedido of pedidos">
-                <div style="
-                font-size: 60px;
-                font-weight: bold;
-                text-align: center;
-                display: block;
-                font-family: 'Times New Roman', Times, serif;
-                color:white;
-              ">
-                  @if(pedido.cliente == usuarioActual?.mail && pedido.estadoPedido == "en proceso"){
-                  <p>Estado del pedido tuyo: {{ pedido.estadoPedido }}</p>
-                  <button (click)="goEncuesta()">Ir a Escuesta</button>
-                  }
-                  @else if(pedido.estadoPedido == "preparado"){
-                  <p>Estado del pedido tuyo: {{ pedido.estadoPedido }}, en breve el mozo se lo entregará.</p>
-                  <button (click)="goEncuesta()">Ir a Escuesta</button>
-                  }
-                  @else if(pedido.estadoPedido == "entregado"){
-                  <!-- <button (click)="confirmarRecepcion()">Confirmar Recepción</button> -->
-                  <button (click)="cambiarEstadoPedido(pedido)">Confirmar Recepción</button>
-                  }
-                  @else if(pedido.estadoPedido == "comiendo" && recepcion){
-                  <p>Estado del pedido tuyo: Ya está en tu mesa.</p>
-
-                  }@else if(!recepcion){
-                  <button (click)="goEncuesta()">Ir a Escuesta</button>
-                  <button (click)="goCuenta()">Pedir La Cuenta</button>
-                  }
-                  @else{
-                  <button (click)="goMenu()">Ir al Menú</button>
-                  }
-                </div>
-              </li>
-            </ul>
+        <div class="textoMesaNumero">
+          <ion-text
+            >Su mesa es la numero: <span>{{ mesaAsignada }} </span></ion-text
+          >
+        </div>
+        @if(usuarioActual?.perfil == "cliente" && usuarioActual?.listaDeEspera
+        == true && usuarioActual?.mesaAsignada != 0){
+        <ion-button expand="block" (click)="goMenu()">Ir al Menú</ion-button>
+        }
+        <div *ngIf="pedidos$ | async as pedidos;">
+          @for (pedido of pedidos; track $index) {
+          <div class="contenedorBtn">
+            @if(pedido.cliente == usuarioActual?.mail && pedido.estadoPedido ==
+            "enProceso"){
+            <div class="textoPedidoEstado">
+              <p>Tu pedido está: <span>{{ pedido.estadoPedido }}</span></p>
+            </div>
+            <ion-button expand="block" (click)="goEncuesta()"
+              >Ir a Escuesta</ion-button
+            >
+            } @else if(pedido.estadoPedido == "preparado"){
+            <div class="textoPedidoEstado">
+              <p>Tu pedido está: <span>{{ pedido.estadoPedido }}</span></p>
+            </div>
+            <ion-button expand="block" (click)="goEncuesta()"
+              >Ir a Escuesta</ion-button
+            >
+            } @else if(pedido.estadoPedido == "entregado"){
+            <!-- <ion-button (click)="confirmarRecepcion()">Confirmar Recepción</ion-button> -->
+            <ion-button expand="block" (click)="cambiarEstadoPedido(pedido)">
+              Confirmar Recepción
+            </ion-button>
+            } @else if(pedido.estadoPedido == "comiendo"){
+            <div class="textoPedidoEstado">
+              <p>Tu pedido está: <span>{{ pedido.estadoPedido }}</span></p>
+            </div>
+            <ion-button expand="block" (click)="goEncuesta()"
+              >Ir a Escuesta</ion-button
+            >
+            <ion-button expand="full" (click)="goCuenta()"
+              >Pedir La Cuenta</ion-button
+            >
+            }
           </div>
-        </ion-text>
+          }
+        </div>
       </ng-template>
     </div>
   </ng-template>

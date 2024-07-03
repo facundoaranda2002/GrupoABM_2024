@@ -48,6 +48,7 @@ import Swal from 'sweetalert2';
 import { switchMap } from 'rxjs';
 import { Usuario } from 'src/app/clases/usuario';
 import { FcmService } from 'src/app/service/fcm.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
@@ -102,7 +103,7 @@ export class RegisterPage implements OnInit {
   photoService = inject(PhotoService);
   private modalController: ModalController = inject(ModalController);
   fmc = inject(FcmService);
-
+  http = inject(HttpClient);
   qrCodeImageUrl: string | undefined;
   mailRegistrar: string = '';
   passwordRegistrar: string = '';
@@ -239,9 +240,19 @@ export class RegisterPage implements OnInit {
               this.altaAnonimo(cliente).then(() => {});
               this.authService.agregarAnonimo(cliente.mail);
               this.fmc.registrarToken();
+              this.sendNotificationToRole(
+                'Nuevo Usuario',
+                'Se agrego un cliente a la lista de espera',
+                'maitre'
+              );
               this.router.navigateByUrl('/home');
             } else {
               this.alta(cliente);
+              this.sendNotificationToRole(
+                'Nuevo registro',
+                'Se agrego un cliente a la lista de velidados',
+                'supervisor'
+              );
               this.router.navigateByUrl('/login');
             }
 
@@ -397,5 +408,14 @@ export class RegisterPage implements OnInit {
     const numero = Math.floor(1000 + Math.random() * 9000).toString(); // Genera un número de 4 dígitos
 
     return `${nombre}${numero}@${dominio}`;
+  }
+
+  sendNotificationToRole(title: string, body: string, perfil: string) {
+    const apiUrl = 'https://appiamb.onrender.com/notify-role';
+    const payload = { title, body, perfil };
+    console.log(payload);
+    return this.http.post<any>(apiUrl, payload).subscribe((r) => {
+      console.log(r);
+    });
   }
 }

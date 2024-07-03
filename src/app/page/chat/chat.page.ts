@@ -23,6 +23,7 @@ import { Router } from '@angular/router';
 import { ChatService } from 'src/app/service/chat.service';
 import { firstValueFrom } from 'rxjs';
 import { Usuario } from 'src/app/clases/usuario';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-chat',
@@ -47,6 +48,7 @@ export class ChatPage implements OnInit {
   router = inject(Router);
   chat = inject(ChatService);
   fb = inject(FormBuilder);
+  http = inject(HttpClient);
 
   goRegister() {
     this.router.navigateByUrl('/register');
@@ -136,6 +138,10 @@ export class ChatPage implements OnInit {
         mail: mailUsuario,
       };
       this.chat.saveMensaje(message);
+      if (this.usuarioActual?.perfil == 'cliente') {
+        console.log('1');
+        this.sendNotificationToRole('Nuevo mensaje', value.mensaje, 'mozo');
+      }
       this.form.setValue({ mensaje: '' });
     }
   }
@@ -148,5 +154,14 @@ export class ChatPage implements OnInit {
     }
 
     return cadena;
+  }
+
+  sendNotificationToRole(title: string, body: string, perfil: string) {
+    const apiUrl = 'https://appiamb.onrender.com/notify-role';
+    const payload = { title, body, perfil };
+    console.log(payload);
+    return this.http.post<any>(apiUrl, payload).subscribe((r) => {
+      console.log(r);
+    });
   }
 }

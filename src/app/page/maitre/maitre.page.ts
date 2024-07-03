@@ -182,8 +182,8 @@ export class MaitrePage implements OnInit {
       // this.form.patchValue({ mesaAsignada: this.scanResoult }); // Actualiza el campo mesaAsignada en el formulario
       console.log('MesaAsignada anonimo: ', this.mesaAsignada);
       // Extraer el número de mesa del texto del código QR
-      const mesaNumero = this.extractMesaNumber(this.scanResoult);
-      //const mesaNumero = 4;//esto para probar desde la pc, simula el dato devuelto del qr.
+      // const mesaNumero = this.extractMesaNumber(this.scanResoult);
+      const mesaNumero = 4; //esto para probar desde la pc, simula el dato devuelto del qr.
       //Comentar const mesaNumero = this.extractMesaNumber(this.scanResoult); para que funcione esta prueba
       this.yaEscaneada = true;
       //mesaAsignda es la mesa de la base
@@ -213,7 +213,7 @@ export class MaitrePage implements OnInit {
         // Aquí podrías continuar con la lógica necesaria si el escaneo es correcto.
         this.mesaYaAsignada = false;
         // this.router.navigateByUrl('/menu-comidas');
-        this.recepcion = false;
+        // this.recepcion = false;
       }
     }
   }
@@ -257,7 +257,6 @@ export class MaitrePage implements OnInit {
       console.error('Error obteniendo perfil de usuario:', error);
     }
   }
-
 
   async checkMesaAsignada() {
     try {
@@ -426,7 +425,6 @@ export class MaitrePage implements OnInit {
     // Verificar si pedido.id tiene un valor
     if (pedido.id) {
       pedido.estadoPedido = 'comiendo';
-      this.recepcion = true;
       try {
         // Llamar al servicio para actualizar el pedido en Firebase Firestore
         await this.pedidoService.updatePedido(pedido.id, pedido);
@@ -453,7 +451,4 @@ export class MaitrePage implements OnInit {
   goCuenta() {
     this.router.navigateByUrl('/cuenta');
   }
-  recepcion: boolean = false;
-
-
 }

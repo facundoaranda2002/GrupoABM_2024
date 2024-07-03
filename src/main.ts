@@ -1,4 +1,4 @@
-import { enableProdMode ,  InjectionToken} from '@angular/core';
+import { enableProdMode, InjectionToken } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import {
   RouteReuseStrategy,
@@ -18,6 +18,7 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getStorage, provideStorage } from '@angular/fire/storage';
+import { provideHttpClient } from '@angular/common/http';
 
 export const TEST_DIALOG = new InjectionToken('TEST_DIALOG');
 
@@ -38,14 +39,12 @@ bootstrapApplication(AppComponent, {
         apiKey: 'AIzaSyCAXNHPsnp00YhCanOtetVyCUZWZPO-sDA',
         authDomain: 'ppsabm-1a5eb.firebaseapp.com',
         messagingSenderId: '281289826400',
-
       })
     ),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage()),
-    { provide: TEST_DIALOG, useValue: 'test' }
+    { provide: TEST_DIALOG, useValue: 'test' },
+    provideHttpClient(),
   ],
 });
-
-
