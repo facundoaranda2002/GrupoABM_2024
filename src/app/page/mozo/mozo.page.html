@@ -6,7 +6,7 @@
 
 <ion-content>
   <!-- Si es Mozo -->
-  <ng-container *ngIf="!isMozoProfile">
+  <ng-container *ngIf="isMozoProfile">
     <div *ngIf="pedidos$ | async as pedidos; else loading">
       <ul>
         <li *ngFor="let pedido of pedidos">
@@ -25,7 +25,11 @@
               </li>
             </ul>
           </div>
+          @if(pedido.estadoPedido == "pendiente"){
           <button (click)="cambiarEstadoPedido(pedido)">Confirmar pedido</button>
+          }@else if(pedido.estadoPedido == "preparado"){
+          <button (click)="cambiarEstadoPedido(pedido)">Entregar pedido</button>
+          }
         </li>
       </ul>
     </div>
@@ -35,11 +39,11 @@
   </ng-container>
 
   <!-- Si es Bartender -->
-  <ng-container *ngIf="!isMozoProfile">
+  <ng-container *ngIf="isBartenderProfile">
     <div *ngIf="pedidos$ | async as pedidos; else loading">
       <ul>
         <li *ngFor="let pedido of pedidos">
-          <div class="test" (click)="cambiarEstadoPedido(pedido)">
+          <div class="test">
             <p>ID: {{ pedido.id }}</p>
             <p>Cliente: {{ pedido.cliente }}</p>
             <p>Precio Total: {{ pedido.precioTotal | currency }}</p>
@@ -52,7 +56,7 @@
                 <p>Precio: {{ comida.precio | currency }}</p>
               </li>
             </ul>
-            <!-- <button (click)="cambiarEstadoPedido(pedido)">Confirmar pedido</button> -->
+            <button (click)="cambiarEstadoPedido(pedido)">Pedido Terminado</button>
           </div>
         </li>
       </ul>
@@ -65,11 +69,11 @@
 
 
   <!-- Si es Cocinero -->
-  <ng-container *ngIf="!isMozoProfile">
+  <ng-container *ngIf="isCocineroProfile">
     <div *ngIf="pedidos$ | async as pedidos; else loading">
       <ul>
         <li *ngFor="let pedido of pedidos">
-          <div class="test" (click)="cambiarEstadoPedido(pedido)">
+          <div class="test">
             <p>ID: {{ pedido.id }}</p>
             <p>Cliente: {{ pedido.cliente }}</p>
             <p>Precio Total: {{ pedido.precioTotal | currency }}</p>
@@ -82,7 +86,7 @@
                 <p>Precio: {{ comida.precio | currency }}</p>
               </li>
             </ul>
-            <!-- <button (click)="cambiarEstadoPedido(pedido)">Confirmar pedido</button> -->
+            <button (click)="cambiarEstadoPedido(pedido)">Pedido Terminado</button>
           </div>
         </li>
       </ul>

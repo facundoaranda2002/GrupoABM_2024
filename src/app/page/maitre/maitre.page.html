@@ -116,7 +116,23 @@
                   @if(pedido.cliente == usuarioActual?.mail && pedido.estadoPedido == "en proceso"){
                   <p>Estado del pedido tuyo: {{ pedido.estadoPedido }}</p>
                   <button (click)="goEncuesta()">Ir a Escuesta</button>
-                  }@else{
+                  }
+                  @else if(pedido.estadoPedido == "preparado"){
+                  <p>Estado del pedido tuyo: {{ pedido.estadoPedido }}, en breve el mozo se lo entregará.</p>
+                  <button (click)="goEncuesta()">Ir a Escuesta</button>
+                  }
+                  @else if(pedido.estadoPedido == "entregado"){
+                  <!-- <button (click)="confirmarRecepcion()">Confirmar Recepción</button> -->
+                  <button (click)="cambiarEstadoPedido(pedido)">Confirmar Recepción</button>
+                  }
+                  @else if(pedido.estadoPedido == "comiendo" && recepcion){
+                  <p>Estado del pedido tuyo: Ya está en tu mesa.</p>
+
+                  }@else if(!recepcion){
+                  <button (click)="goEncuesta()">Ir a Escuesta</button>
+                  <button (click)="goCuenta()">Pedir La Cuenta</button>
+                  }
+                  @else{
                   <button (click)="goMenu()">Ir al Menú</button>
                   }
                 </div>

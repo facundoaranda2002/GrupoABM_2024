@@ -213,6 +213,7 @@ export class MaitrePage implements OnInit {
         // Aquí podrías continuar con la lógica necesaria si el escaneo es correcto.
         this.mesaYaAsignada = false;
         // this.router.navigateByUrl('/menu-comidas');
+        this.recepcion = false;
       }
     }
   }
@@ -420,4 +421,39 @@ export class MaitrePage implements OnInit {
   loadPedidos() {
     this.pedidos$ = this.pedidoService.getPedidos();
   }
+
+  async cambiarEstadoPedido(pedido: Pedido) {
+    // Verificar si pedido.id tiene un valor
+    if (pedido.id) {
+      pedido.estadoPedido = 'comiendo';
+      this.recepcion = true;
+      try {
+        // Llamar al servicio para actualizar el pedido en Firebase Firestore
+        await this.pedidoService.updatePedido(pedido.id, pedido);
+
+        // Mostrar el toast de éxito
+        this.Toast.fire({
+          icon: 'success',
+          title: `Recepción Confirmada`,
+          color: '#ffffff',
+        });
+      } catch (error) {
+        console.error('Error al cambiar el estado del pedido:', error);
+
+        // Mostrar un toast de error si ocurre algún problema
+        this.Toast.fire({
+          icon: 'error',
+          title: `Error al confirmar pedido`,
+          color: '#ffffff',
+        });
+      }
+    }
+  }
+
+  goCuenta() {
+    this.router.navigateByUrl('/cuenta');
+  }
+  recepcion: boolean = false;
+
+
 }

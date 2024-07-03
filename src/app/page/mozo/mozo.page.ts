@@ -108,6 +108,7 @@ export class MozoPage implements OnInit {
 
   ngOnInit() {
     this.loadPedidos();
+    this.checkUserProfile();
   }
 
   async checkUserProfile() {
@@ -119,6 +120,8 @@ export class MozoPage implements OnInit {
           this.isMozoProfile = true;
         } else if (perfil === 'bartender') {
           this.isBartenderProfile = true;
+        } else {
+          this.isCocineroProfile = true;
         }
       }
     } catch (error) {
@@ -134,8 +137,15 @@ export class MozoPage implements OnInit {
   async cambiarEstadoPedido(pedido: Pedido) {
     // Verificar si pedido.id tiene un valor
     if (pedido.id) {
-      // Actualizar el estado del pedido a 'En Proceso'
-      pedido.estadoPedido = 'en proceso';
+      if (pedido.estadoPedido == "pendiente") {
+        // Actualizar el estado del pedido a 'En Proceso'
+        pedido.estadoPedido = 'en proceso';
+      } else if (pedido.estadoPedido == "en proceso") {
+        pedido.estadoPedido = 'preparado';
+      } else {
+        pedido.estadoPedido = 'entregado';
+      }
+
 
       try {
         // Llamar al servicio para actualizar el pedido en Firebase Firestore
