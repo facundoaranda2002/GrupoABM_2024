@@ -21,10 +21,6 @@ export class CuentaPage implements OnInit {
   pedidos: any;
   total: number = 0;
   propina: number = 0;  
-  userData : any;
-  @Output() usingQRChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-  usingQR : boolean = false;
-  waitingForData = true;
   totalFinal : any;
   public pagando : boolean = false;
   usuarioActual : any;
@@ -36,9 +32,9 @@ export class CuentaPage implements OnInit {
     private router: Router) { }
     
     async ngOnInit() {
-      setTimeout(() => {
-        this.checkUser();
-      }, 2000);
+      
+    await this.checkUser();
+      
     const rawPedidos = await this.data.getCuentaFromUser(this.usuarioActual.mail);
     
     const productosAgrupados: { [nombreProducto: string]: { cantidad: number, precio: number } } = {};
@@ -141,7 +137,7 @@ export class CuentaPage implements OnInit {
     }
     else
     {
-      this.propina = this.total * 0;   
+      this.propina = 0;   
       this.total += this.propina; 
     }
   }

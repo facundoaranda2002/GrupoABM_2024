@@ -13,8 +13,8 @@
         <div  class="user-container"*ngFor="let pedido of this.pagos">
           <div>
             <i class="bi bi-person-circle"></i>
-            <span>{{pedido.name}}</span>
-            <span>${{pedido.monto}}</span>
+            <span>{{pedido.cliente}}</span>
+            <span>${{pedido.precioTotal}}</span>
             <button type="button" (click)="onAcceptClick(pedido)" class="btn"><i class="bi bi-check"></i></button>
           </div>
         </div>

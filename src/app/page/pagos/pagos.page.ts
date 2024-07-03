@@ -32,7 +32,7 @@ export class PagosPage implements OnInit {
 
   public async onAcceptClick(pedido : any)
   {
-    await this.data.cambiarEstadoPedido(pedido.name, 'pagado');
+    await this.data.cambiarEstadoPedido(pedido.cliente, 'pagado');
   }
 
 }
