@@ -54,6 +54,9 @@ import Swal from 'sweetalert2';
 import { BarcodeScanningModalComponent } from './barcode-scanning-modal.component';
 import { BarcodeScanner, LensFacing } from '@capacitor-mlkit/barcode-scanning';
 import { Usuario } from 'src/app/clases/usuario';
+import { PedidoService } from 'src/app/service/pedido.service';
+import { Pedido } from 'src/app/clases/pedido';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-maitre',
@@ -108,15 +111,12 @@ export class MaitrePage implements OnInit {
   authService = inject(AuthService);
   clienteService = inject(ClienteService);
   modalController: ModalController = inject(ModalController);
+  pedidoService = inject(PedidoService);
+  pedidos$: Observable<Pedido[]> | undefined;
   // Atributos
   usuarioAsignar?: any;
-
-  isMaitreProfile: boolean = false;
   isClientProfile: boolean = false;
-  isMozoProfile: boolean = false;
-
   usuariosSinMesa: Usuario[] = [];
-
   qrCodeImageUrl: string | undefined;
   mesaAsignada: number | undefined; //esta variable la uso para mostrar la mesa asignada siendo cliente
   scanResoult = '';
@@ -127,8 +127,10 @@ export class MaitrePage implements OnInit {
   mesaYaAsignada: boolean = false; // Variable para controlar si la mesa ya está asignada, la usa cuando ingresa un cliente y escanea un qr asignado a otro cliente
   numeroMesaMaitre: number = 0; //sirve para mostrar el numero de mesa que asigna el maitre
   yaEscaneada: boolean = false;
+  usuarioActual: Usuario | null = null;
 
   ngOnInit() {
+    this.loadPedidos();
     this.numbers = this.generateNumbers(); // Genera los números disponibles
     this.loadMesasAsignadas();
     this.checkUserProfile();
@@ -210,9 +212,15 @@ export class MaitrePage implements OnInit {
         );
         // Aquí podrías continuar con la lógica necesaria si el escaneo es correcto.
         this.mesaYaAsignada = false;
-        this.router.navigateByUrl('/menu-comidas');
+        // this.router.navigateByUrl('/menu-comidas');
       }
     }
+  }
+  goEncuesta() {
+    this.router.navigateByUrl('/encuesta');
+  }
+  goMenu() {
+    this.router.navigateByUrl('/menu-comidas');
   }
 
   // Método para extraer el número de mesa del texto del código QR
@@ -231,14 +239,8 @@ export class MaitrePage implements OnInit {
           this.isClientProfile = true;
           // await this.loadQrForClient(currentUserEmail);
           await this.loadMesaAsignada(currentUserEmail);
-        } else if (perfil === 'maitre') {
-          this.isMaitreProfile = true;
         }
-        else if (perfil === 'mozo') {
-          this.isMozoProfile = true;
-        }
-      }
-      else {
+      } else {
         if (this.authService.obtenerAnonimo()) {
           const perfil = await this.authService.getUser(
             this.authService.obtenerAnonimo()
@@ -247,10 +249,6 @@ export class MaitrePage implements OnInit {
             this.isClientProfile = true;
             // await this.loadQrForClient(currentUserEmail);
             await this.loadMesaAsignada(this.authService.obtenerAnonimo());
-          } else if (perfil === 'maitre') {
-            this.isMaitreProfile = true;
-          } else if (perfil === 'mozo') {
-            this.isMozoProfile = true;
           }
         }
       }
@@ -259,36 +257,6 @@ export class MaitrePage implements OnInit {
     }
   }
 
-
-
-  // async checkUserProfile() {
-  //   try {
-  //     const currentUserEmail = await firstValueFrom(this.authService.actual());
-  //     if (currentUserEmail) {
-  //       const perfil = await this.authService.getUser(currentUserEmail);
-  //       if (perfil === 'cliente') {
-  //         this.isClientProfile = true;
-  //         // await this.loadQrForClient(currentUserEmail);
-  //         await this.loadMesaAsignada(currentUserEmail);
-  //       }
-  //     } else {
-  //       if (this.authService.obtenerAnonimo()) {
-  //         const perfil = await this.authService.getUser(
-  //           this.authService.obtenerAnonimo()
-  //         );
-  //         if (perfil === 'cliente') {
-  //           this.isClientProfile = true;
-  //           // await this.loadQrForClient(currentUserEmail);
-  //           await this.loadMesaAsignada(this.authService.obtenerAnonimo());
-  //         }
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.error('Error obteniendo perfil de usuario:', error);
-  //   }
-  // }
-
-  usuarioActual: Usuario | null = null;
 
   async checkMesaAsignada() {
     try {
@@ -446,5 +414,10 @@ export class MaitrePage implements OnInit {
       console.error(err);
       return '';
     }
+  }
+
+  // Carga los pedidos a pedidos$
+  loadPedidos() {
+    this.pedidos$ = this.pedidoService.getPedidos();
   }
 }

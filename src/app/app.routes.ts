@@ -85,11 +85,15 @@ export const routes: Routes = [
   },
   {
     path: 'cuenta',
-    loadComponent: () => import('./page/cuenta/cuenta.page').then( m => m.CuentaPage)
+    loadComponent: () => import('./page/cuenta/cuenta.page').then(m => m.CuentaPage)
   },
   {
     path: 'pagos',
-    loadComponent: () => import('./page/pagos/pagos.page').then( m => m.PagosPage)
+    loadComponent: () => import('./page/pagos/pagos.page').then(m => m.PagosPage)
+  },
+  {
+    path: 'mozo',
+    loadComponent: () => import('./page/mozo/mozo.page').then(m => m.MozoPage)
   },
   {
     path: '**',

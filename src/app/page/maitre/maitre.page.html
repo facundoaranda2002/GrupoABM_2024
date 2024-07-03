@@ -9,7 +9,7 @@
 <!-- Contenido Principal -->
 <ion-content>
   <!-- Si es Maitre -->
-  <ng-container *ngIf="isMaitreProfile">
+  <ng-container *ngIf="!isClientProfile; else clientView">
     <!-- Listado usuarios sin asignar mesa-->
     @if(!usuarioAsignar){
     <ion-text color="white">
@@ -59,7 +59,7 @@
     }
   </ng-container>
   <!-- Si es Cliente -->
-  <ng-template *ngIf="isClientProfile">
+  <ng-template #clientView>
     <ion-button class="submit" (click)="startScan()" expand="block">
       Escanear Mesa
       <ion-icon slot="end" name="scan-outline"></ion-icon>
@@ -102,70 +102,29 @@
           ">
           <!-- Su mesa es la numero {{scanResoult}} -->
           {{ mesaAsignada }}
+          <div *ngIf="pedidos$ | async as pedidos;">
+            <ul>
+              <li *ngFor="let pedido of pedidos">
+                <div style="
+                font-size: 60px;
+                font-weight: bold;
+                text-align: center;
+                display: block;
+                font-family: 'Times New Roman', Times, serif;
+                color:white;
+              ">
+                  @if(pedido.cliente == usuarioActual?.mail && pedido.estadoPedido == "en proceso"){
+                  <p>Estado del pedido tuyo: {{ pedido.estadoPedido }}</p>
+                  <button (click)="goEncuesta()">Ir a Escuesta</button>
+                  }@else{
+                  <button (click)="goMenu()">Ir al Menú</button>
+                  }
+                </div>
+              </li>
+            </ul>
+          </div>
         </ion-text>
       </ng-template>
     </div>
   </ng-template>
-
-  <!-- Si es Cliente -->
-  <ng-template *ngIf="isClientProfile">
-    <ion-button class="submit" (click)="startScan()" expand="block">
-      Escanear Mesa
-      <ion-icon slot="end" name="scan-outline"></ion-icon>
-    </ion-button>
-    @if(usuarioActual != null){
-    <ion-button class="submit" (click)="goChat()" expand="block">
-      Consultar Mozo
-    </ion-button>
-    }
-    <!-- <h1>Mesa escaneada numero: </h1>
-    <h1>{{scanResoult}}</h1> -->
-    <div *ngIf="yaEscaneada">
-      <div *ngIf="mesaYaAsignada; else notAssigned">
-        <ion-text color="danger" style="
-            font-size: 60px;
-            font-weight: bold;
-            text-align: center;
-            display: block;
-            font-family: 'Times New Roman', Times, serif;
-          "><br />
-          Esta mesa la tiene asignada otro cliente, no la puede usar.
-        </ion-text>
-      </div>
-      <ng-template #notAssigned>
-        <ion-text style="
-            font-size: 65px;
-            text-align: center;
-            display: block;
-            color: white;
-            font-family: 'Times New Roman', Times, serif;
-          "><br />
-          Su mesa es la numero: <br />
-        </ion-text>
-        <ion-text style="
-            font-size: 250px;
-            text-align: center;
-            display: block;
-            color: white;
-            font-family: 'Times New Roman', Times, serif;
-          ">
-          <!-- Su mesa es la numero {{scanResoult}} -->
-          {{ mesaAsignada }}
-        </ion-text>
-      </ng-template>
-    </div>
-  </ng-template>
-
-  <!-- Si es Mozo -->
-  <ng-container *ngIf="isMozoProfile">
-    <ion-text color="white">
-      <h2>Bienvenido, Mozo</h2>
-    </ion-text>
-    <div>
-      <!-- Aquí puedes agregar el contenido específico para el perfil de mozo -->
-      <p>Contenido específico para el mozo...</p>
-    </div>
-  </ng-container>
-
-
 </ion-content>
