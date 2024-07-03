@@ -365,7 +365,7 @@ export class ClienteService {
     const docRef = querySnapshot.docs[0].ref;
     await updateDoc(docRef, 
     {
-      orderStatus: estado
+      estadoPedido: estado
     });
   }
 }

@@ -23,7 +23,7 @@
     <img class="imgLogo" src="../../../assets/img/splashanimated.png" alt="User" />
     <div class="contenedorBtn">
       <!-- Es Cliente Anonimo O Registrado -->
-      @if(this.profile === 'cliente' || this.authService.obtenerAnonimo()) 
+      @if(this.profile === 'cliente' || this.authService.obtenerAnonimo())
       {
       <!--NO Esta en lista de espera -->
       @if(!usuarioActual?.listaDeEspera){
@@ -49,24 +49,41 @@
       <ion-button color="secondary" (click)="goCuenta()" class="submit" expand="full">
         Cuenta
       </ion-button>
-      } 
+      }
       <!-- Es Mozo -->
       @if(this.profile === 'mozo'){
-        <ion-button expand="block" (click)="goChat()"> Chat Clientes </ion-button>
-        <ion-button color="secondary" (click)="goConfirmarPago()" class="submit" expand="full">
-          Pendiente de pago
-        </ion-button>
-      } 
+      <ion-button expand="block" (click)="goChat()"> Chat Clientes </ion-button>
+      <ion-button color="secondary" (click)="goConfirmarPago()" class="submit" expand="full">
+        Pendiente de pago
+      </ion-button>
+      <ion-button expand="block" (click)="goMozos()">
+        Ir a Lista de Pedidos
+      </ion-button>
+      }
       <!-- Es Maitre -->
       @if(this.profile === 'maitre') {
       <ion-button expand="block" (click)="goRegisterMaitreAsignaMesa()">
         Asignar Mesa
       </ion-button>
-      } 
+      }
       <!-- Es Admin -->
       @if(this.profile === 'dueno' || this.profile === 'supervisor') {
       <ion-button expand="block" (click)="goAdminClientes()">
         Administrar Clientes
+      </ion-button>
+      }
+
+      <!-- Es Cocinero -->
+      @if(this.profile === 'cocinero'){
+      <ion-button expand="block" (click)="goMozos()">
+        Ir a la cocina
+      </ion-button>
+      }
+
+      <!-- Es Bartender -->
+      @if(this.profile === 'bartender'){
+      <ion-button expand="block" (click)="goMozos()">
+        Ir al bar
       </ion-button>
       }
     </div>

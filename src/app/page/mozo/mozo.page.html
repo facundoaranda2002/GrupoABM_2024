@@ -1,0 +1,113 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>mozo</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Si es Mozo -->
+  <ng-container *ngIf="isMozoProfile">
+    <div *ngIf="pedidos$ | async as pedidos; else loading">
+      <ul>
+        <li *ngFor="let pedido of pedidos">
+          <!-- <div class="test" (click)="cambiarEstadoPedido(pedido)"> -->
+          <div class="test">
+            <p>ID: {{ pedido.id }}</p>
+            <p>Cliente: {{ pedido.cliente }}</p>
+            <p>Precio Total: {{ pedido.precioTotal | currency }}</p>
+            <p>Tiempo Total Estimado: {{ pedido.tiempoTotalEstimado }} mins</p>
+            <p>Estado: {{ pedido.estadoPedido }}</p>
+            <p>Comidas:</p>
+            <ul>
+              <li *ngFor="let comida of pedido.comidas">
+                <p>Cantidad: {{ comida.cantidad }}</p>
+                <p>Descripción: {{ comida.descripcion }}</p>
+                <p>Estado Comida: {{ comida.estadoComida }}</p>
+                <img src="{{ comida.img }}" alt="Imagen de comida">
+                <p>Nombre: {{ comida.nombre }}</p>
+                <p>Precio: {{ comida.precio | currency }}</p>
+                <p>Tiempo Estimado: {{ comida.tiempoEstimado }}</p>
+              </li>
+            </ul>
+          </div>
+          @if(pedido.estadoPedido == "pendiente"){
+          <button (click)="cambiarEstadoPedido(pedido)">Confirmar pedido</button>
+          }@else if(pedido.estadoPedido == "preparado"){
+          <button (click)="cambiarEstadoPedido(pedido)">Entregar pedido</button>
+          }
+        </li>
+      </ul>
+    </div>
+    <ng-template #loading>
+      <p class="test">Cargando pedidos...</p>
+    </ng-template>
+  </ng-container>
+
+  <!-- Si es Bartender -->
+  <ng-container *ngIf="isBartenderProfile">
+    <div *ngIf="pedidos$ | async as pedidos; else loading">
+      <ul>
+        <li *ngFor="let pedido of pedidos">
+          <div class="test">
+            <p>ID: {{ pedido.id }}</p>
+            <p>Cliente: {{ pedido.cliente }}</p>
+            <p>Precio Total: {{ pedido.precioTotal | currency }}</p>
+            <p>Tiempo Total Estimado: {{ pedido.tiempoTotalEstimado }} mins</p>
+            <p>Estado: {{ pedido.estadoPedido }}</p>
+            <p>Comidas:</p>
+            <ul>
+              <li *ngFor="let comida of pedido.comidas">
+                <p>Cantidad: {{ comida.cantidad }}</p>
+                <p>Descripción: {{ comida.descripcion }}</p>
+                <p>Estado Comida: {{ comida.estadoComida }}</p>
+                <img src="{{ comida.img }}" alt="Imagen de comida">
+                <p>Nombre: {{ comida.nombre }}</p>
+                <p>Precio: {{ comida.precio | currency }}</p>
+                <p>Tiempo Estimado: {{ comida.tiempoEstimado }}</p>
+              </li>
+            </ul>
+            <button (click)="cambiarEstadoPedido(pedido)">Pedido Terminado</button>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <ng-template #loading>
+      <p class="test">Cargando pedidos...</p>
+    </ng-template>
+  </ng-container>
+
+
+
+  <!-- Si es Cocinero -->
+  <ng-container *ngIf="isCocineroProfile">
+    <div *ngIf="pedidos$ | async as pedidos; else loading">
+      <ul>
+        <li *ngFor="let pedido of pedidos">
+          <div class="test">
+            <p>ID: {{ pedido.id }}</p>
+            <p>Cliente: {{ pedido.cliente }}</p>
+            <p>Precio Total: {{ pedido.precioTotal | currency }}</p>
+            <p>Tiempo Total Estimado: {{ pedido.tiempoTotalEstimado }} mins</p>
+            <p>Estado: {{ pedido.estadoPedido }}</p>
+            <p>Comidas:</p>
+            <ul>
+              <li *ngFor="let comida of pedido.comidas">
+                <p>Cantidad: {{ comida.cantidad }}</p>
+                <p>Descripción: {{ comida.descripcion }}</p>
+                <img src="{{ comida.img }}" alt="Imagen de comida">
+                <img src={{ comida.img }} alt="Imagen de comida">
+                <p>Nombre: {{ comida.nombre }}</p>
+                <p>Precio: {{ comida.precio | currency }}</p>
+                <p>Tiempo Estimado: {{ comida.tiempoEstimado }}</p>
+              </li>
+            </ul>
+            <button (click)="cambiarEstadoPedido(pedido)">Pedido Terminado</button>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <ng-template #loading>
+      <p class="test">Cargando pedidos...</p>
+    </ng-template>
+  </ng-container>
+</ion-content>

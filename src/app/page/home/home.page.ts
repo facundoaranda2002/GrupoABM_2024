@@ -59,7 +59,7 @@ export class HomePage implements OnInit {
 
   usuarioActual: any;
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit() {
     setTimeout(() => {
@@ -231,5 +231,8 @@ export class HomePage implements OnInit {
 
   goConfirmarPago() {
     this.router.navigateByUrl('/pagos');
+  }
+  goMozos() {
+    this.router.navigateByUrl('/mozo');
   }
 }
