@@ -142,6 +142,7 @@ export class HomePage implements OnInit {
         listaDeEspera: true,
         mesaAsignada: usuarioActual.mesaAsignada,
         estadoEncuesta: usuarioActual.estadoEncuesta,
+        token: usuarioActual.token,
       };
       this.authService
         .updateUsuarioCliente(usuarioActual.id, usuarioAux)

@@ -25,6 +25,7 @@ import {
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/service/auth.service';
 import Swal from 'sweetalert2';
+import { FcmService } from 'src/app/service/fcm.service';
 
 @Component({
   selector: 'app-login',
@@ -56,6 +57,7 @@ export class LoginPage implements OnInit {
   fb = inject(FormBuilder);
   authService = inject(AuthService);
   elementRef = inject(ElementRef);
+  fmc = inject(FcmService);
   isToastOpen = false;
   usuario: any = null;
 
@@ -102,6 +104,7 @@ export class LoginPage implements OnInit {
         next: () => {
           setTimeout(() => {
             this.router.navigateByUrl('/home');
+            this.fmc.registrarToken();
           }, 2000);
           this.form.reset();
         },

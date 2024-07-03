@@ -85,6 +85,19 @@ export class AuthService {
       return null; // Si no se encuentra el usuario, retornamos null
     }
   }
+  async getUserActualId(email: string | undefined | null): Promise<any> {
+    const usersCollection = collection(this.firestore, 'Usuarios');
+    const q = query(usersCollection, where('mail', '==', email));
+    const usersSnapshot = await getDocs(q);
+
+    if (!usersSnapshot.empty) {
+      const userDoc = usersSnapshot.docs[0];
+      const userData = userDoc.data();
+      return { ...userData, id: userDoc.id }; // Incluimos el ID del documento en el objeto retornado
+    } else {
+      return null; // Si no se encuentra el usuario, retornamos null
+    }
+  }
 
   register(email: string, password: string): Observable<UserCredential> {
     const promise = createUserWithEmailAndPassword(
@@ -172,6 +185,11 @@ export class AuthService {
   updateUsuarioCliente(id: string, cliente: Usuario) {
     return updateDoc(this.document(id), { ...cliente });
   }
+
+  updateUsuario(id: string, any: any) {
+    return updateDoc(this.document(id), { ...any });
+  }
+
   private document(id: string) {
     const usersCollection = collection(this.firestore, 'Usuarios');
     return doc(usersCollection, `${id}`);
@@ -194,5 +212,4 @@ export class AuthService {
       return null;
     }
   }
-  
 }

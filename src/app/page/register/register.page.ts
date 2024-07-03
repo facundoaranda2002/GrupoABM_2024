@@ -47,6 +47,7 @@ import { BarcodeScanningModalComponent } from './barcode-scanning-modal.componen
 import Swal from 'sweetalert2';
 import { switchMap } from 'rxjs';
 import { Usuario } from 'src/app/clases/usuario';
+import { FcmService } from 'src/app/service/fcm.service';
 
 @Component({
   selector: 'app-register',
@@ -100,6 +101,7 @@ export class RegisterPage implements OnInit {
   clienteService = inject(ClienteService);
   photoService = inject(PhotoService);
   private modalController: ModalController = inject(ModalController);
+  fmc = inject(FcmService);
 
   qrCodeImageUrl: string | undefined;
   mailRegistrar: string = '';
@@ -236,6 +238,7 @@ export class RegisterPage implements OnInit {
             if (this.form.getRawValue().tipo == 'anonimo') {
               this.altaAnonimo(cliente).then(() => {});
               this.authService.agregarAnonimo(cliente.mail);
+              this.fmc.registrarToken();
               this.router.navigateByUrl('/home');
             } else {
               this.alta(cliente);

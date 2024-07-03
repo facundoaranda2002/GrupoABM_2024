@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Capacitor } from '@capacitor/core';
 import {
   ActionPerformed,
@@ -6,8 +6,10 @@ import {
   PushNotificationSchema,
   Token,
 } from '@capacitor/push-notifications';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, firstValueFrom } from 'rxjs';
 import { StorageService } from './storage.service';
+import { AuthService } from './auth.service';
+import { Usuario } from '../clases/usuario';
 
 export const FCM_TOKEN = 'push_notification_token';
 
@@ -16,6 +18,7 @@ export const FCM_TOKEN = 'push_notification_token';
 })
 export class FcmService {
   private _redirect = new BehaviorSubject<any>(null);
+  authService = inject(AuthService);
 
   get redirect() {
     return this._redirect.asObservable();
@@ -23,11 +26,41 @@ export class FcmService {
 
   constructor(private storage: StorageService) {}
 
+  // Para encontrar el usuario actual
+  usuarioActual: any | null = null;
+  async checkDatosUsuarioActual() {
+    try {
+      const currentUserEmail = await firstValueFrom(this.authService.actual());
+      if (currentUserEmail) {
+        const usuario = await this.authService.getUserActualId(
+          currentUserEmail
+        );
+        if (usuario.mesaAsignada != 0) {
+          this.usuarioActual = usuario;
+        }
+      } else {
+        if (this.authService.obtenerAnonimo()) {
+          const usuario = await this.authService.getUserActualId(
+            this.authService.obtenerAnonimo()
+          );
+          if (usuario.mesaAsignada != 0) {
+            this.usuarioActual = usuario;
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Error obteniendo perfil de usuario:', error);
+    }
+  }
+
   initPush() {
     if (Capacitor.getPlatform() !== 'web') {
       this.registerPush();
       // this.getDeliveredNotifications();
     }
+  }
+  async registrarToken() {
+    await PushNotifications.register();
   }
 
   private async registerPush() {
@@ -57,6 +90,14 @@ export class FcmService {
 
   addListeners() {
     PushNotifications.addListener('registration', async (token: Token) => {
+      this.checkDatosUsuarioActual().then(() => {
+        if (this.usuarioActual) {
+          this.usuarioActual.token = token.value;
+          const { id, ...rest } = this.usuarioActual;
+          this.authService.updateUsuario(this.usuarioActual.id, rest);
+        }
+      });
+
       console.log('My token: ', token);
       const fcm_token = token?.value;
       let go = 1;
