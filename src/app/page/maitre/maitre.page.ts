@@ -158,8 +158,12 @@ export class MaitrePage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.checkUserProfile();
-    this.checkMesaAsignada();
+    setTimeout(() => {
+      this.checkUserProfile();
+    }, 2000);
+    setTimeout(() => {
+      this.checkMesaAsignada();
+    }, 2000);
     this.estadoEncuesta = this.usuarioActual?.estadoEncuesta;
   }
 
