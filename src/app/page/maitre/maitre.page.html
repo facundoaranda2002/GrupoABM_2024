@@ -75,6 +75,7 @@
   </ng-container>
   <!-- Si es Cliente -->
   <ng-template #clientView>
+    @if(mesaYaAsignada){
     <ion-button class="submit btnMesaMozo" (click)="startScan()" expand="block">
       Escanear Mesa
       <ion-icon slot="end" name="scan-outline"></ion-icon>
@@ -83,7 +84,7 @@
     <ion-button class="submit btnMesaMozo" (click)="goChat()" expand="block">
       Consultar Mozo
     </ion-button>
-    }
+    } }
     <div *ngIf="yaEscaneada">
       <div *ngIf="mesaYaAsignada; else notAssigned"></div>
       <ng-template #notAssigned>
@@ -93,32 +94,41 @@
           >
         </div>
         @if(usuarioActual?.perfil == "cliente" && usuarioActual?.listaDeEspera
-        == true && usuarioActual?.mesaAsignada != 0){
+        == true && usuarioActual?.mesaAsignada != 0 && !hizoElPedido){
         <ion-button expand="block" (click)="goMenu()">Ir al Menú</ion-button>
         }
         <div *ngIf="pedidos$ | async as pedidos;">
           @for (pedido of pedidos; track $index) {
           <div class="contenedorBtn">
             @if(pedido.cliente == usuarioActual?.mail && pedido.estadoPedido ==
-            "enProceso"){
+            "pendiente"){
             <div class="textoPedidoEstado">
               <p>
                 Tu pedido está: <span>{{ pedido.estadoPedido | estado }}</span>
               </p>
             </div>
-            <ion-button expand="block" (click)="goEncuesta()"
-              >Ir a Escuesta</ion-button
-            >
-            } @else if(pedido.estadoPedido == "preparado"){
+            } @else if(pedido.cliente == usuarioActual?.mail &&
+            pedido.estadoPedido == "enProceso"){
             <div class="textoPedidoEstado">
               <p>
                 Tu pedido está: <span>{{ pedido.estadoPedido | estado }}</span>
               </p>
             </div>
+            @if(estadoEncuesta == false){
             <ion-button expand="block" (click)="goEncuesta()"
               >Ir a Escuesta</ion-button
             >
-            } @else if(pedido.estadoPedido == "entregado"){
+            } } @else if(pedido.estadoPedido == "preparado"){
+            <div class="textoPedidoEstado">
+              <p>
+                Tu pedido está: <span>{{ pedido.estadoPedido | estado }}</span>
+              </p>
+            </div>
+            @if(estadoEncuesta == false){
+            <ion-button expand="block" (click)="goEncuesta()"
+              >Ir a Escuesta</ion-button
+            >
+            } } @else if(pedido.estadoPedido == "entregado"){
             <!-- <ion-button (click)="confirmarRecepcion()">Confirmar Recepción</ion-button> -->
             <ion-button expand="block" (click)="cambiarEstadoPedido(pedido)">
               Confirmar Recepción

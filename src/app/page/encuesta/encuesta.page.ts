@@ -119,7 +119,7 @@ export class EncuestaPage implements OnInit {
 
     this.data.saveEncuesta(encuesta);
     this.data.actualizarEstadoClienteEncuesta(this.usuarioActual.id, true);
-    this.router.navigateByUrl('/home');
+    this.navController.back();
     console.log(this.form.controls['servicio'].value);
     console.log(this.form.controls['comida'].value);
     console.log(this.form.controls['precio'].value);

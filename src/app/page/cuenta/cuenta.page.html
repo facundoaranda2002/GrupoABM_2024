@@ -1,4 +1,4 @@
-<ion-content [fullscreen]="true">  
+<ion-content [fullscreen]="true">
   <div class="background" *ngIf="!this.pagando; else elseBlock">
     <div class="seccion">
       <h1>Cuenta:</h1>
@@ -6,7 +6,7 @@
         <thead>
           <tr>
             <th>Producto</th>
-            <th style="display: flex;" class="centrado">Cant.</th>
+            <th style="display: flex" class="centrado">Cant.</th>
             <th class="centrado">Precio</th>
             <th class="centrado">Subtotal</th>
           </tr>
@@ -20,14 +20,22 @@
           </tr>
         </tbody>
       </table>
-      <div class="separador"></div> 
-      <h2 style="text-align: end;">Propina: ${{propina}}</h2>
-      <div class="separador"></div> 
-      <h2 style="text-align: end;">Total: ${{total}}</h2>
+      <div class="separador"></div>
+      <h2 style="text-align: end">Propina: ${{propina}}</h2>
+      <div class="separador"></div>
+      <h2 class="Total" style="text-align: end">Total: ${{total}}</h2>
     </div>
-    <div class="button-container">      
-      <button (click)="darPropina()"> <span>Dar propina</span> <i style="margin-left: 6px;" class="bi bi-qr-code-scan"></i></button>
-      <button (click)="onPagar()"> <span>Pagar en efectivo <i style="margin-left: 6px;" class="bi bi-cash-coin"></i></span></button>
+    <div class="button-container">
+      <button (click)="darPropina()">
+        <span>Dar propina</span>
+        <i style="margin-left: 6px" class="bi bi-qr-code-scan"></i>
+      </button>
+      <button (click)="onPagar()">
+        <span
+          >Pagar en efectivo
+          <i style="margin-left: 6px" class="bi bi-cash-coin"></i
+        ></span>
+      </button>
     </div>
   </div>
   <ng-template #elseBlock>

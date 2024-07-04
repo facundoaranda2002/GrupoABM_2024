@@ -90,6 +90,15 @@ export class CarritoComidasPage implements OnInit {
       auxPedido.comidas = this.pedidoService.comidasPedidos;
       auxPedido.estadoPedido = 'pendiente';
       auxPedido.precioTotal = this.pedidoService.calcularPrecioTotal();
+      this.authService
+        .GetUserTableByUserEmail(email)
+        .then((mesaAsignada) => {
+          auxPedido.mesa = mesaAsignada;
+        })
+        .catch((error) => {
+          console.error('Error fetching user table:', error);
+          auxPedido.mesa = 0;
+        });
       auxPedido.tiempoTotalEstimado =
         this.pedidoService.calcularEstimacionTotal();
       this.pedidoService.savePedido(auxPedido).then(() => {

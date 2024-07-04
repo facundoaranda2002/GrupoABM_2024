@@ -133,6 +133,7 @@ export class MaitrePage implements OnInit {
   yaEscaneada: boolean = false;
   usuarioActual: Usuario | null = null;
   estadoEncuesta?: boolean = false;
+  hizoElPedido?: boolean = false;
 
   ngOnInit() {
     this.loadPedidos();
@@ -157,6 +158,7 @@ export class MaitrePage implements OnInit {
     });
 
     this.estadoEncuesta = this.usuarioActual?.estadoEncuesta;
+    this.hizoElPedido = false;
   }
 
   ionViewWillEnter() {
@@ -239,6 +241,7 @@ export class MaitrePage implements OnInit {
   }
   goMenu() {
     this.router.navigateByUrl('/menu-comidas');
+    this.hizoElPedido = true;
   }
 
   // Método para extraer el número de mesa del texto del código QR

@@ -71,6 +71,21 @@ export class AuthService {
     }
   }
 
+  public async GetUserTableByUserEmail(
+    userEmail: string
+  ): Promise<number | null> {
+    const usersCollection = collection(this.firestore, 'Usuarios');
+    const q = query(usersCollection, where('mail', '==', userEmail)); // Declaramos explícitamente el tipo de la consulta
+    const usersSnapshot = await getDocs(q);
+    if (!usersSnapshot.empty) {
+      const userDoc = usersSnapshot.docs[0];
+      const userData = userDoc.data();
+      return userData['mesaAsignada'] || null;
+    } else {
+      return null;
+    }
+  }
+
   //Busco en la colección Usuarios si hay un mail cargado igual al que estoy usando para encontrarlo y retornarlo
   async getUserActual(email: string | undefined | null): Promise<any> {
     const usersCollection = collection(this.firestore, 'Usuarios');

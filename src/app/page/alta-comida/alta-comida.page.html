@@ -1,0 +1,109 @@
+<ion-content [fullscreen]="true">
+  <ion-fab slot="fixed" vertical="top" horizontal="start">
+    <ion-icon size="large" name="arrow-back-outline"></ion-icon>
+  </ion-fab>
+  <div class="contenedorBlanco">
+    <h1>Agregar Producto</h1>
+    <form id="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <!-- Nombre Producto -->
+      <ion-item color="secondary">
+        <ion-input
+          type="text"
+          placeholder="Ingrese Nombre Producto"
+          formControlName="nombreProducto"
+        ></ion-input>
+      </ion-item>
+      <!-- Validaciones Nombre Producto -->
+      <p
+        class="error-message"
+        *ngIf="form.get('nombreProducto')?.touched && form.get('nombreProducto')?.hasError('required')"
+      >
+        El nombre es obligatorio.
+      </p>
+      <p
+        class="error-message"
+        *ngIf="form.get('nombreProducto')?.touched && form.get('nombreProducto')?.hasError('pattern')"
+      >
+        Nombre inválido. Solo letras y espacios.
+      </p>
+      <!-- Descripccion -->
+      <ion-item color="secondary">
+        <ion-textarea
+          formControlName="descripcionProducto"
+          rows="5"
+          placeholder="Descripccion del producto"
+          [autoGrow]="true"
+        >
+        </ion-textarea>
+      </ion-item>
+      <!-- Validaciones Descripccion -->
+      <p
+        class="error-message"
+        *ngIf="form.get('descripcionProducto')?.touched && form.get('descripcionProducto')?.hasError('required')"
+      >
+        La descripcion es obligatoria.
+      </p>
+      <p
+        class="error-message"
+        *ngIf="form.get('descripcionProducto')?.touched && form.get('descripcionProducto')?.hasError('pattern')"
+      >
+        descripcion inválido. Solo letras y espacios minimo 10 caracteres y
+        maximo 50.
+      </p>
+      <!-- Precio -->
+      <ion-item color="secondary">
+        <ion-input
+          type="number"
+          placeholder="Ingrese el precio"
+          formControlName="precioProducto"
+        ></ion-input>
+      </ion-item>
+      <!-- Validacion precio -->
+      <p
+        class="error-message"
+        *ngIf="form.get('precioProducto')?.touched && form.get('precioProducto')?.hasError('required')"
+      >
+        El Precio es obligatorio.
+      </p>
+      <p
+        class="error-message"
+        *ngIf="form.get('precioProducto')?.touched && form.get('precioProducto')?.hasError('pattern')"
+      >
+        El precio es invalido
+      </p>
+      <!-- Tiempo Estimado -->
+      <ion-item color="secondary">
+        <ion-input
+          type="number"
+          placeholder="Ingrese Tiempo Estimado"
+          formControlName="tiempoEstimadoProducto"
+        ></ion-input>
+      </ion-item>
+      <!-- Validacion Tiempo Estimado -->
+      <p
+        class="error-message"
+        *ngIf="form.get('tiempoEstimadoProducto')?.touched && form.get('tiempoEstimadoProducto')?.hasError('required')"
+      >
+        El tiempo Estimado es obligatorio
+      </p>
+      <p
+        class="error-message"
+        *ngIf="form.get('tiempoEstimadoProducto')?.touched && form.get('tiempoEstimadoProducto')?.hasError('pattern')"
+      >
+        El tiempo Estimado es Invalido
+      </p>
+      <!-- Foto -->
+      <div class="btnFoto">
+        <ion-button color="primary" expand="full">Tomar Foto</ion-button>
+      </div>
+      <!-- Boton -->
+      <ion-button
+        class="btnRegistrar"
+        color="secondary"
+        type="submit"
+        expand="block"
+        >Alta Producto</ion-button
+      >
+    </form>
+  </div>
+</ion-content>

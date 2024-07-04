@@ -15,10 +15,10 @@ import {
   limit,
   addDoc,
   QuerySnapshot,
-  deleteDoc
+  deleteDoc,
 } from '@angular/fire/firestore';
 import { AuthService } from './auth.service';
-import { firstValueFrom , Observable} from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 import { UserInterface } from '../interface/user-interface';
 import { Usuario } from '../clases/usuario';
 
@@ -30,7 +30,7 @@ export class ClienteService {
     private firestore: Firestore,
     private authService: AuthService,
     private auth: AuthService
-  ) { }
+  ) {}
 
   AltaCliente(user: Usuario) {
     const coleccion = collection(this.firestore, 'Usuarios');
@@ -78,8 +78,9 @@ export class ClienteService {
 
   //obtengo el perfil cliente con listaDeEspera true, estaValidado aceptado y mail que coincida
   // async obtenerClienteEnListaEspera(listaDeEspera: boolean): Promise<UserInterface | null> {
-  async obtenerClienteEnListaEspera(email: string | null): Promise<UserInterface | null> {
-
+  async obtenerClienteEnListaEspera(
+    email: string | null
+  ): Promise<UserInterface | null> {
     const usuariosCollection = collection(this.firestore, 'Usuarios');
     const q = query(
       usuariosCollection,
@@ -128,7 +129,10 @@ export class ClienteService {
 
       querySnapshot.forEach((doc) => {
         const userData = doc.data() as UserInterface;
-        if (userData.mesaAsignada !== undefined && userData.mesaAsignada !== 0) {
+        if (
+          userData.mesaAsignada !== undefined &&
+          userData.mesaAsignada !== 0
+        ) {
           usuarios.push(userData);
         }
       });
@@ -192,26 +196,29 @@ export class ClienteService {
     return userDoc.id;
   }
 
-  public async saveEncuesta(encuestaData : any)
-  {
+  public async saveEncuesta(encuestaData: any) {
     const encuestaCollection = collection(this.firestore, 'encuestas');
-    const docRef = await addDoc(encuestaCollection, encuestaData);  
+    const docRef = await addDoc(encuestaCollection, encuestaData);
 
     return docRef.id;
   }
 
   async getVotosComida(): Promise<number[]> {
     const encuestaCollection = collection(this.firestore, 'encuestas');
-    
+
     // Realizar la consulta para obtener los datos de la colección 'encuestas'
-    const q = query(encuestaCollection, where('comida', '>=', 1), where('comida', '<=', 5));
+    const q = query(
+      encuestaCollection,
+      where('comida', '>=', 1),
+      where('comida', '<=', 5)
+    );
     const querySnapshot: QuerySnapshot<any> = await getDocs(q);
 
     // Inicializar un array para contar los votos en cada categoría (1 al 5)
     const conteoVotos = [0, 0, 0, 0, 0];
 
     // Contar los votos en cada categoría
-    querySnapshot.forEach(doc => {
+    querySnapshot.forEach((doc) => {
       const voto = doc.data().comida;
       if (voto >= 1 && voto <= 5) {
         conteoVotos[voto - 1]++;
@@ -221,41 +228,55 @@ export class ClienteService {
     return conteoVotos;
   }
 
-  async getVotosServicio(){
+  async getVotosServicio() {
     const encuestaCollection = collection(this.firestore, 'encuestas');
-    
+
     // Realizar la consulta para obtener los datos de la colección 'encuestas'
-    const q = query(encuestaCollection, where('servicio', '>=', 1), where('servicio', '<=', 5));
+    const q = query(
+      encuestaCollection,
+      where('servicio', '>=', 1),
+      where('servicio', '<=', 5)
+    );
     const querySnapshot: QuerySnapshot<any> = await getDocs(q);
 
     // Inicializar un array para contar los votos en cada categoría (1 al 5)
-    const conteoVotos = [{name: "1", value: 0}, {name: "2", value: 0}, {name: "3", value: 0}, {name: "4", value: 0}, {name: "5", value: 0}];
+    const conteoVotos = [
+      { name: '1', value: 0 },
+      { name: '2', value: 0 },
+      { name: '3', value: 0 },
+      { name: '4', value: 0 },
+      { name: '5', value: 0 },
+    ];
 
     // Contar los votos en cada categoría
-    querySnapshot.forEach(doc => {
+    querySnapshot.forEach((doc) => {
       const voto = doc.data().servicio;
       if (voto >= 1 && voto <= 5) {
-        conteoVotos[voto - 1]["value"]++;
+        conteoVotos[voto - 1]['value']++;
       }
     });
 
-    const votosFiltrados = conteoVotos.filter(voto => voto.value > 0);
+    const votosFiltrados = conteoVotos.filter((voto) => voto.value > 0);
 
     return votosFiltrados;
   }
 
   async getVotosPrecio(): Promise<number[]> {
     const encuestaCollection = collection(this.firestore, 'encuestas');
-    
+
     // Realizar la consulta para obtener los datos de la colección 'encuestas'
-    const q = query(encuestaCollection, where('precio', '>=', 1), where('precio', '<=', 5));
+    const q = query(
+      encuestaCollection,
+      where('precio', '>=', 1),
+      where('precio', '<=', 5)
+    );
     const querySnapshot: QuerySnapshot<any> = await getDocs(q);
 
     // Inicializar un array para contar los votos en cada categoría (1 al 5)
     const conteoVotos = [0, 0, 0, 0, 0];
 
     // Contar los votos en cada categoría
-    querySnapshot.forEach(doc => {
+    querySnapshot.forEach((doc) => {
       const voto = doc.data().precio;
       if (voto >= 1 && voto <= 5) {
         conteoVotos[voto - 1]++;
@@ -265,51 +286,48 @@ export class ClienteService {
     return conteoVotos;
   }
 
-  public async getCuentaFromUser(userMail : string) : Promise<any | null>
-  {
+  public async getCuentaFromUser(userMail: string): Promise<any | null> {
     console.log('Mail' + userMail);
     const userCollection = collection(this.firestore, 'pedidos');
     const q = query(userCollection, where('cliente', '==', userMail));
     const querySnapshot = await getDocs(q);
-  
-    if (querySnapshot.empty) 
-    {
+
+    if (querySnapshot.empty) {
       return null;
     }
 
-    const pedidos = querySnapshot.docs.map(doc => doc.data());
+    const pedidos = querySnapshot.docs.map((doc) => doc.data());
 
     return pedidos;
   }
 
-  public async pagarCuenta(userMail : string, status : string, monto: number)
-  {
+  public async pagarCuenta(userMail: string, status: string, monto: number) {
     const EstadoPedidoCollection = collection(this.firestore, 'pedidos');
-    const querySnapshot = await getDocs(query(EstadoPedidoCollection, where('cliente', '==', userMail)));
+    const querySnapshot = await getDocs(
+      query(EstadoPedidoCollection, where('cliente', '==', userMail))
+    );
     const docRef = querySnapshot.docs[0].ref;
-    await updateDoc(docRef, 
-    {
+    await updateDoc(docRef, {
       estadoPedido: status,
-      precioTotal: monto
+      precioTotal: monto,
     });
   }
 
-  public escucharConfirmacionMozo(userMail : string): Observable<any[]> {
-    const userCollection = collection(this.firestore,"pedidos");
+  public escucharConfirmacionMozo(userMail: string): Observable<any[]> {
+    const userCollection = collection(this.firestore, 'pedidos');
     const q = query(userCollection, where('cliente', '==', userMail));
 
     return new Observable<any[]>((observer) => {
       const unsubscribe = onSnapshot(q, (querySnapshot) => {
         const users = querySnapshot.docs.map((doc) => doc.data());
-        if (users == null)
-        {
+        if (users == null) {
           observer.next(users);
         }
       });
 
       return () => unsubscribe();
     });
-  } 
+  }
 
   public async liberarMesa(userMail: string) {
     //Eliminar pedido.
@@ -317,10 +335,8 @@ export class ClienteService {
     let q = query(userCollection, where('cliente', '==', userMail));
     let querySnapshot = await getDocs(q);
 
-    if (!querySnapshot.empty) 
-    {
-      querySnapshot.docs.forEach(doc => 
-      {
+    if (!querySnapshot.empty) {
+      querySnapshot.docs.forEach((doc) => {
         deleteDoc(doc.ref);
       });
     }
@@ -330,22 +346,20 @@ export class ClienteService {
     q = query(userCollection, where('mail', '==', userMail));
     querySnapshot = await getDocs(q);
 
-    
-    if (!querySnapshot.empty) 
-    {
+    if (!querySnapshot.empty) {
       const Doc = querySnapshot.docs[0];
       const DocRef = doc(userCollection, Doc.id);
-  
+
       await updateDoc(DocRef, {
         estadoEncuesta: false,
         listaDeEspera: false,
-        mesaAsignada: 0
+        mesaAsignada: 0,
       });
     }
   }
 
   public getPedidosPorPagar(): Observable<any[]> {
-    const userCollection = collection(this.firestore,"pedidos");
+    const userCollection = collection(this.firestore, 'pedidos');
     const q = query(userCollection, where('estadoPedido', '==', 'pagando'));
 
     return new Observable<any[]>((observer) => {
@@ -356,16 +370,16 @@ export class ClienteService {
 
       return () => unsubscribe();
     });
-  } 
+  }
 
-  public async cambiarEstadoPedido(userMail : string, estado : string)
-  {
+  public async cambiarEstadoPedido(userMail: string, estado: string) {
     const EstadoPedidoCollection = collection(this.firestore, 'pedidos');
-    const querySnapshot = await getDocs(query(EstadoPedidoCollection, where('cliente', '==', userMail)));
+    const querySnapshot = await getDocs(
+      query(EstadoPedidoCollection, where('cliente', '==', userMail))
+    );
     const docRef = querySnapshot.docs[0].ref;
-    await updateDoc(docRef, 
-    {
-      estadoPedido: estado
+    await updateDoc(docRef, {
+      estadoPedido: estado,
     });
   }
 }
