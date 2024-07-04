@@ -1,7 +1,13 @@
 import { Component, EventEmitter, OnInit, Output, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, ModalController } from '@ionic/angular/standalone';
+import {
+  IonContent,
+  IonHeader,
+  IonTitle,
+  IonToolbar,
+  ModalController,
+} from '@ionic/angular/standalone';
 import { ClienteService } from 'src/app/service/cliente.service';
 import { AuthService } from 'src/app/service/auth.service';
 import { Router } from '@angular/router';
@@ -14,53 +20,66 @@ import { BarcodeScanner, LensFacing } from '@capacitor-mlkit/barcode-scanning';
   templateUrl: './cuenta.page.html',
   styleUrls: ['./cuenta.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [
+    IonContent,
+    IonHeader,
+    IonTitle,
+    IonToolbar,
+    CommonModule,
+    FormsModule,
+  ],
 })
 export class CuentaPage implements OnInit {
-
   pedidos: any;
   total: number = 0;
-  propina: number = 0;  
-  totalFinal : any;
-  public pagando : boolean = false;
-  usuarioActual : any;
+  propina: number = 0;
+  totalFinal: any;
+  public pagando: boolean = false;
+  usuarioActual: any;
   private modalController: ModalController = inject(ModalController);
   scanResoult = '';
 
-  constructor(private data: ClienteService,
+  constructor(
+    private data: ClienteService,
     private auth: AuthService,
-    private router: Router) { }
-    
-    async ngOnInit() {
-      
+    private router: Router
+  ) {}
+
+  async ngOnInit() {
     await this.checkUser();
-      
-    const rawPedidos = await this.data.getCuentaFromUser(this.usuarioActual.mail);
-    
-    const productosAgrupados: { [nombreProducto: string]: { cantidad: number, precio: number } } = {};
+
+    const rawPedidos = await this.data.getCuentaFromUser(
+      this.usuarioActual.mail
+    );
+
+    const productosAgrupados: {
+      [nombreProducto: string]: { cantidad: number; precio: number };
+    } = {};
 
     rawPedidos.forEach((pedido: { comidas: any[] }) => {
-      pedido.comidas.forEach((comida: { nombre: string, precio: number, cantidad: number }) => {
-        const nombreProducto = comida.nombre;
-        const cantidad = comida.cantidad || 1; // Asumimos que cada 'comida' en la lista es una unidad
-        const precio = comida.precio;
-        
-        if (productosAgrupados[nombreProducto]) {
-          // Si el producto ya existe, actualizar la cantidad
-          productosAgrupados[nombreProducto].cantidad += cantidad;
-        } else {
-          // Si el producto no existe, agregarlo al objeto
-          productosAgrupados[nombreProducto] = { cantidad, precio };
+      pedido.comidas.forEach(
+        (comida: { nombre: string; precio: number; cantidad: number }) => {
+          const nombreProducto = comida.nombre;
+          const cantidad = comida.cantidad || 1; // Asumimos que cada 'comida' en la lista es una unidad
+          const precio = comida.precio;
+
+          if (productosAgrupados[nombreProducto]) {
+            // Si el producto ya existe, actualizar la cantidad
+            productosAgrupados[nombreProducto].cantidad += cantidad;
+          } else {
+            // Si el producto no existe, agregarlo al objeto
+            productosAgrupados[nombreProducto] = { cantidad, precio };
+          }
         }
-      });
+      );
     });
 
     // Crear un nuevo array con la información agrupada
-    this.pedidos = Object.keys(productosAgrupados).map(nombreProducto => {
+    this.pedidos = Object.keys(productosAgrupados).map((nombreProducto) => {
       const cantidad = productosAgrupados[nombreProducto].cantidad;
       const precioUnitario = productosAgrupados[nombreProducto].precio;
       const totalPorProducto = cantidad * precioUnitario;
-      
+
       // Calcular el total general sumando el total de cada producto
       this.total += totalPorProducto;
       this.totalFinal = this.total;
@@ -69,76 +88,52 @@ export class CuentaPage implements OnInit {
         NombreProducto: nombreProducto,
         Cantidad: cantidad,
         Precio: precioUnitario,
-        TotalPorProducto: totalPorProducto
+        TotalPorProducto: totalPorProducto,
       };
     });
   }
 
   async checkUser() {
-    try {
-      let currentUserEmail = await firstValueFrom(this.auth.actual());
-      if (currentUserEmail) {
-        let user = await this.auth.getUserActual(currentUserEmail);
-        if (user) {
-          this.usuarioActual = user;
-          console.log('usuario es: ', this.usuarioActual);
-        } else {
-          console.log('usuario es 2: ', this.usuarioActual);
-        }
-      } else {
-        console.log(this.auth.obtenerAnonimo());
-        this.usuarioActual = await this.auth.getUserActual(this.auth.obtenerAnonimo());
+    if (this.auth.currentUserSig()) {
+      this.usuarioActual = await this.auth.getUserActual(
+        this.auth.currentUserSig()?.email
+      );
+    } else {
+      console.log(this.auth.obtenerAnonimo());
+      if (this.auth.obtenerAnonimo()) {
+        this.usuarioActual = await this.auth.getUserActual(
+          this.auth.obtenerAnonimo()
+        );
+        console.log(this.usuarioActual);
       }
-    } catch (error) {
-      console.error('Error obteniendo nombre de usuario:', error);
     }
   }
 
-  async onPagar()
-  {
-    await this.data.pagarCuenta(this.usuarioActual.mail,"pagando",this.total);
+  async onPagar() {
+    await this.data.pagarCuenta(this.usuarioActual.mail, 'pagando', this.total);
     this.pagando = true;
-    this.data.escucharConfirmacionMozo(this.usuarioActual.mail).subscribe(async (x : any) =>
-    {
-      console.log('paga');
-      if(x.orderStatus == 'pagado')
-      {
-        console.log('pagado');
-        await this.data.liberarMesa(this.usuarioActual.mail);
-        this.router.navigateByUrl('/home');
-      }
-    });
+    this.router.navigateByUrl('/home');
   }
 
-  async darPropina()
-  {
+  async darPropina() {
     this.total = this.totalFinal;
     await this.startScan();
 
-    if(this.scanResoult == 'Excelente')
-    {
-      this.propina = this.total * 0.20;   
-      this.total += this.propina;   
-    }
-    else if(this.scanResoult == 'Muy Bueno')
-    {
-      this.propina = this.total * 0.15;   
-      this.total += this.propina;   
-    }
-    else if(this.scanResoult == 'Bueno')
-    {
-      this.propina = this.total * 0.10;   
-      this.total += this.propina;   
-    }
-    else if(this.scanResoult == 'Regular')
-    {
-      this.propina = this.total * 0.05;   
-      this.total += this.propina;   
-    }
-    else
-    {
-      this.propina = 0;   
-      this.total += this.propina; 
+    if (this.scanResoult == 'Excelente') {
+      this.propina = this.total * 0.2;
+      this.total += this.propina;
+    } else if (this.scanResoult == 'Muy Bueno') {
+      this.propina = this.total * 0.15;
+      this.total += this.propina;
+    } else if (this.scanResoult == 'Bueno') {
+      this.propina = this.total * 0.1;
+      this.total += this.propina;
+    } else if (this.scanResoult == 'Regular') {
+      this.propina = this.total * 0.05;
+      this.total += this.propina;
+    } else {
+      this.propina = 0;
+      this.total += this.propina;
     }
   }
 
@@ -158,5 +153,4 @@ export class CuentaPage implements OnInit {
       this.scanResoult = data?.barcode?.displayValue;
     }
   }
-
 }

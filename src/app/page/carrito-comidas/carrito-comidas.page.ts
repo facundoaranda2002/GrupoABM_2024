@@ -92,7 +92,10 @@ export class CarritoComidasPage implements OnInit {
       auxPedido.precioTotal = this.pedidoService.calcularPrecioTotal();
       auxPedido.tiempoTotalEstimado =
         this.pedidoService.calcularEstimacionTotal();
-      this.pedidoService.savePedido(auxPedido);
+      this.pedidoService.savePedido(auxPedido).then(() => {
+        this.pedidoService.comidasPedidos = [];
+        this.router.navigateByUrl('/maitre');
+      });
     }
   }
 

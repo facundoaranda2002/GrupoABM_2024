@@ -7,10 +7,10 @@
   .user-name {
     width: 100%;
     text-align: center;
-    padding: 20px;
+    padding: 10px;
     background-color: #7a0c0f;
     border-radius: 30px;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
   }
   .info-container {
     background-color: #f67609;
@@ -31,9 +31,10 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      // height: 10px;
     }
     .buttons-container {
-      margin-top: 20px;
+      margin-top: 10px;
       display: flex;
       width: 100%;
       flex-direction: column;
@@ -41,8 +42,8 @@
       align-items: center;
       .button-option {
         margin-top: 10px;
-        font-size: 20px;
-        padding: 20px;
+        font-size: 15px;
+        padding: 7px;
         border-radius: 10px;
         border: none;
         width: 50%;

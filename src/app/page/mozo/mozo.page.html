@@ -1,5 +1,8 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar color="primary">
+    <ion-buttons (click)="goHome()" slot="start">
+      <ion-icon size="large" name="arrow-back-outline"></ion-icon>
+    </ion-buttons>
     <ion-title>mozo</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -8,9 +11,20 @@
   <!-- Si es Mozo -->
   <ng-container *ngIf="isMozoProfile">
     <div *ngIf="pedidos$ | async as pedidos; else loading">
-      <ul>
+      <div class="listaPedidos">
+        @for (pedido of pedidos; track $index) {
+        <div class="pedido-container" (click)="cambiarEstadoPedido(pedido)">
+          <div>
+            <span
+              >Cliente: {{pedido.cliente}} <br />
+              Estado: {{pedido.estadoPedido}}</span
+            >
+          </div>
+        </div>
+        }
+      </div>
+      <!-- <ul>
         <li *ngFor="let pedido of pedidos">
-          <!-- <div class="test" (click)="cambiarEstadoPedido(pedido)"> -->
           <div class="test">
             <p>ID: {{ pedido.id }}</p>
             <p>Cliente: {{ pedido.cliente }}</p>
@@ -38,73 +52,73 @@
           <button (click)="cambiarEstadoPedido(pedido)">Entregar pedido</button>
           }
         </li>
-      </ul>
+      </ul> -->
     </div>
     <ng-template #loading>
-      <p class="test">Cargando pedidos...</p>
+      <div class="contenedorLoading">
+        <img src="../../../assets/img/loading.gif" alt="" />
+      </div>
     </ng-template>
   </ng-container>
 
   <!-- Si es Bartender -->
   <ng-container *ngIf="isBartenderProfile">
     <div *ngIf="pedidos$ | async as pedidos; else loading">
-      <ul>
+      <div class="food-list">
         @for (pedido of pedidos; track $index) { @if(pedido.comidas){
         @for(comida of pedido.comidas; track $index) { @if(( comida.sector ==
         "bebida") && comida.estadoComida == 'enProceso') {
-        <li>
-          <p>Cantidad: {{ comida.cantidad }}</p>
-          <p>Descripción: {{ comida.descripcion }}</p>
-          <img src="{{ comida.img }}" alt="Imagen de comida" />
-          <p>Nombre: {{ comida.nombre }}</p>
-          <p>Precio: {{ comida.precio | currency }}</p>
-          <p>Tiempo Estimado: {{ comida.tiempoEstimado }}</p>
-          <ion-button
-            (click)="cambiarEstadoComida(pedido, comida)"
-            expand="block"
-            fill="clear"
-            shape="round"
-          >
-            Cambiar estado
-          </ion-button>
-        </li>
+        <div class="card">
+          <ion-img [src]="comida.img" [alt]="comida.nombre"></ion-img>
+          <div class="card-content">
+            <h3 class="title">{{comida.nombre}}</h3>
+            <h3 class="subtitle">Cantidad: {{comida.cantidad}}</h3>
+            <h3 class="subtitle">Estado: {{comida.estadoComida}}</h3>
+            <ion-buttons>
+              <ion-button (click)="cambiarEstadoComida(pedido,comida)">
+                <ion-icon name="add"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </div>
+        </div>
         } } } }
-      </ul>
+      </div>
     </div>
     <ng-template #loading>
-      <p class="test">Cargando pedidos...</p>
+      <div class="contenedorLoading">
+        <img src="../../../assets/img/loading.gif" alt="" />
+      </div>
     </ng-template>
   </ng-container>
 
   <!-- Si es Cocinero -->
   <ng-container *ngIf="isCocineroProfile">
     <div *ngIf="pedidos$ | async as pedidos; else loading">
-      <ul>
+      <div class="food-list">
         @for (pedido of pedidos; track $index) { @if(pedido.comidas){
         @for(comida of pedido.comidas; track $index) { @if((comida.sector ==
         "comida" || comida.sector == "postre") && comida.estadoComida ==
         'enProceso') {
-        <li>
-          <p>Cantidad: {{ comida.cantidad }}</p>
-          <p>Descripción: {{ comida.descripcion }}</p>
-          <img src="{{ comida.img }}" alt="Imagen de comida" />
-          <p>Nombre: {{ comida.nombre }}</p>
-          <p>Precio: {{ comida.precio | currency }}</p>
-          <p>Tiempo Estimado: {{ comida.tiempoEstimado }}</p>
-          <ion-button
-            (click)="cambiarEstadoComida(pedido, comida)"
-            expand="block"
-            fill="clear"
-            shape="round"
-          >
-            Cambiar estado
-          </ion-button>
-        </li>
+        <div class="card">
+          <ion-img [src]="comida.img" [alt]="comida.nombre"></ion-img>
+          <div class="card-content">
+            <h3 class="title">{{comida.nombre}}</h3>
+            <h3 class="subtitle">Cantidad: {{comida.cantidad}}</h3>
+            <h3 class="subtitle">Estado: {{comida.estadoComida}}</h3>
+            <ion-buttons>
+              <ion-button (click)="cambiarEstadoComida(pedido,comida)">
+                <ion-icon name="add"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </div>
+        </div>
         } } } }
-      </ul>
+      </div>
     </div>
     <ng-template #loading>
-      <p class="test">Cargando pedidos...</p>
+      <div class="contenedorLoading">
+        <img src="../../../assets/img/loading.gif" alt="" />
+      </div>
     </ng-template>
   </ng-container>
 </ion-content>

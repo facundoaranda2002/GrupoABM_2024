@@ -57,6 +57,7 @@ import { Usuario } from 'src/app/clases/usuario';
 import { PedidoService } from 'src/app/service/pedido.service';
 import { Pedido } from 'src/app/clases/pedido';
 import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-maitre',
@@ -112,6 +113,7 @@ export class MaitrePage implements OnInit {
   clienteService = inject(ClienteService);
   modalController: ModalController = inject(ModalController);
   pedidoService = inject(PedidoService);
+  http = inject(HttpClient);
   pedidos$: Observable<Pedido[]> | undefined;
   // Atributos
   usuarioAsignar?: any;
@@ -128,6 +130,7 @@ export class MaitrePage implements OnInit {
   numeroMesaMaitre: number = 0; //sirve para mostrar el numero de mesa que asigna el maitre
   yaEscaneada: boolean = false;
   usuarioActual: Usuario | null = null;
+  estadoEncuesta?: boolean = false;
 
   ngOnInit() {
     this.loadPedidos();
@@ -150,6 +153,18 @@ export class MaitrePage implements OnInit {
         );
       });
     });
+
+    this.estadoEncuesta = this.usuarioActual?.estadoEncuesta;
+  }
+
+  ionViewWillEnter() {
+    setTimeout(() => {
+      this.checkUserProfile();
+    }, 2000);
+    setTimeout(() => {
+      this.checkMesaAsignada();
+    }, 2000);
+    this.estadoEncuesta = this.usuarioActual?.estadoEncuesta;
   }
 
   async onUserClick(mail: string) {
@@ -194,7 +209,7 @@ export class MaitrePage implements OnInit {
           title: `Esta mesa la tiene asignada otro cliente, no la puede usar.`,
           color: '#ffffff',
         });
-
+        this.router.navigateByUrl('/home');
         console.log(
           'El código QR escaneado no coincide con la mesa asignada al cliente.'
         );
@@ -448,7 +463,21 @@ export class MaitrePage implements OnInit {
     }
   }
 
+  sendNotificationToRole(title: string, body: string, perfil: string) {
+    const apiUrl = 'https://appiamb.onrender.com/notify-role';
+    const payload = { title, body, perfil };
+    console.log(payload);
+    return this.http.post<any>(apiUrl, payload).subscribe((r) => {
+      console.log(r);
+    });
+  }
+
   goCuenta() {
     this.router.navigateByUrl('/cuenta');
+    this.sendNotificationToRole(
+      'Cuenta solicitada',
+      'Un cliente espera la cuenta',
+      'mozo'
+    );
   }
 }

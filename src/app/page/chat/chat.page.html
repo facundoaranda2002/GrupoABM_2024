@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  @if(this.authService.currentUserSig() ) {
+  @if(usuarioActual) {
   <!-- Contenido Main -->
   <div class="card text-center cardContainer">
     <div class="card-body">
@@ -18,7 +18,7 @@
           *ngFor="let message of messages"
           [ngClass]="agregarClase(message.mail)"
         >
-          @if(!(this.usuarioActual?.mail == message.mail)){
+          @if(!(this.usuarioActual.mail == message.mail)){
           <span> {{ message.userName }} </span> <br />
           } {{ message.text }} <br />
           <span> {{ message.date }} </span>

@@ -59,7 +59,7 @@ export class HomePage implements OnInit {
 
   usuarioActual: any;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
     setTimeout(() => {
@@ -71,6 +71,15 @@ export class HomePage implements OnInit {
       BarcodeScanner.checkPermissions().then();
       BarcodeScanner.removeAllListeners();
     }
+    setTimeout(() => {
+      this.estoyListaEspera();
+    }, 2000);
+  }
+
+  ionViewWillEnter() {
+    setTimeout(() => {
+      this.checkUserProfile();
+    }, 2000);
     setTimeout(() => {
       this.estoyListaEspera();
     }, 2000);

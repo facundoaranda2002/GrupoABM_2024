@@ -74,7 +74,9 @@ export class ChatPage implements OnInit {
   messages?: messageInterfaceId[] = [];
 
   ngOnInit() {
-    this.checkDatosUsuarioActual();
+    setTimeout(() => {
+      this.checkDatosUsuarioActual();
+    }, 2000);
     this.chat.getMensajes().subscribe((messages) => {
       messages.sort((a, b) => {
         const timestampA =
@@ -90,25 +92,18 @@ export class ChatPage implements OnInit {
   usuarioActual: Usuario | null = null;
 
   async checkDatosUsuarioActual() {
-    try {
-      const currentUserEmail = await firstValueFrom(this.authService.actual());
-      if (currentUserEmail) {
-        const usuario = await this.authService.getUserActual(currentUserEmail);
-        if (usuario.mesaAsignada != 0) {
-          this.usuarioActual = usuario;
-        }
-      } else {
-        if (this.authService.obtenerAnonimo()) {
-          const usuario = await this.authService.getUserActual(
-            this.authService.obtenerAnonimo()
-          );
-          if (usuario.mesaAsignada != 0) {
-            this.usuarioActual = usuario;
-          }
-        }
+    if (this.authService.currentUserSig()) {
+      this.usuarioActual = await this.authService.getUserActual(
+        this.authService.currentUserSig()?.email
+      );
+    } else {
+      console.log(this.authService.obtenerAnonimo());
+      if (this.authService.obtenerAnonimo()) {
+        this.usuarioActual = await this.authService.getUserActual(
+          this.authService.obtenerAnonimo()
+        );
+        console.log(this.usuarioActual);
       }
-    } catch (error) {
-      console.error('Error obteniendo perfil de usuario:', error);
     }
   }
 
