@@ -58,6 +58,7 @@ import { PedidoService } from 'src/app/service/pedido.service';
 import { Pedido } from 'src/app/clases/pedido';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { EstadoPipe } from 'src/app/pipes/estado.pipe';
 
 @Component({
   selector: 'app-maitre',
@@ -99,6 +100,7 @@ import { HttpClient } from '@angular/common/http';
     FormsModule,
     ReactiveFormsModule,
     BarcodeScanningModalComponent,
+    EstadoPipe,
   ],
 })
 export class MaitrePage implements OnInit {

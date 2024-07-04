@@ -44,31 +44,26 @@ ion-content {
   margin-bottom: 30px;
   background-color: #f67809;
   border-radius: 3rem;
-  font-size: 30px;
+  font-size: 40px;
   color: #fff;
   font-weight: 600;
   text-align: center;
+  padding: 10px;
 }
 
 .contenedorBtn {
   .textoPedidoEstado {
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    background-color: #7a0c0f;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    background-color: #f67809;
     border-radius: 3rem;
-    font-size: 30px;
+    font-size: 40px;
     color: #fff;
     font-weight: 600;
     text-align: center;
-    span {
-      color: #eec39d;
-    }
-  }
-  ion-button {
-    height: 80px;
-    font-size: 30px;
+    padding: 10px;
   }
 }
 
@@ -78,4 +73,10 @@ ion-content {
 .btnMesaMozo {
   height: 80px;
   font-size: 30px;
+}
+
+ion-button {
+  height: 80px;
+  font-size: 30px;
+  margin: 15px 10px;
 }
