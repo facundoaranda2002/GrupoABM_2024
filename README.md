@@ -121,7 +121,7 @@ Una vez que el cliente ya se encuentre comiendo, podra pedir la cuenta al mozo e
 
 En este apartado el cliente ademas podra cargar una propina para el mozo escanenado el qr correspondiente
 
-<img src="src/assets/img/DarPropina.jpg>
+<img src="src/assets/img/DarPropina.jpg">
 
 Una vez hecho esto, el cliente podra proceder a pagar en efectivo, lo cual lo redireccionara a la primer pantalla de su apartado
 
@@ -130,39 +130,39 @@ Una vez hecho esto, el cliente podra proceder a pagar en efectivo, lo cual lo re
 En esta pantalla, el maitre podria acceder a una lista de clientes pendientes para que les asigne una mesa.
 El mozo hara click en el cliente y le saldran las disntintas mesas, pudiendo asignarlo solo a aquellas mesas libres
 
-<img src="src/assets/img/mozoAsignaMesa.jpg>
+<img src="src/assets/img/mozoAsignaMesa.jpg">
 
-<img src="src/assets/img/respuestaMozoAsignaMesa.jpg>
+<img src="src/assets/img/respuestaMozoAsignaMesa.jpg">
 
 ## Pantalla de mozo
 
 Desde esta pantalla el mozo podra ingresar a ver los pedidos pendientes de confirmacion, los pedidos pendientes de abonar y el chat para responderles a los clientes
 
-<img src="src/assets/img/MenuCliente.jpg>
+<img src="src/assets/img/MenuCliente.jpg">
 
 ### Confirmar pedido
 
 Desde esta pantalla el mozo confirmara el pedido, para que sea relevado a los que estaran encargados de prepararlo
 
-<img src="src/assets/img/MozoAutorizaPedido.jpg>
+<img src="src/assets/img/MozoAutorizaPedido.jpg">
 
-<img src="src/assets/img/RespuestaMozoAutorizaPedido.jpg>
+<img src="src/assets/img/RespuestaMozoAutorizaPedido.jpg">
 
 ### Confirmar pago para liberar la mesa
 
 En esta pantalla el mozo confirma el pago en efectivo por parte del cliente y libera la mesa
 
-<img src="src/assets/img/MozoConfirmaCuenta.jpg>
+<img src="src/assets/img/MozoConfirmaCuenta.jpg">
 
 ## Pantalla de cocinero/bartender
 
 En la primer pantalla estos tendran un boton para acceder a sus pedidos pendientes de elaboracion
 
-<img src="src/assets/img/MenuCocinero.jpg>
+<img src="src/assets/img/MenuCocinero.jpg">
 
 Al ingresar visualizara el producto para ponerlo como realizado asi el mozo lo entrega
 
-<img src="src/assets/img/CocineroTerminaComida.jpg>
+<img src="src/assets/img/CocineroTerminaComida.jpg">
 
 ## Módulos
 
