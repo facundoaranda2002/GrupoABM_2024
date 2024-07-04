@@ -29,7 +29,7 @@ conformado por:
 
 La pantalla de ingreso pide el correo y la contraseña, además cuenta con un desplegable abajo a la izquierda que cuenta con los usuarios pre registrados, a fin de hacer un ingreso rapido para probar la aplicación. En caso de no tener una cuenta este tiene un enlace para redirigirse al registro
 
-<img src="src/assets/img/login.PNG">
+<img src="src/assets/img/login123.PNG">
 
 ## Registro
 
@@ -83,6 +83,87 @@ Se muestran los resultados de las valoraciones que hicieron los clientes anterio
 
 <img src="src/assets/img/Graficos2.PNG">
 
+### Escanear Mesa y Consultar mozo
+
+Una vez que entro al local el usuario puede proceder a escanear una mesa y, si el maitre le asigno una, este podra ingresar a la mesa corrspondiente, ademas de consultar a los distintos mozos via chat
+
+<img src="src/assets/img/ConsultaMozo.jpg">
+
+El cliente puede acceder al menu para realizar un pedido del cual ira viendo constantemente el estado, ademas podra completar la encuesta del local(una vez)
+
+<img src="src/assets/img/MostrarEstadoCliente.jpg">
+
+### Menu
+
+Aqui el cliente podra: 
+- Visualizar el menu, dividiendolo por categorias en caso que lo desee
+- Ver los detalles de cada producto(su tiempo de preparacion, precio, descripcion)
+- Agregar productos al carrito
+- Confirmar el pedido
+
+<img src="src/assets/img/MenuComidas.jpg">
+<img src="src/assets/img/DetalleComida.jpg">
+<img src="src/assets/img/CarritoPedido.jpg">
+
+### Completar encuesta
+
+El cliente podra completar una encuesta en la que puntue de 1 a 5 estrellas la comida, el servicio y el precio, ademas de poder dejar una pequeña reseña
+
+<img src="src/assets/img/encuesta.PNG">
+
+### Pedir la cuenta
+
+Una vez que el cliente ya se encuentre comiendo, podra pedir la cuenta al mozo en el momento que lo necesite
+
+<img src="src/assets/img/PedirCuenta.jpg">
+
+### Agregar propina
+
+En este apartado el cliente ademas podra cargar una propina para el mozo escanenado el qr correspondiente
+
+<img src="src/assets/img/DarPropina.jpg>
+
+Una vez hecho esto, el cliente podra proceder a pagar en efectivo, lo cual lo redireccionara a la primer pantalla de su apartado
+
+## Pantalla de maitre
+
+En esta pantalla, el maitre podria acceder a una lista de clientes pendientes para que les asigne una mesa.
+El mozo hara click en el cliente y le saldran las disntintas mesas, pudiendo asignarlo solo a aquellas mesas libres
+
+<img src="src/assets/img/mozoAsignaMesa.jpg>
+
+<img src="src/assets/img/respuestaMozoAsignaMesa.jpg>
+
+## Pantalla de mozo
+
+Desde esta pantalla el mozo podra ingresar a ver los pedidos pendientes de confirmacion, los pedidos pendientes de abonar y el chat para responderles a los clientes
+
+<img src="src/assets/img/MenuCliente.jpg>
+
+### Confirmar pedido
+
+Desde esta pantalla el mozo confirmara el pedido, para que sea relevado a los que estaran encargados de prepararlo
+
+<img src="src/assets/img/MozoAutorizaPedido.jpg>
+
+<img src="src/assets/img/RespuestaMozoAutorizaPedido.jpg>
+
+### Confirmar pago para liberar la mesa
+
+En esta pantalla el mozo confirma el pago en efectivo por parte del cliente y libera la mesa
+
+<img src="src/assets/img/MozoConfirmaCuenta.jpg>
+
+## Pantalla de cocinero/bartender
+
+En la primer pantalla estos tendran un boton para acceder a sus pedidos pendientes de elaboracion
+
+<img src="src/assets/img/MenuCocinero.jpg>
+
+Al ingresar visualizara el producto para ponerlo como realizado asi el mozo lo entrega
+
+<img src="src/assets/img/CocineroTerminaComida.jpg>
+
 ## Módulos
 
 ### Enlace de Jira
@@ -103,22 +184,22 @@ https://grupoabm.atlassian.net/jira/software/projects/KAN/boards/1?atlOrigin=eyJ
 - **Solucionado correción de estilos de los mails** _(27/06/24)_
   
   ![Estado](https://img.shields.io/badge/Estado-Completado-green?style=for-the-badge&labelColor=black)
-- **Encuesta clientes** _(22/06/2024 - 29/06/24)_
-  
-  ![Estado](https://img.shields.io/badge/Estado-En%20Curso-FFD700?style=for-the-badge&labelColor=black)
-- **Graficos encuesta clientes** _(22/06/2024 - 29/06/24)_
+- **Encuesta clientes** _(02/07/24)_
   
   ![Estado](https://img.shields.io/badge/Estado-Completado-green?style=for-the-badge&labelColor=black)
-- **Push notification: agregar cliente nuevo** _(29/06/2024 - 06/07/24)_
+- **Graficos encuesta clientes** _(29/06/24)_
   
-  ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)
-- **Push notification: pedir la cuenta** _(29/06/2024 - 06/07/24)_
-
-  ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)
-
-- **QR de propina** _(29/06/2024 - 06/07/24)_
+  ![Estado](https://img.shields.io/badge/Estado-Completado-green?style=for-the-badge&labelColor=black)
+- **Push notification: agregar cliente nuevo** _(03/07/24)_
   
-  ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)
+  ![Estado](https://img.shields.io/badge/Estado-Completado-green?style=for-the-badge&labelColor=black)
+- **Push notification: pedir la cuenta** _(03/07/24)_
+
+  ![Estado](https://img.shields.io/badge/Estado-Completado-green?style=for-the-badge&labelColor=black)
+
+- **QR de propina** _(03/07/24)_
+  
+  ![Estado](https://img.shields.io/badge/Estado-Completado-green?style=for-the-badge&labelColor=black)
 
 ### Beta
 
@@ -140,15 +221,16 @@ https://grupoabm.atlassian.net/jira/software/projects/KAN/boards/1?atlOrigin=eyJ
 - **Solucionado correción de estilos login/register y se agrega el campo repetir contraseña** _(27/06/24)_
   
   ![Estado](https://img.shields.io/badge/Estado-Completado-green?style=for-the-badge&labelColor=black)
-- **Confirmar pedidos** _(22/06/2024 - 29/06/24)_
+- **Realizar pedidos(platos y bebidas)** _(02/07/24)_
   
-  ![Estado](https://img.shields.io/badge/Estado-En%20Curso-FFD700?style=for-the-badge&labelColor=black)
-- **Push notification: confirmar pedido(por parte del mozo)** _(29/06/2024 - 06/07/24)_
+  ![Estado](https://img.shields.io/badge/Estado-Completado-green?style=for-the-badge&labelColor=black)
+- **Push notification: ingresar al local** _(03/07/24)_
   
-  ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)
-- **Push notification: confirmar realización del pedido(por parte del cocinero o bartender)** _(29/06/2024 - 06/07/24)_
-  
-  ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)  
+  ![Estado](https://img.shields.io/badge/Estado-Completado-green?style=for-the-badge&labelColor=black)
+- **Push notification: consultar al mozo** _(03/07/24)_
+
+  ![Estado](https://img.shields.io/badge/Estado-Completado-green?style=for-the-badge&labelColor=black)
+
 
 
 ### Gamma
@@ -165,12 +247,12 @@ https://grupoabm.atlassian.net/jira/software/projects/KAN/boards/1?atlOrigin=eyJ
 - **Solucionado pantalla blanca entre los splash** _(22/06/24)_
   
   ![Estado](https://img.shields.io/badge/Estado-Completado-green?style=for-the-badge&labelColor=black)
-- **Realizar pedidos(platos y bebidas)** _(22/06/2024 - 29/06/24)_
+- **Confirmar pedidos** _(02/07/24)_
   
-  ![Estado](https://img.shields.io/badge/Estado-En%20Curso-FFD700?style=for-the-badge&labelColor=black)
-- **Push notification: ingresar al local** _(29/06/2024 - 06/07/24)_
+  ![Estado](https://img.shields.io/badge/Estado-Completado-green?style=for-the-badge&labelColor=black)
+- **Push notification: confirmar pedido(por parte del mozo)** _(03/07/24)_
   
-  ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)
-- **Push notification: consultar al mozo** _(29/06/2024 - 06/07/24)_
-
-  ![Estado](https://img.shields.io/badge/Estado-Pendiente-gray?style=for-the-badge&labelColor=black)
+  ![Estado](https://img.shields.io/badge/Estado-Completado-green?style=for-the-badge&labelColor=black)
+- **Push notification: confirmar realización del pedido(por parte del cocinero o bartender)** _(03/07/24)_
+  
+  ![Estado](https://img.shields.io/badge/Estado-Completado-green?style=for-the-badge&labelColor=black)  
