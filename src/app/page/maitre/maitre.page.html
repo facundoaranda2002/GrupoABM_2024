@@ -12,6 +12,7 @@
 </ion-header>
 <!-- Contenido Principal -->
 <ion-content>
+  @defer () {
   <!-- Si es Maitre -->
   <ng-container *ngIf="!isClientProfile; else clientView">
     <!-- Listado usuarios sin asignar mesa-->
@@ -75,16 +76,21 @@
   </ng-container>
   <!-- Si es Cliente -->
   <ng-template #clientView>
-    @if(mesaYaAsignada){
-    <ion-button class="submit btnMesaMozo" (click)="startScan()" expand="block">
-      Escanear Mesa
-      <ion-icon slot="end" name="scan-outline"></ion-icon>
-    </ion-button>
-    @if(usuarioActual != null){
-    <ion-button class="submit btnMesaMozo" (click)="goChat()" expand="block">
-      Consultar Mozo
-    </ion-button>
-    } }
+    <div *ngIf="!yaEscaneada">
+      <ion-button
+        class="submit btnMesaMozo"
+        (click)="startScan()"
+        expand="block"
+      >
+        Escanear Mesa
+        <ion-icon slot="end" name="scan-outline"></ion-icon>
+      </ion-button>
+      @if(usuarioActual != null){
+      <ion-button class="submit btnMesaMozo" (click)="goChat()" expand="block">
+        Consultar Mozo
+      </ion-button>
+      }
+    </div>
     <div *ngIf="yaEscaneada">
       <div *ngIf="mesaYaAsignada; else notAssigned"></div>
       <ng-template #notAssigned>
@@ -94,8 +100,13 @@
           >
         </div>
         @if(usuarioActual?.perfil == "cliente" && usuarioActual?.listaDeEspera
-        == true && usuarioActual?.mesaAsignada != 0 && !hizoElPedido){
-        <ion-button expand="block" (click)="goMenu()">Ir al Menú</ion-button>
+        == true && usuarioActual?.mesaAsignada != 0){
+        <ion-button
+          expand="block"
+          *ngIf="(pedidos$ | async)?.length === 0"
+          (click)="goMenu()"
+          >Ir al Menú</ion-button
+        >
         }
         <div *ngIf="pedidos$ | async as pedidos;">
           @for (pedido of pedidos; track $index) {
@@ -114,20 +125,20 @@
                 Tu pedido está: <span>{{ pedido.estadoPedido | estado }}</span>
               </p>
             </div>
-            @if(estadoEncuesta == false){
-            <ion-button expand="block" (click)="goEncuesta()"
-              >Ir a Escuesta</ion-button
-            >
+            @if(usuarioActual?.estadoEncuesta === false){
+            <ion-button expand="block" (click)="goEncuesta()">
+              Ir a Escuesta
+            </ion-button>
             } } @else if(pedido.estadoPedido == "preparado"){
             <div class="textoPedidoEstado">
               <p>
                 Tu pedido está: <span>{{ pedido.estadoPedido | estado }}</span>
               </p>
             </div>
-            @if(estadoEncuesta == false){
-            <ion-button expand="block" (click)="goEncuesta()"
-              >Ir a Escuesta</ion-button
-            >
+            @if(usuarioActual?.estadoEncuesta === false){
+            <ion-button expand="block" (click)="goEncuesta()">
+              Ir a Escuesta
+            </ion-button>
             } } @else if(pedido.estadoPedido == "entregado"){
             <!-- <ion-button (click)="confirmarRecepcion()">Confirmar Recepción</ion-button> -->
             <ion-button expand="block" (click)="cambiarEstadoPedido(pedido)">
@@ -139,14 +150,14 @@
                 Tu pedido está: <span>{{ pedido.estadoPedido | estado}}</span>
               </p>
             </div>
-            @if(estadoEncuesta == false){
-            <ion-button expand="block" (click)="goEncuesta()"
-              >Ir a Escuesta</ion-button
-            >
+            @if(usuarioActual?.estadoEncuesta === false){
+            <ion-button expand="block" (click)="goEncuesta()">
+              Ir a Escuesta
+            </ion-button>
             }
-            <ion-button expand="full" (click)="goCuenta()"
-              >Pedir La Cuenta</ion-button
-            >
+            <ion-button expand="full" (click)="goCuenta()">
+              Pedir La Cuenta
+            </ion-button>
             }
           </div>
           }
@@ -154,4 +165,9 @@
       </ng-template>
     </div>
   </ng-template>
+  } @placeholder {
+  <ion-spinner class="spinner" color="danger"></ion-spinner>
+  } @loading (minimum 2s) {
+  <ion-spinner class="spinner" color="danger"></ion-spinner>
+  }
 </ion-content>

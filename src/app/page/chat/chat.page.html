@@ -1,5 +1,5 @@
 <ion-header [translucent]="true">
-  <ion-toolbar class="titulo4A">
+  <ion-toolbar color="primary">
     <ion-buttons slot="primary">
       <ion-button (click)="goHome()"> Atras </ion-button>
     </ion-buttons>
@@ -12,7 +12,11 @@
   <!-- Contenido Main -->
   <div class="card text-center cardContainer">
     <div class="card-body">
-      <div data-bs-spy="scroll" class="contenedorMensajes">
+      <div
+        data-bs-spy="scroll"
+        class="contenedorMensajes"
+        id="contenedorDeMensajes"
+      >
         <p
           class="mensajeItem"
           *ngFor="let message of messages"

@@ -97,11 +97,17 @@
       <ion-button expand="block" (click)="goMozos()">
         Ir a la cocina
       </ion-button>
+      <ion-button expand="block" (click)="goAltaProducto()">
+        Crear Plato
+      </ion-button>
       }
 
       <!-- Es Bartender -->
       @if(this.profile === 'bartender'){
       <ion-button expand="block" (click)="goMozos()"> Ir al bar </ion-button>
+      <ion-button expand="block" (click)="goAltaProducto()">
+        Crear Plato
+      </ion-button>
       }
     </div>
   </div>

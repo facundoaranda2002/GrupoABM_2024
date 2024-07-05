@@ -42,6 +42,7 @@ import {
   ModalController,
   IonCard,
   IonFooter,
+  IonSpinner,
 } from '@ionic/angular/standalone';
 
 import { TableService } from '../../service/table.service';
@@ -66,6 +67,7 @@ import { EstadoPipe } from 'src/app/pipes/estado.pipe';
   styleUrls: ['./maitre.page.scss'],
   standalone: true,
   imports: [
+    IonSpinner,
     IonFooter,
     IonCard,
     IonInput,
@@ -132,8 +134,6 @@ export class MaitrePage implements OnInit {
   numeroMesaMaitre: number = 0; //sirve para mostrar el numero de mesa que asigna el maitre
   yaEscaneada: boolean = false;
   usuarioActual: Usuario | null = null;
-  estadoEncuesta?: boolean = false;
-  hizoElPedido?: boolean = false;
 
   ngOnInit() {
     this.loadPedidos();
@@ -156,9 +156,6 @@ export class MaitrePage implements OnInit {
         );
       });
     });
-
-    this.estadoEncuesta = this.usuarioActual?.estadoEncuesta;
-    this.hizoElPedido = false;
   }
 
   ionViewWillEnter() {
@@ -168,7 +165,6 @@ export class MaitrePage implements OnInit {
     setTimeout(() => {
       this.checkMesaAsignada();
     }, 2000);
-    this.estadoEncuesta = this.usuarioActual?.estadoEncuesta;
   }
 
   async onUserClick(mail: string) {
@@ -241,7 +237,6 @@ export class MaitrePage implements OnInit {
   }
   goMenu() {
     this.router.navigateByUrl('/menu-comidas');
-    this.hizoElPedido = true;
   }
 
   // Método para extraer el número de mesa del texto del código QR

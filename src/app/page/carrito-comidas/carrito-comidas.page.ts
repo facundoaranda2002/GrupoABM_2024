@@ -25,6 +25,7 @@ import { MenuComida } from 'src/app/clases/menuComida';
 import { Pedido } from 'src/app/clases/pedido';
 import { AuthService } from 'src/app/service/auth.service';
 import Swal from 'sweetalert2';
+import { Usuario } from 'src/app/clases/usuario';
 
 @Component({
   selector: 'app-carrito-comidas',
@@ -76,31 +77,43 @@ export class CarritoComidasPage implements OnInit {
     this.router.navigateByUrl('/menu-comidas');
   }
 
-  agregarPedido() {
-    let email;
+  usuarioActual: Usuario | null = null;
+
+  async checkDatosUsuarioActual() {
     if (this.authService.currentUserSig()) {
-      email = this.authService.currentUserSig()?.email;
+      this.usuarioActual = await this.authService.getUserActual(
+        this.authService.currentUserSig()?.email
+      );
     } else {
-      email = this.authService.obtenerAnonimo();
+      console.log(this.authService.obtenerAnonimo());
+      if (this.authService.obtenerAnonimo()) {
+        this.usuarioActual = await this.authService.getUserActual(
+          this.authService.obtenerAnonimo()
+        );
+        console.log(this.usuarioActual);
+      }
     }
-    console.log(email);
-    if (email) {
+  }
+
+  agregarPedido() {
+    if (this.usuarioActual != null) {
+      let mail = '';
+      let mesa = 0;
+      if (this.usuarioActual.mail) {
+        mail = this.usuarioActual.mail;
+      }
+      if (this.usuarioActual.mesaAsignada) {
+        mesa = this.usuarioActual.mesaAsignada;
+      }
       const auxPedido: Pedido = new Pedido();
-      auxPedido.cliente = email;
+      auxPedido.cliente = mail;
       auxPedido.comidas = this.pedidoService.comidasPedidos;
       auxPedido.estadoPedido = 'pendiente';
       auxPedido.precioTotal = this.pedidoService.calcularPrecioTotal();
-      this.authService
-        .GetUserTableByUserEmail(email)
-        .then((mesaAsignada) => {
-          auxPedido.mesa = mesaAsignada;
-        })
-        .catch((error) => {
-          console.error('Error fetching user table:', error);
-          auxPedido.mesa = 0;
-        });
       auxPedido.tiempoTotalEstimado =
         this.pedidoService.calcularEstimacionTotal();
+      auxPedido.numeroMesa = mesa;
+
       this.pedidoService.savePedido(auxPedido).then(() => {
         this.pedidoService.comidasPedidos = [];
         this.router.navigateByUrl('/maitre');
@@ -121,5 +134,7 @@ export class CarritoComidasPage implements OnInit {
     },
   });
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.checkDatosUsuarioActual();
+  }
 }

@@ -7,5 +7,5 @@ export class Pedido {
   estadoPedido: string = '';
   id?: string;
   cliente: string = '';
-  mesa: number | null = 0;
+  numeroMesa: number = 0;
 }

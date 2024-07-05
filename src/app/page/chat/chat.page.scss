@@ -18,11 +18,12 @@ ion-content {
   justify-content: center;
   align-items: center;
   margin: 0 auto;
+  background-image: url(https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png);
 }
 
 .card-body {
   padding: 0.5rem;
-  overflow: scroll;
+  overflow-y: auto;
 }
 
 .card-body::-webkit-scrollbar {
@@ -48,12 +49,12 @@ ion-content {
   text-align: left;
   max-width: 80%;
   padding-top: 1rem;
-  background-color: #d62828;
+  background-color: #7a0c0f;
 }
 
 p span {
   font-size: 10px;
-  color: rgba(255, 255, 255, 0.699);
+  color: white;
 }
 
 .recibido {
@@ -65,7 +66,11 @@ p span {
   border-radius: 10px;
   text-align: left;
   max-width: 80%;
-  background-color: #e69f9f;
+  background-color: #7a484a;
+}
+
+.contenedorFooter {
+  background-color: white;
 }
 
 .iconoChat {
@@ -90,5 +95,5 @@ p span {
 }
 
 .titulo4A {
-  --background: #d62828 !important;
+  --background: #7a0c0f !important;
 }

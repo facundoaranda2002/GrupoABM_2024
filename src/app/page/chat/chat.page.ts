@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { CommonModule, NgFor } from '@angular/common';
 import {
   FormBuilder,
@@ -49,6 +49,7 @@ export class ChatPage implements OnInit {
   chat = inject(ChatService);
   fb = inject(FormBuilder);
   http = inject(HttpClient);
+  cdr = inject(ChangeDetectorRef);
 
   goRegister() {
     this.router.navigateByUrl('/register');
@@ -69,6 +70,9 @@ export class ChatPage implements OnInit {
 
   cambiarEstado() {
     this.estaActivo = !this.estaActivo;
+    if (this.estaActivo) {
+      setTimeout(() => this.scrollToTheLastElementByClassName(), 100);
+    }
   }
 
   messages?: messageInterfaceId[] = [];
@@ -87,6 +91,8 @@ export class ChatPage implements OnInit {
       });
       this.messages = messages;
     });
+    this.cdr.detectChanges();
+    this.scrollToTheLastElementByClassName();
   }
 
   usuarioActual: Usuario | null = null;
@@ -117,7 +123,9 @@ export class ChatPage implements OnInit {
       let fecha = new Date();
       let nombreUsuario = '';
       let mailUsuario = '';
+      let numeroMesa = 0;
       if (this.usuarioActual != null) {
+        numeroMesa = this.usuarioActual.mesaAsignada;
         nombreUsuario = this.usuarioActual.nombre;
         mailUsuario = this.usuarioActual.mail;
       }
@@ -138,6 +146,9 @@ export class ChatPage implements OnInit {
         this.sendNotificationToRole('Nuevo mensaje', value.mensaje, 'mozo');
       }
       this.form.setValue({ mensaje: '' });
+      setTimeout(() => {
+        this.scrollToTheLastElementByClassName();
+      }, 100);
     }
   }
   agregarClase(mail: string) {
@@ -158,5 +169,12 @@ export class ChatPage implements OnInit {
     return this.http.post<any>(apiUrl, payload).subscribe((r) => {
       console.log(r);
     });
+  }
+
+  scrollToTheLastElementByClassName() {
+    const container = document.getElementById('contenedorDeMensajes');
+    if (container) {
+      container.scrollTop = container.scrollHeight;
+    }
   }
 }

@@ -22,6 +22,7 @@ import { firstValueFrom } from 'rxjs';
 import { BarcodeScanningModalComponent } from './barcode-scanning-modal.component';
 import { BarcodeScanner, LensFacing } from '@capacitor-mlkit/barcode-scanning';
 import { Usuario } from 'src/app/clases/usuario';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
@@ -50,7 +51,7 @@ export class HomePage implements OnInit {
   auth = inject(AuthService);
   authService = inject(AuthService);
   router = inject(Router);
-
+  http = inject(HttpClient);
   profile: string = '';
 
   scanResoult = '';
@@ -156,12 +157,26 @@ export class HomePage implements OnInit {
       this.authService
         .updateUsuarioCliente(usuarioActual.id, usuarioAux)
         .then(() => {
+          this.sendNotificationToRole(
+            'Nuevo Usuario',
+            'Se agrego un cliente a la lista de espera',
+            'maitre'
+          );
           console.log('modiificacion exitosa');
           this.estoyListaEspera();
         });
     } else {
       // Mensaje error de lector qr
     }
+  }
+
+  sendNotificationToRole(title: string, body: string, perfil: string) {
+    const apiUrl = 'https://appiamb.onrender.com/notify-role';
+    const payload = { title, body, perfil };
+    console.log(payload);
+    return this.http.post<any>(apiUrl, payload).subscribe((r) => {
+      console.log(r);
+    });
   }
 
   async estoyListaEspera() {
@@ -184,6 +199,9 @@ export class HomePage implements OnInit {
     }
   }
   //Ruteo
+  goAltaProducto() {
+    this.router.navigateByUrl('/alta-comida');
+  }
   goRegister() {
     this.router.navigateByUrl('/register');
   }

@@ -240,11 +240,6 @@ export class RegisterPage implements OnInit {
               this.altaAnonimo(cliente).then(() => {});
               this.authService.agregarAnonimo(cliente.mail);
               this.fmc.registrarToken();
-              this.sendNotificationToRole(
-                'Nuevo Usuario',
-                'Se agrego un cliente a la lista de espera',
-                'maitre'
-              );
               this.router.navigateByUrl('/home');
             } else {
               this.alta(cliente);

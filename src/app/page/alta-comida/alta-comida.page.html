@@ -3,7 +3,14 @@
     <ion-icon size="large" name="arrow-back-outline"></ion-icon>
   </ion-fab>
   <div class="contenedorBlanco">
+    @if(usuarioActual){ @if(usuarioActual.perfil == "cocinero"){
+    <h1>Agregar Comida</h1>
+    }@else if(usuarioActual.perfil == "bartender"){
+    <h1>Agregar Bebida</h1>
+    } }@else{
     <h1>Agregar Producto</h1>
+    }
+
     <form id="form" [formGroup]="form" (ngSubmit)="onSubmit()">
       <!-- Nombre Producto -->
       <ion-item color="secondary">
@@ -94,10 +101,13 @@
       </p>
       <!-- Foto -->
       <div class="btnFoto">
-        <ion-button color="primary" expand="full">Tomar Foto</ion-button>
+        <ion-button color="primary" (click)="takePhoto()" expand="full"
+          >Tomar Foto</ion-button
+        >
       </div>
       <!-- Boton -->
       <ion-button
+        [disabled]="!form.valid || pathFoto1 == null || pathFoto2 == null || pathFoto3 == null"
         class="btnRegistrar"
         color="secondary"
         type="submit"

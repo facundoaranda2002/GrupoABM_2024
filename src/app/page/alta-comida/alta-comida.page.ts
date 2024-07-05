@@ -22,6 +22,10 @@ import {
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { PhotoService } from 'src/app/service/photo.service';
+import { MenuComida } from 'src/app/clases/menuComida';
+import { Usuario } from 'src/app/clases/usuario';
+import { AuthService } from 'src/app/service/auth.service';
+import { MenuComidaService } from 'src/app/service/menu-comida.service';
 
 @Component({
   selector: 'app-alta-comida',
@@ -49,10 +53,14 @@ export class AltaComidaPage implements OnInit {
   router = inject(Router);
   fb = inject(FormBuilder);
   photoService = inject(PhotoService);
+  authService = inject(AuthService);
+  menuService = inject(MenuComidaService);
 
   pathFoto1: string | null = null;
   pathFoto2: string | null = null;
   pathFoto3: string | null = null;
+
+  usuarioActual: Usuario | null = null;
 
   form = this.fb.nonNullable.group({
     nombreProducto: [
@@ -65,18 +73,11 @@ export class AltaComidaPage implements OnInit {
         Validators.required,
         Validators.pattern('^[a-zA-Z ]*$'),
         Validators.minLength(10),
-        Validators.minLength(50),
+        Validators.maxLength(50),
       ],
     ],
-    precioProducto: [
-      '',
-      [Validators.required, Validators.pattern('^[0-9]{8}$')],
-    ],
-    tiempoEstimadoProducto: [
-      '',
-      [Validators.required, Validators.pattern('^[0-9]{8}$')],
-    ],
-    foto: ['', Validators.required],
+    precioProducto: ['', [Validators.required]],
+    tiempoEstimadoProducto: ['', [Validators.required]],
   });
 
   private Toast = Swal.mixin({
@@ -94,17 +95,123 @@ export class AltaComidaPage implements OnInit {
 
   async takePhoto() {
     const photo = await this.photoService.addClientPhoto();
+    console.log(photo?.name);
     if (photo && photo.name) {
-      this.form.patchValue({ foto: photo.name });
+      const urlFoto = await this.photoService.getPhotoUrlClient(photo.name);
+      console.log(urlFoto);
+      if (urlFoto) {
+        if (this.pathFoto1 == null) {
+          this.pathFoto1 = urlFoto;
+          this.Toast.fire({
+            icon: 'success',
+            title: 'Foto Uno Subida',
+            color: '#ffffff',
+          });
+        } else if (this.pathFoto2 == null) {
+          this.pathFoto2 = urlFoto;
+          this.Toast.fire({
+            icon: 'success',
+            title: 'Foto Dos Subida',
+            color: '#ffffff',
+          });
+        } else if (this.pathFoto3 == null) {
+          this.pathFoto3 = urlFoto;
+          this.Toast.fire({
+            icon: 'success',
+            title: 'Foto Tres Subida',
+            color: '#ffffff',
+          });
+        } else {
+          this.Toast.fire({
+            icon: 'error',
+            title: 'Ya estan todas las fotos subidas',
+            color: '#ffffff',
+          });
+        }
+      } else {
+        this.Toast.fire({
+          icon: 'error',
+          title: 'No se Extraer la url de la foto',
+          color: '#ffffff',
+        });
+      }
+    } else {
       this.Toast.fire({
-        icon: 'success',
-        title: 'Foto Subida',
+        icon: 'error',
+        title: 'No se pudo guardar la foto',
         color: '#ffffff',
       });
     }
   }
 
-  ngOnInit() {}
+  async checkDatosUsuarioActual() {
+    if (this.authService.currentUserSig()) {
+      this.usuarioActual = await this.authService.getUserActual(
+        this.authService.currentUserSig()?.email
+      );
+    } else {
+      console.log(this.authService.obtenerAnonimo());
+      if (this.authService.obtenerAnonimo()) {
+        this.usuarioActual = await this.authService.getUserActual(
+          this.authService.obtenerAnonimo()
+        );
+        console.log(this.usuarioActual);
+      }
+    }
+  }
 
-  async onSubmit(): Promise<void> {}
+  ngOnInit() {
+    this.checkDatosUsuarioActual();
+  }
+
+  async onSubmit(): Promise<void> {
+    if (
+      this.form.valid &&
+      this.pathFoto1 != null &&
+      this.pathFoto2 != null &&
+      this.pathFoto3 != null
+    ) {
+      console.log(this.usuarioActual);
+      let perfil: string = '';
+      if (this.usuarioActual?.perfil == 'cocinero') {
+        perfil = 'comida';
+      } else if (this.usuarioActual?.perfil == 'bartender') {
+        perfil = 'bebida';
+      }
+      // Carga Menu
+      let value = this.form.getRawValue();
+      const auxMenu: MenuComida = {
+        descripcion: value.descripcionProducto,
+        img: this.pathFoto1,
+        nombre: value.nombreProducto,
+        precio: parseInt(value.precioProducto),
+        sector: perfil,
+        tiempoEstimado: parseInt(value.tiempoEstimadoProducto),
+      };
+      // Agrega Menu
+      this.menuService
+        .saveMenuComida(auxMenu)
+        .then(() => {
+          this.Toast.fire({
+            icon: 'success',
+            title: 'Plato Subido Correctamente',
+            color: '#ffffff',
+          });
+          this.router.navigateByUrl('/home');
+        })
+        .catch(() => {
+          this.Toast.fire({
+            icon: 'error',
+            title: 'No se pudo guardar la foto',
+            color: '#ffffff',
+          });
+        });
+    } else {
+      this.Toast.fire({
+        icon: 'error',
+        title: 'Faltan Datos',
+        color: '#ffffff',
+      });
+    }
+  }
 }

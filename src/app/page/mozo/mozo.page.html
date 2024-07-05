@@ -3,7 +3,7 @@
     <ion-buttons (click)="goHome()" slot="start">
       <ion-icon size="large" name="arrow-back-outline"></ion-icon>
     </ion-buttons>
-    <ion-title>trabajadores</ion-title>
+    <ion-title>ABM</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -16,7 +16,7 @@
         <div class="pedido-container" (click)="cambiarEstadoPedido(pedido)">
           <div>
             <span
-              >Cliente: {{pedido.cliente}} <br />
+              >Numero de mesa: {{pedido.numeroMesa}} <br />
               Estado: {{pedido.estadoPedido}}</span
             >
           </div>
