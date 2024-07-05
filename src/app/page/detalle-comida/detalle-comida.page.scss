@@ -16,19 +16,19 @@ ion-content {
     }
   }
   .card {
-    height: 75%;
     width: 100%;
     background: #fff;
     position: absolute;
     bottom: 0;
     border-radius: 3rem 3rem 0 0;
     padding: 2rem;
+    min-height: 30px;
     .image {
       padding: 1rem;
       background-color: #fff;
       border-radius: 10px;
       position: absolute;
-      top: -2.5rem;
+      top: -9rem;
       width: 50%;
       left: 50%;
       transform: translateX(-50%);

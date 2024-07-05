@@ -10,13 +10,19 @@
   <div class="card">
     @if(comidaMenu?.img){
     <div class="image">
-      @if(this.numeroImagen == 1){
-      <ion-img (click)="cambiarNumero()" [src]="comidaMenu?.img"></ion-img>
-      }@else if(this.numeroImagen == 2){
+      @if(this.numeroImagen == 1){ @defer () {
+      <ion-img (click)="cambiarNumero()" [src]="comidaMenu?.img"> </ion-img>
+      } @placeholder {
+      <ion-spinner class="spinner" color="danger"></ion-spinner>
+      } }@else if(this.numeroImagen == 2){ @defer () {
       <ion-img (click)="cambiarNumero()" [src]="comidaMenu?.img2"></ion-img>
-      }@else if (this.numeroImagen == 3) {
+      } @placeholder {
+      <ion-spinner class="spinner" color="danger"></ion-spinner>
+      } }@else if (this.numeroImagen == 3) { @defer () {
       <ion-img (click)="cambiarNumero()" [src]="comidaMenu?.img3"></ion-img>
-      }
+      } @placeholder {
+      <ion-spinner class="spinner" color="danger"></ion-spinner>
+      } }
     </div>
     <div class="card-content">
       <div class="card-title">

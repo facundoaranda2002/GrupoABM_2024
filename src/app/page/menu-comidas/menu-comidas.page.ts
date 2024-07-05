@@ -19,6 +19,7 @@ import { Router } from '@angular/router';
 import { PedidoService } from 'src/app/service/pedido.service';
 import { Comida } from 'src/app/clases/comida';
 import Swal from 'sweetalert2';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-menu-comidas',
@@ -45,6 +46,7 @@ export class MenuComidasPage implements OnInit {
   menuService = inject(MenuComidaService);
   router = inject(Router);
   pedidoService = inject(PedidoService);
+  navController = inject(NavController);
 
   arrayMenu: MenuComida[] = [];
   categoria: string = 'todo';
@@ -82,6 +84,9 @@ export class MenuComidasPage implements OnInit {
   goHome() {
     this.router.navigateByUrl('/home');
   }
+  goMaitre() {
+    this.router.navigateByUrl('/maitre');
+  }
   goCarritoComidas() {
     this.router.navigateByUrl('/carrito-comidas');
   }
@@ -98,4 +103,8 @@ export class MenuComidasPage implements OnInit {
       toast.addEventListener('mouseleave', Swal.resumeTimer);
     },
   });
+
+  public async onBackClick() {
+    this.navController.back();
+  }
 }

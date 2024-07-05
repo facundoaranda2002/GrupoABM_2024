@@ -22,7 +22,6 @@ import {
 import { AuthService } from 'src/app/service/auth.service';
 import { Router } from '@angular/router';
 import { ClienteService } from 'src/app/service/cliente.service';
-import { firstValueFrom } from 'rxjs';
 import Swal from 'sweetalert2';
 import { NavController } from '@ionic/angular';
 
