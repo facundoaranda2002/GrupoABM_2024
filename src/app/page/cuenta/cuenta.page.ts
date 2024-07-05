@@ -7,6 +7,7 @@ import {
   IonTitle,
   IonToolbar,
   ModalController,
+  IonIcon,
 } from '@ionic/angular/standalone';
 import { ClienteService } from 'src/app/service/cliente.service';
 import { AuthService } from 'src/app/service/auth.service';
@@ -21,6 +22,7 @@ import { BarcodeScanner, LensFacing } from '@capacitor-mlkit/barcode-scanning';
   styleUrls: ['./cuenta.page.scss'],
   standalone: true,
   imports: [
+    IonIcon,
     IonContent,
     IonHeader,
     IonTitle,

@@ -10,6 +10,7 @@ import {
   IonButton,
   IonIcon,
   IonImg,
+  IonSpinner,
 } from '@ionic/angular/standalone';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MenuComida } from 'src/app/clases/menuComida';
@@ -24,6 +25,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./detalle-comida.page.scss'],
   standalone: true,
   imports: [
+    IonSpinner,
     IonImg,
     IonIcon,
     IonButton,
@@ -44,6 +46,16 @@ export class DetalleComidaPage implements OnInit {
 
   id?: string | null;
   comidaMenu?: any;
+
+  numeroImagen: number = 1;
+
+  cambiarNumero() {
+    if (this.numeroImagen == 3) {
+      this.numeroImagen = 1;
+    } else {
+      this.numeroImagen++;
+    }
+  }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {

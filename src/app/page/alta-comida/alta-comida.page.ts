@@ -72,7 +72,7 @@ export class AltaComidaPage implements OnInit {
       [
         Validators.required,
         Validators.pattern('^[a-zA-Z ]*$'),
-        Validators.minLength(10),
+        Validators.minLength(5),
         Validators.maxLength(50),
       ],
     ],
@@ -183,6 +183,8 @@ export class AltaComidaPage implements OnInit {
       const auxMenu: MenuComida = {
         descripcion: value.descripcionProducto,
         img: this.pathFoto1,
+        img2: this.pathFoto2,
+        img3: this.pathFoto3,
         nombre: value.nombreProducto,
         precio: parseInt(value.precioProducto),
         sector: perfil,

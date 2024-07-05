@@ -81,3 +81,32 @@ ion-content {
   margin-top: 0.25em;
   margin-left: 0.5em;
 }
+
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+}
+.contenerBotonColor {
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  .botonColor {
+    color: white;
+    border-radius: 100%;
+    background-color: #7a0c0f;
+    width: 60px;
+    height: 60px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .botonColorCorrecto {
+    background-color: #32612d;
+  }
+}

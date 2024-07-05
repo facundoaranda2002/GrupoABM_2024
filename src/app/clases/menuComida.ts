@@ -5,6 +5,8 @@ export class MenuComida {
   tiempoEstimado: number = 0;
   sector: string = '';
   img: string = '';
+  img2: string = '';
+  img3: string = '';
   id?: string;
 }
 // nombre: string = '';

@@ -13,11 +13,16 @@
     <div *ngIf="pedidos$ | async as pedidos; else loading">
       <div class="listaPedidos">
         @for (pedido of pedidos; track $index) {
+
         <div class="pedido-container" (click)="cambiarEstadoPedido(pedido)">
           <div>
             <span
               >Numero de mesa: {{pedido.numeroMesa}} <br />
-              Estado: {{pedido.estadoPedido}}</span
+              Estado: {{pedido.estadoPedido}} <br />
+              Lista Comidas: @for (comida of pedido.comidas; track $index) {
+              <br />Producto:
+              <span class="spanComida">{{comida.nombre}}</span> Cantidad:
+              <span class="spanComida">{{comida.cantidad}}</span> }</span
             >
           </div>
         </div>

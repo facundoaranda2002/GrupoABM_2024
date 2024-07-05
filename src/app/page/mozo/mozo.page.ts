@@ -154,16 +154,7 @@ export class MozoPage implements OnInit {
             comida.estadoComida = 'enProceso';
           }
         }
-      } else if (pedido.estadoPedido == 'enProceso') {
-        pedido.estadoPedido = 'preparado';
-
-        for (let comida of pedido.comidas) {
-          // Actualizar el estado de la comida según la lógica necesaria
-          if (comida.estadoComida === 'enProceso') {
-            comida.estadoComida = 'preparado';
-          }
-        }
-      } else {
+      } else if (pedido.estadoPedido == 'preparado') {
         pedido.estadoPedido = 'entregado';
 
         for (let comida of pedido.comidas) {
@@ -224,7 +215,7 @@ export class MozoPage implements OnInit {
           // Mostrar el toast de éxito
           this.Toast.fire({
             icon: 'success',
-            title: `Pedido Confirmado`,
+            title: `Plato Confirmado`,
             color: '#ffffff',
           });
         } catch (error) {
@@ -233,7 +224,7 @@ export class MozoPage implements OnInit {
           // Mostrar un toast de error si ocurre algún problema
           this.Toast.fire({
             icon: 'error',
-            title: `Error al confirmar pedido`,
+            title: `Error al confirmar Plato`,
             color: '#ffffff',
           });
         }

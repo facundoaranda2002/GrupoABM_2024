@@ -115,5 +115,25 @@
         >Alta Producto</ion-button
       >
     </form>
+    <div class="contenerBotonColor">
+      <div
+        class="botonColor"
+        [ngClass]="pathFoto1 == null ? '':'botonColorCorrecto'"
+      >
+        Foto 1
+      </div>
+      <div
+        class="botonColor"
+        [ngClass]="pathFoto2 == null ? '':'botonColorCorrecto'"
+      >
+        Foto 2
+      </div>
+      <div
+        class="botonColor"
+        [ngClass]="pathFoto3 == null ? '':'botonColorCorrecto'"
+      >
+        Foto 3
+      </div>
+    </div>
   </div>
 </ion-content>

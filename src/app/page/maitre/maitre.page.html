@@ -99,7 +99,15 @@
             >Su mesa es la numero: <span>{{ mesaAsignada }} </span></ion-text
           >
         </div>
-        @if(usuarioActual?.perfil == "cliente" && usuarioActual?.listaDeEspera
+        @if(usuarioActual != null){
+        <ion-button
+          class="submit btnMesaMozo"
+          (click)="goChat()"
+          expand="block"
+        >
+          Consultar Mozo
+        </ion-button>
+        } @if(usuarioActual?.perfil == "cliente" && usuarioActual?.listaDeEspera
         == true && usuarioActual?.mesaAsignada != 0){
         <ion-button
           expand="block"
@@ -129,6 +137,10 @@
             <ion-button expand="block" (click)="goEncuesta()">
               Ir a Escuesta
             </ion-button>
+            } @else {
+            <ion-button expand="block" (click)="goGraficos()">
+              Encuestas Previas
+            </ion-button>
             } } @else if(pedido.estadoPedido == "preparado"){
             <div class="textoPedidoEstado">
               <p>
@@ -137,6 +149,10 @@
             </div>
             @if(usuarioActual?.estadoEncuesta === false){
             <ion-button expand="block" (click)="goEncuesta()">
+              Ir a Escuesta
+            </ion-button>
+            } @else {
+            <ion-button expand="block" (click)="goGraficos()">
               Ir a Escuesta
             </ion-button>
             } } @else if(pedido.estadoPedido == "entregado"){
@@ -152,6 +168,10 @@
             </div>
             @if(usuarioActual?.estadoEncuesta === false){
             <ion-button expand="block" (click)="goEncuesta()">
+              Ir a Escuesta
+            </ion-button>
+            } @else {
+            <ion-button expand="block" (click)="goGraficos()">
               Ir a Escuesta
             </ion-button>
             }

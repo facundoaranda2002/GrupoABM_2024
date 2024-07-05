@@ -24,6 +24,7 @@ import { ChatService } from 'src/app/service/chat.service';
 import { firstValueFrom } from 'rxjs';
 import { Usuario } from 'src/app/clases/usuario';
 import { HttpClient } from '@angular/common/http';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-chat',
@@ -50,6 +51,7 @@ export class ChatPage implements OnInit {
   fb = inject(FormBuilder);
   http = inject(HttpClient);
   cdr = inject(ChangeDetectorRef);
+  navController = inject(NavController);
 
   goRegister() {
     this.router.navigateByUrl('/register');
@@ -62,6 +64,11 @@ export class ChatPage implements OnInit {
   goHome() {
     this.router.navigateByUrl('/home');
   }
+
+  public async onBackClick() {
+    this.navController.back();
+  }
+
   logout(): void {
     this.authService.logout();
   }

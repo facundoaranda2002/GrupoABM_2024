@@ -480,4 +480,8 @@ export class MaitrePage implements OnInit {
       'mozo'
     );
   }
+
+  goGraficos() {
+    this.router.navigateByUrl('/graficos');
+  }
 }
