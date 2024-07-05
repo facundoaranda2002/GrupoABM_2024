@@ -87,11 +87,19 @@ Se muestran los resultados de las valoraciones que hicieron los clientes anterio
 
 Una vez que entro al local el usuario puede proceder a escanear una mesa y, si el maitre le asigno una, este podra ingresar a la mesa corrspondiente, ademas de consultar a los distintos mozos via chat
 
-<img src="src/assets/img/ConsultaMozo.jpg">
+<img src="src/assets/img/ClienteEscanearMesa.jpg">
 
-El cliente puede acceder al menu para realizar un pedido del cual ira viendo constantemente el estado, ademas podra completar la encuesta del local(una vez)
+## Consulta mozo
 
-<img src="src/assets/img/MostrarEstadoCliente.jpg">
+<img src="src/assets/img/chat.jpg">
+
+El cliente puede acceder al menu para realizar un pedido del cual ira viendo constantemente el estado, ademas podra completar la encuesta del local(una vez que la hizo, solo le va a dejar entrar a las encuestas previas) en el momento que le toque, confirmar la recepcion del pedido y pedir la cuenta una vez haya terminado de comer
+
+<img src="src/assets/img/estadoEnProceso.jpg">
+
+<img src="src/assets/img/confirmarRecepcion.jpg">
+
+<img src="src/assets/img/estadoComiendo.jpg">
 
 ### Menu
 
@@ -109,19 +117,20 @@ Aqui el cliente podra:
 
 El cliente podra completar una encuesta en la que puntue de 1 a 5 estrellas la comida, el servicio y el precio, ademas de poder dejar una pequeña reseña
 
-<img src="src/assets/img/encuesta.PNG">
+<img src="src/assets/img/encuesta1.jpg">
+<img src="src/assets/img/encuesta2.jpg">
 
 ### Pedir la cuenta
 
 Una vez que el cliente ya se encuentre comiendo, podra pedir la cuenta al mozo en el momento que lo necesite
 
-<img src="src/assets/img/PedirCuenta.jpg">
+<img src="src/assets/img/cuenta.jpg">
 
 ### Agregar propina
 
 En este apartado el cliente ademas podra cargar una propina para el mozo escanenado el qr correspondiente
 
-<img src="src/assets/img/DarPropina.jpg">
+<img src="src/assets/img/propina.jpg">
 
 Una vez hecho esto, el cliente podra proceder a pagar en efectivo, lo cual lo redireccionara a la primer pantalla de su apartado
 
@@ -144,25 +153,33 @@ Desde esta pantalla el mozo podra ingresar a ver los pedidos pendientes de confi
 
 Desde esta pantalla el mozo confirmara el pedido, para que sea relevado a los que estaran encargados de prepararlo
 
-<img src="src/assets/img/MozoAutorizaPedido.jpg">
-
-<img src="src/assets/img/RespuestaMozoAutorizaPedido.jpg">
+<img src="src/assets/img/confirmarPedido.jpg">
 
 ### Confirmar pago para liberar la mesa
 
 En esta pantalla el mozo confirma el pago en efectivo por parte del cliente y libera la mesa
 
-<img src="src/assets/img/MozoConfirmaCuenta.jpg">
+<img src="src/assets/img/menuPagos.jpg">
 
 ## Pantalla de cocinero/bartender
 
 En la primer pantalla estos tendran un boton para acceder a sus pedidos pendientes de elaboracion
 
-<img src="src/assets/img/MenuCocinero.jpg">
+<img src="src/assets/img/menuCocina.jpg">
+
+<img src="src/assets/img/menuBar.jpg">
 
 Al ingresar visualizara el producto para ponerlo como realizado asi el mozo lo entrega
 
 <img src="src/assets/img/CocineroTerminaComida.jpg">
+
+## Alta de comida/bebida
+
+El cocinero podra hacer el alta de una comida ingresando 3 fotos, el bartender podra hacer el alta de una bebida ingresando 3 fotos tambien.
+
+<img src="src/assets/img/altaComida.jpg">
+
+<img src="src/assets/img/altaBebida.jpg">
 
 ## Módulos
 
@@ -230,6 +247,12 @@ https://grupoabm.atlassian.net/jira/software/projects/KAN/boards/1?atlOrigin=eyJ
 - **Push notification: consultar al mozo** _(03/07/24)_
 
   ![Estado](https://img.shields.io/badge/Estado-Completado-green?style=for-the-badge&labelColor=black)
+- **Alta de comidas** _(04/07/24)_
+  
+  ![Estado](https://img.shields.io/badge/Estado-Completado-green?style=for-the-badge&labelColor=black)
+- **Alta de bebidas** _(04/07/24)_
+  
+  ![Estado](https://img.shields.io/badge/Estado-Completado-green?style=for-the-badge&labelColor=black)
 
 
 
@@ -256,3 +279,37 @@ https://grupoabm.atlassian.net/jira/software/projects/KAN/boards/1?atlOrigin=eyJ
 - **Push notification: confirmar realización del pedido(por parte del cocinero o bartender)** _(03/07/24)_
   
   ![Estado](https://img.shields.io/badge/Estado-Completado-green?style=for-the-badge&labelColor=black)  
+
+
+## QRS
+
+### Ingresar al local
+
+<img src="src/assets/img/Ingresar al local.jpg">
+
+### Mesas
+
+<img src="src/assets/img/QrsMesas.PNG">
+
+### Propinas
+
+#### Malo(0%)
+
+<img src="src/assets/img/Malo.png">
+
+#### Regular(5%)
+
+<img src="src/assets/img/Regular.png">
+
+#### Bueno(10%)
+
+<img src="src/assets/img/Bueno.png">
+
+#### Muy Bueno(15%)
+
+<img src="src/assets/img/Muy Bueno.png">
+
+#### Excelente(20%)
+
+<img src="src/assets/img/Excelente.png">
+
