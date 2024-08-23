@@ -25,6 +25,8 @@ conformado por:
   <a href="javier.mendoza.benitez@gmail.com"><img alt="Email" src="https://img.shields.io/badge/Gmail-javier.mendoza.benitez@gmail.com-blue?style=flat-square&logo=gmail"></a>
   <a href="https://github.com/JavierMendozaBenitez"><img alt="GitHub" src="https://img.shields.io/badge/GitHub-JavierMendozaBenitez-black?style=flat-square&logo=github"></a>
 
+Videos del funcionamiento de la app: https://www.youtube.com/watch?v=vLuFL6ViW_k&list=PLOnTIpQMnXmgSktXqLfEnQ5LP2o2_fUxZ 
+
 ## Ingreso
 
 La pantalla de ingreso pide el correo y la contraseña, además cuenta con un desplegable abajo a la izquierda que cuenta con los usuarios pre registrados, a fin de hacer un ingreso rapido para probar la aplicación. En caso de no tener una cuenta este tiene un enlace para redirigirse al registro
